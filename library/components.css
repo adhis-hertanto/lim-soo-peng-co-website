@@ -278,9 +278,10 @@ html:not(.js) .nav__links{display:none}
 .about.is-fading .card.is-in{opacity:1;translate:0 0}
 
 /* ---------- What we do: steps (stacked by default, pinned with JS and motion allowed) ---------- */
-/* overflow-x: clip trims the full-width texture without making a scroll container, so the sticky stage still pins. */
-.practice{position:relative;isolation:isolate;overflow-x:clip;background:var(--grey-900);color:var(--on-dark)}
-.steps__stage{display:grid;gap:3rem}
+/* The stage spans the full width and the container sits inside it, so nothing overflows and no ancestor needs
+   overflow clipping. A clipped ancestor around a sticky element makes iPhone Safari jitter it while scrolling. */
+.practice{background:var(--grey-900);color:var(--on-dark)}
+.steps__inner{display:grid;gap:3rem}
 .step{display:grid;gap:1.5rem}
 .step__photo{order:-1}
 .photo{position:relative;overflow:hidden;aspect-ratio:4 / 3;background:var(--grey-200);border-radius:var(--radius-card)}
@@ -303,11 +304,11 @@ html:not(.js) .nav__links{display:none}
 .circle--step-3{left:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
 
 @media (min-width:768px){
-  .steps__stage{gap:0}
+  .steps__inner{gap:0}
   .step{grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);column-gap:.6875rem;padding-block:6rem}
   .step + .step{border-top:1px solid var(--olive)}
-  .steps > .step:first-child{padding-top:0}
-  .steps > .step:last-child{padding-bottom:0}
+  .steps__inner > .step:first-child{padding-top:0}
+  .steps__inner > .step:last-child{padding-bottom:0}
   .step__photo{order:0;aspect-ratio:1 / 1}
   .step__rule{display:flex;flex-direction:column;align-items:center;gap:.5rem;width:2px;justify-self:center}
   .step__text{justify-content:space-between}
@@ -324,18 +325,24 @@ html:not(.js) .nav__links{display:none}
 /* svh, not vh: on iPhone Safari vh is the largest viewport (URL bar hidden), so a vh-sized stage and pin distance
    jump every time the toolbar collapses or expands while scrolling. */
 .steps.is-pinned{display:block;height:300vh;height:300svh}
-.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh;min-height:100svh}
-/* Texture behind each slide: the colonnade photo under a dark grey overlay. It sits on the pinned stage,
-   so it covers exactly the viewport-high slide area, full width, and leaves with the section. */
-.steps.is-pinned .steps__stage::before{content:"";position:absolute;top:0;bottom:0;left:50%;z-index:-1;width:100vw;translate:-50% 0;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat;pointer-events:none}
-/* No filter here: a blur on a sticky, full-screen layer makes iPhone Safari repaint and re-composite it on every scroll
-   frame (the jitter), and it can leave the layer painted over the sections below. The 85% overlay already reads as texture. */
+/* Texture behind each slide: the colonnade photo under a dark grey overlay, as the stage's own background, so it
+   covers exactly the viewport-high slide area, full width, and leaves with the section. No filter: a blur on a
+   sticky full-screen layer makes iPhone Safari repaint it on every scroll frame. */
+.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh;min-height:100svh;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat}
 .steps.is-pinned .step{grid-area:1 / 1;padding-block:0;border-top:0;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
 .steps.is-pinned .step.is-active{opacity:1;visibility:visible;transition-delay:0s}
 .steps.is-pinned .circle{transition:translate var(--fade) ease}
-/* Mobile pinned: the same three-part rule, laid out horizontally along the bottom of the viewport */
+/* Mobile pinned: the same three-part rule, laid out horizontally along the bottom of the viewport,
+   inset two gutters from the edges of the full-width stage */
 @media (max-width:767px){
-  .steps.is-pinned .step__rule{display:flex;position:absolute;left:var(--gutter);right:var(--gutter);bottom:2rem;z-index:2;flex-direction:row;align-items:center;gap:.5rem;width:auto;height:2px}
+  /* Each slide fits the visible screen: clear of the nav bar at the top and the rule at the bottom. The text keeps
+     its size and the photo takes what is left, up to its natural 4:3, so short phones get a shorter photo. */
+  .steps.is-pinned .steps__stage{height:100vh;height:100svh;padding-block:5rem 4.5rem;align-items:stretch}
+  .steps.is-pinned .steps__inner{min-height:0}
+  .steps.is-pinned .step{display:flex;flex-direction:column;justify-content:center;min-height:0}
+  .steps.is-pinned .step__text{flex:none}
+  .steps.is-pinned .step__photo{flex:0 1 auto;aspect-ratio:auto;height:calc((100vw - 2 * var(--gutter)) * .75);min-height:7rem}
+  .steps.is-pinned .step__rule{display:flex;position:absolute;left:calc(var(--gutter) * 2);right:calc(var(--gutter) * 2);bottom:2rem;z-index:2;flex-direction:row;align-items:center;gap:.5rem;width:auto;height:2px}
   .steps.is-pinned .step__rule span{flex:1;width:auto;height:1px}
   .steps.is-pinned .step__rule span.is-current{height:2px}
 }

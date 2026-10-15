@@ -3,6 +3,7 @@
 (function () {
   var root = document.querySelector("[data-steps]");
   if (!root) return;
+  var stage = root.querySelector(".steps__stage");
   var steps = Array.prototype.slice.call(root.querySelectorAll(".step"));
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
   var ticking = false;
@@ -22,7 +23,8 @@
     ticking = false;
     if (!root.classList.contains("is-pinned")) return;
     var rect = root.getBoundingClientRect();
-    var span = rect.height - window.innerHeight;
+    // Pin distance from the stage's own height, not innerHeight, which on iPhone changes as the toolbar collapses.
+    var span = rect.height - stage.offsetHeight;
     var p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 0;
     activate(Math.min(steps.length - 1, Math.floor(p * steps.length)));
   }

@@ -99,6 +99,8 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  // Don't recalculate every trigger when the iPhone toolbar collapses or expands mid-scroll.
+  ScrollTrigger.config({ ignoreMobileResize: true });
   startSmoothScroll();
 
   var media = hero.querySelector(".hero__media");

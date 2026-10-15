@@ -60,7 +60,7 @@ White 16px card with a 64/64/96px motif SVG (`.card__motif`, classes `m-gold m-g
 - **v2:** shadow `0 24px 48px rgba(35,31,32,.12), 0 2px 6px rgba(35,31,32,.06)`. Three columns from 768px (16px gap, 24px padding, 360px min height) and on desktop (32px gap, 40px padding, 420px). Stacked on mobile. In the pinned About section the list is absolutely positioned at the vertical middle of the stage, each card is translated -50% of its height and moved by `--rise`, so it ends centred in the viewport.
 
 ## Scroll-pinned steps (`.steps`)
-- **Markup:** `.steps[data-steps] > .steps__stage > section.step[data-step]` x3, each with `.step__text`, `.step__rule` (three spans, `is-current` on its own), and `.photo.step__photo` with a `.circle--step-n`.
+- **Markup:** `.steps[data-steps] > .steps__stage > .container.steps__inner > section.step[data-step]` x3 (the stage is full width and carries the pinned texture; the container sits inside it so nothing overflows), each with `.step__text`, `.step__rule` (three spans, `is-current` on its own), and `.photo.step__photo` with a `.circle--step-n`.
 - **Default:** stacked (mobile, no JS, reduced motion). Mobile shows photo above text.
 - **Indicator colours** match the hero progress: the current segment (`.is-current`, 2px) is the lighter olive `--olive-line`; inactive segments (1px) are white at 32%.
 - **Pinned:** `scripts/scroll-steps.js` adds `.is-pinned` on every breakpoint with motion allowed (mobile included, one step per viewport height). Section is 300vh with a sticky stage; the active step cross-fades. Circle position per step: bottom-right, top-centre, bottom-left.

@@ -164,8 +164,14 @@
     if (history.pushState) history.pushState(null, "", "#about");
   });
 
+  // iPhone Safari fires resize whenever its toolbar collapses or expands mid-scroll. Rebuilding then resets the cards
+  // and lays out the whole page twice, so on touch screens only a width change (rotation) re-syncs.
+  var coarse = window.matchMedia("(pointer: coarse)");
+  var lastWidth = window.innerWidth;
   var resizeTimer = 0;
   window.addEventListener("resize", function () {
+    if (coarse.matches && window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(sync, 150);
   });
