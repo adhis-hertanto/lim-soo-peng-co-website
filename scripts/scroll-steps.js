@@ -9,7 +9,12 @@
 
   function canPin() { return !calm.matches; }
 
+  var current = -1;
+
+  // Only touch the DOM when the active step changes, not on every scroll frame.
   function activate(i) {
+    if (i === current) return;
+    current = i;
     steps.forEach(function (s, n) { s.classList.toggle("is-active", n === i); });
   }
 
@@ -30,7 +35,7 @@
     var pin = canPin();
     root.classList.toggle("is-pinned", pin);
     if (pin) update();
-    else steps.forEach(function (s) { s.classList.add("is-active"); });
+    else { current = -1; steps.forEach(function (s) { s.classList.add("is-active"); }); }
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });

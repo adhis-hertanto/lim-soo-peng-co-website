@@ -38,7 +38,6 @@
   --on-dark-72:rgba(255,255,255,.72);  /* inactive labels, ghost button border on photo */
   --on-dark-32:rgba(255,255,255,.32);  /* progress track on photo */
   --texture-overlay:.85;               /* What We Do photo: dark grey overlay strength (#2A2B2E) */
-  --blur-texture:3px;                  /* What We Do photo: blur, so it reads as texture */
   --glass:rgba(255,255,255,.14);       /* nav pill over the hero */
   --glass-olive:rgba(94,105,61,.14);   /* nav pill over light sections (olive at the same strength) */
   --blur-glass:.75rem;                   /* backdrop blur behind the nav pill */
@@ -98,7 +97,6 @@
   --fs-tagline:2rem;--lh-tagline:1.15;
   --fs-statement:2.25rem;--lh-statement:1.15;  /* About reveal statement */
   --fs-body:1rem;
-  --fs-lead-row:1.125rem;                  /* accordion sub-item */
   --fs-contact:1.375rem;
   --fs-nav:.875rem;
   --fs-eyebrow:.8125rem;
