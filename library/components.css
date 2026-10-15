@@ -163,6 +163,9 @@ html:not(.js) .nav__links{display:none}
 /* Load reveal: hero elements start hidden (html.intro, set in the head) and scripts/hero-intro.js animates them in. */
 .intro .hero__slide.is-active .hero__title,.intro .hero__slide.is-active .hero__text,.intro .hero__progress .progress,.intro .hero__scroll,.intro .hero__circle--b,.intro .nav{opacity:0}
 /* Pinned: stays in place while the About section (the curtain) slides up over it. See scripts/hero-curtain.js. */
+/* The hero is sticky inside .curtain (hero + About), not the whole page: a page-wide sticky 100svh dark block can stay painted
+   over the later sections on iPhone Safari even when hidden. Here it ends with the curtain. */
+.curtain{position:relative}
 .hero{--focus:var(--on-dark);position:sticky;top:0;overflow:hidden;height:100vh;height:100svh;background:var(--grey-900);color:var(--on-dark)}
 .hero.is-covered{visibility:hidden}
 .hero__media{position:absolute;inset:0;z-index:0}
