@@ -3,10 +3,6 @@
    Breakpoints: mobile < 768, tablet 768 to 1199, desktop 1200+.
    Sizes are in rem: the design px divided by 16 (24px = 1.5rem). Hairlines, rules and the focus ring stay in px. */
 
-@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Freight Display";src:url("../brand/fonts/FreightDisplay-Book.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 
 :root{
   /* Brand */
@@ -52,8 +48,8 @@
   --rule:var(--grey-200);              /* divider in the bio dialog */
 
   /* Type families */
-  --font-sans:"Cera Pro",Jost,system-ui,sans-serif;
-  --font-serif:"Freight Display",Newsreader,Georgia,serif;
+  --font-sans:Montserrat,system-ui,sans-serif;
+  --font-serif:Cormorant,Georgia,serif;
 
   /* Shape */
   --radius-card:1rem;
@@ -92,10 +88,10 @@
   --fs-loader-count:3.5rem;     /* page loader: percentage counter */
   --nav-slide:.3s;            /* nav hides on scroll down, returns on scroll up */
 
-  /* Type scale (Freight Display headings, Cera Pro body) */
+  /* Type scale (Cormorant headings, Montserrat body; brand fonts Freight Display / Cera Pro parked for the final build) */
   /* Mobile hero title scales with the screen so "Practical solutions." (7.115 times the font size wide) always stays on one line,
      keeping slide 1 on three lines: (screen width - both gutters) / 7.2, between 34px and 56px. 44px was the fixed value. */
-  --fs-hero:clamp(2.125rem,calc((100vw - 2 * var(--gutter)) / 7.2),3.5rem);   --lh-hero:1.1;
+  --fs-hero:clamp(2.125rem,calc((100vw - 2 * var(--gutter)) / 8),min(3.5rem,8.5svh));   --lh-hero:1.1;
   --fs-h2:2.25rem;     --lh-h2:1.15;
   --fs-h3:1.5rem;     --lh-h3:1.25;     /* card, accordion, step (step overridden) */
   --fs-step:2.25rem;   --lh-step:1.15;
@@ -118,7 +114,7 @@
     --section-y:6rem;
     --ring-toggle:3rem;
     --fs-loader-count:4.5rem;
-    --fs-hero:4rem; --lh-hero:1.05;
+    --fs-hero:min(4rem,8.5svh); --lh-hero:1.05;
     --fs-h2:3rem;   --lh-h2:1.1;
     --fs-statement:3rem; --lh-statement:1.1;
     --fs-step:3rem; --lh-step:1.1;
@@ -134,7 +130,7 @@
     --gap:2rem;
     --section-y:8rem;
     --fs-loader-count:6rem;
-    --fs-hero:5.5rem; --lh-hero:1.02;
+    --fs-hero:min(5.5rem,9.5svh); --lh-hero:1.02;
     --fs-h2:4rem;   --lh-h2:1.1;
     --fs-statement:4rem; --lh-statement:1.1;
     --fs-h3:1.75rem;

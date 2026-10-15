@@ -163,7 +163,7 @@ html:not(.js) .nav__links{display:none}
 /* Load reveal: hero elements start hidden (html.intro, set in the head) and scripts/hero-intro.js animates them in. */
 .intro .hero__slide.is-active .hero__title,.intro .hero__slide.is-active .hero__text,.intro .hero__progress .progress,.intro .hero__scroll,.intro .hero__circle--b,.intro .nav{opacity:0}
 /* Pinned: stays in place while the About section (the curtain) slides up over it. See scripts/hero-curtain.js. */
-.hero{--focus:var(--on-dark);position:sticky;top:0;overflow:hidden;height:100vh;height:100svh;min-height:38.75rem;background:var(--grey-900);color:var(--on-dark)}
+.hero{--focus:var(--on-dark);position:sticky;top:0;overflow:hidden;height:100vh;height:100svh;background:var(--grey-900);color:var(--on-dark)}
 .hero.is-covered{visibility:hidden}
 .hero__media{position:absolute;inset:0;z-index:0}
 .hero__photo{position:absolute;inset:0;width:100%;max-width:none;height:100%;object-fit:cover;object-position:var(--pos);opacity:0;transition:opacity var(--fade) ease}
@@ -209,7 +209,7 @@ html:not(.js) .nav__links{display:none}
   .hero__photo[data-slide="4"]{--pos:92% 0}
   .hero__circle--b{top:26.25rem;right:-7.5rem;width:17.5rem;height:17.5rem}
   .hero__body{padding:10rem var(--gutter) 2rem}
-  .hero__slides{max-width:30rem}
+  .hero__slides{max-width:36rem}
   .hero__text{margin-top:1.5rem}
   .hero__progress{padding:2rem var(--gutter) 1.5rem}
   .hero__scroll{margin-top:1rem}
@@ -226,7 +226,7 @@ html:not(.js) .nav__links{display:none}
   .hero__circle--b{top:23.75rem;right:-12.5rem;width:22.5rem;height:22.5rem}
   /* Text block bottom left: it sits just above the progress control, as on tablet and mobile. */
   .hero__body{width:100%;max-width:var(--container);margin-inline:auto;padding:10rem var(--gutter) 2rem}
-  .hero__slides{max-width:40rem}
+  .hero__slides{max-width:48rem}
   .hero__text{width:31.25rem;max-width:100%}
   .hero__progress{width:100%;max-width:var(--container);margin-inline:auto;padding:2rem var(--gutter) 1.5rem}
   .progress__label{font-size:1rem}
