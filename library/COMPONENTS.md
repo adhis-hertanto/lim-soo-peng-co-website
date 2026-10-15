@@ -1,0 +1,113 @@
+# Components
+
+All styles are in `components.css` (tokens in `tokens.css`). Mobile first; tablet from 768px, desktop from 1200px. From 1440px to 1920px the whole page scales in proportion (see Wide screens in `DESIGN.md`); sizes in this file are the design px at 1440. Class names are plain (`.nav`, `.btn`, `.cta`), not prefixed.
+
+## Page loader (`.loader`)
+- **Purpose:** plays on every load and refresh. An olive full-screen panel with a percentage counter and a thin progress line; three words (Clarity., Direction., Peace of mind.) arrive one after another at 33%, 66% and 100%, then the panel lifts away, curved edge first, like a curtain. Modelled on the Big Energy Group loader.
+- **Markup:** `div.loader[data-loader]` (outside `.page`, first in the body) with a visually hidden `p.vh[role=status]` ("Loading") and `div.loader__panel` (aria-hidden) holding `svg.loader__curve` (full width, `--loader-curve` 51px tall, `preserveAspectRatio="none"`, convex bulge, olive fill, sitting just below the panel) and `.loader__inner > .loader__block` with `.loader__progress` (`.loader__count`, `.loader__track > .loader__fill`) and three `.loader__word`.
+- **Visibility:** hidden by default. The head script adds `html.loading` (and `html.intro`) only when motion is allowed and the URL has no `?static=1`, so no JS, reduced motion and screenshots never see it. Safety timers in the head remove `loading` after 10s and `intro` after 12s.
+- **Type and colour:** panel `--olive`; words and counter white (Freight Display, words at the hero title sizes 44 / 64 / 88px, counter `--fs-loader-count` 56 / 72 / 96px); full stops `--gold`; track `--on-dark-32`; fill `--gold` (about 3:1 on the olive, where `--olive-line` is about 2.2:1).
+- **Behaviour:** `scripts/page-loader.js`, one GSAP timeline, values in `CONFIG`. Counter 0 to 100 in three 0.6s runs with 0.25s holds after the first two; each word rises 24px and fades in (0.55s, power3.out) while the block moves up one line (0.4s); 0.3s hold, 0.3s fade of counter and line, then the panel slides up (0.9s, power3.inOut). About 3.8s in total. Before the last run the timeline waits (at most 6s) until fonts are loaded and the first hero photo is decoded.
+- **Hand-off:** fires `pageloader:leave` half way through the slide (the hero reveal starts) and `pageloader:done` at the end (the hero carousel starts, ScrollTrigger refreshes, scrolling and the page return).
+- **While it plays:** scrolling is locked (`overflow: hidden` on `html` and Lenis stopped) and `.page` is `inert`, so keyboard focus cannot reach the page. The visible counter and words are `aria-hidden`.
+- **v2, page transition (`.loader--rise`, `html.entering`, `html.leaving`):** the same olive panel and curve with no counter, line or words, used when moving between `index.html`, `privacy-policy.html` and `terms-of-use.html`. `scripts/page-transition.js` (plain script, config in `CONFIG`) handles it.
+  - **Leaving:** a click on an internal link to another page (same origin, same tab, no modifier keys; not an anchor on the same page; not under reduced motion or `?static=1`; needs GSAP) is intercepted. The panel is built if the page has none, gets `.loader--rise` (the curve moves to the top, leading edge, with a 1px overlap so there is no seam), `html.leaving` shows it and the page goes `inert` with scrolling locked. It rises from below the viewport to cover the page (`CONFIG.slide`: 0.9s, `power3.inOut`, the same as the loader's lift), then `sessionStorage["lsp-transition"]` is set and the browser navigates.
+  - **Arriving:** the head script reads and clears the flag and adds `html.entering` (on `index.html` also `html.intro`, but not `html.loading`), so the panel covers the screen from the first paint. It waits (at most 6s) for fonts and, on the index, the first hero photo, then lifts away with `CONFIG.slide`; `pageloader:leave` fires at 0.45s and `pageloader:done` at the end, so the hero reveal and carousel start as after the loader. `page-loader.js` returns early when `html.entering` is set, so the full loader does not play. The loader still plays on a first visit, a refresh and a direct load. `page-loader.js` reads its `slide` values from `window.PageTransition.slide`, so one set of numbers drives both.
+  - **Afterwards:** legal pages move focus to the h1 (`preventScroll`). For `index.html#section` the matching in-page link is clicked once the panel has gone, so Lenis and the pinned About scroll there as usual.
+  - **Safety:** head timer removes `entering` after 10s; the script forces the cover away after the wait, the lift and 2s; `pageshow` with `persisted` clears `leaving`, the flag and any cover so back and forward never stick. No JS or no GSAP: links navigate normally.
+  - **Legal pages' markup:** a static `.loader[data-loader][aria-hidden]` with `.loader__panel[data-loader-panel]` and `svg.loader__curve[data-loader-curve]` only (hidden unless `entering` or `leaving` is set); it is removed after the lift.
+
+## Floating nav (fixed, all breakpoints) and mobile nav
+- **Purpose:** fixed bar at the top with logo, four anchor links and "Speak to us". Transparent, white text over the hero. On mobile, a glass pill with the CTA and a white menu icon; opening it shows a white card with the links.
+- **Markup:** `header.site-header > nav.nav#nav` with `.nav__logo` (two images: `.nav__logo-light` white, shown by default; `.nav__logo-dark` grey, shown in the open menu and over light sections), `.nav__pill` holding `.btn.nav__cta`, `button.nav__toggle` (aria-expanded, aria-controls="nav-links", aria-label swaps "Open menu" and "Close menu") and `.nav__links > ul > li > a.nav__link`, with a last `li.nav__cta-item` (shown in the open mobile menu only).
+- **States:** one bar, no solid version. It slides off the top when you scroll down (past 120px) and returns on scroll up (`.is-hidden`, set by `scripts/nav.js`); it stays visible while a link has keyboard focus (`:focus-visible`) and while the mobile menu is open. A link you only clicked keeps focus but does not hold the nav open. Link hover and `aria-current` = 1px underline. `.site-header.is-on-light` (set by `scripts/nav.js` when the bar sits over a `data-nav="light"` section, i.e. About, Matters, Our lawyers, Contact and footer) switches the text and logo to dark. Open mobile menu: `.nav.is-open`, a white card (radius 36px, links stacked, 56px rows, CTA in list).
+- **Glass pill:** `rgba(255,255,255,.14)` over the hero and `rgba(94,105,61,.14)` (olive) over light sections, both with a 12px backdrop blur, padding 6px (4px on mobile), gap 4px. Desktop and tablet: links 14px/500, 44px tall, 20px (12px tablet) side padding, then the CTA. Logo 64 / 56 / 52px tall; 24px top margin (16px mobile).
+- **A11y:** `nav aria-label="Main"`; `scripts/menu.js` traps focus, closes on Esc and on link click; `scripts/nav.js` sets `aria-current`. Without JS, the mobile links are hidden and the CTA stays.
+
+## Pill button (`.btn`)
+Olive pill, white label, gold fill with #2A2B2E label on hover. 44px minimum height.
+- **v2 modifiers:** `.btn--lg` (52px tall, padding 0 28px, 16px/500; hero and dialog). `.btn--ghost` (transparent, 1px border white at 72%, white label; hover white fill, #2A2B2E label; for use on photos). `.btn--outline` (transparent, 1px #414245 border and label; hover gold fill, #2A2B2E label; works on `<button>`).
+
+## Ring CTA link (`.cta`)
+Label (`.cta__label`) plus 44px ring (`.cta__ring`) holding a 24px arrow from the sprite. Hover: ring fills gold, label underlined. Variants: arrow right (hero, map fallback), arrow up (footer "Back to top"), toggle (accordion, see below).
+- **v2, icon only:** `button.cta.cta--icon` with just the ring and an `aria-label` (plus on lawyer cards, X to close the bio dialog). Same 44px ring and gold hover.
+- **v2, bare:** `a.cta.cta--bare` is a 44px icon link with no ring (hero "Scroll to About" double chevron, shown below the progress control on every breakpoint).
+
+## Hero carousel (`.hero`)
+- **Markup:** `section.hero[data-carousel][data-current]` with `.hero__media > img.hero__photo[data-slide]` x4, `.hero__overlay`, `.hero__deco > .hero__circle--b`, then `.hero__inner` holding `.hero__body` (`.hero__slides > .hero__slide[role=group]`, each with a title and a paragraph; no buttons) and `.hero__progress` (`.progress`, `.progress__current`, `.cta--bare.hero__scroll`).
+- **Layout:** full-bleed photo (`object-fit: cover`, per-slide and per-breakpoint `--pos` object-position), flat #2A2B2E overlay at 50% (65% when `data-current="3"`), one solid gold circle (right side) behind the text that stays put. Height 100% of the viewport (`100svh`, minimum 620px). On every breakpoint the heading and body sit at the bottom left, just above the progress control (desktop inside the 1200px container, padding 160px above and 32px below; tablet 160px 40px 32px; mobile 120px 24px 32px). Each slide is aligned to the bottom of its shared area, so the gap above the progress control (64px, 56px on mobile) is the same on all four slides. The "Speak to us" and "What we do" buttons are no longer in the hero (the nav has "Speak to us"). White text; focus ring is white inside the hero.
+- **Behaviour:** `scripts/hero-carousel.js`. 4.5s per slide, linear scrubbed fill, 0.6s cross-fade of photo, text and buttons, keeps playing on hover, pauses while keyboard focus is on the carousel and when the tab is hidden, non-current slides get `aria-hidden` and `inert`, `data-current` drives the overlay.
+- **Reduced motion:** no autoplay; slide 1 with its segment shown full.
+
+## Progress segments (`.progress`)
+Four buttons (`.progress__seg`, `aria-current`, `aria-label`), 24px apart (16px on mobile), 1px track white at 32%, 2px fill in the lighter olive `--olive-line` (#94A36A) driven by `--fill`. Labels under each segment on tablet (14px) and desktop (16px), white when current and white at 72% otherwise. Hover (and keyboard focus) on an inactive tab turns its label and track white. Mobile shows no labels: the current slide name (`.progress__current`, 14px) sits under the segments, then the scroll chevron.
+
+## Eyebrow + heading block
+`.eyebrow` (13px uppercase olive; `--on-dark`, `--plain` variants) then `.heading` (Freight, balance; `.heading--wide` caps at 800px). End the heading with `<span class="gold-stop">.</span>`.
+
+## Reveal statement (`.statement`)
+- **Purpose:** the About section's one-paragraph statement whose first sentence is the section heading.
+- **Markup:** `p.statement > span.statement__source > span#about[role=heading][aria-level=2]` then the rest of the sentence, ending in `<span class="gold-stop">.</span>` (only the final full stop is gold). Freight Display, centred, `text-wrap: pretty`; 36/1.15, 48/1.1 (max 688px), 64/1.1 (max 900px).
+- **Behaviour:** `scripts/about-reveal.js` copies the text into an `aria-hidden` `.statement__copy` of word spans (`.statement__word`, opacity from `--o`), groups the words into rendered lines, and hides the source visually (`.vh`) so it is read once. Re-splits on resize and after fonts load.
+  - **Pinned** (`.about.is-pinned`, every breakpoint, motion allowed, and the viewport tall enough for the cards: 120px spare on wide screens, 88px on mobile for the nav bar): `.about__track` is 300vh with a sticky 100vh `.about__stage`. The statement sits at the top; lines go from 15% to 100% opacity over the first 40% of the pin, a hold to 50%, then the cards rise from below the viewport (middle, left, right, 120px of scroll apart) and come to rest centred vertically in the viewport, while the text blurs to 6px and drops to 40% (`--blur`, `--dim`). Otherwise it falls back to fading.
+  - **Mobile pinned:** the three cards stack in one column (16px apart in the pinned state, 16px padding, 40px motif, centred in the space below the 72px nav bar at `top: calc(50% + 36px)`); they rise as one column and the text blurs behind them, as on wide screens.
+  - **Fading** (`.about.is-fading`, only for viewports too short for the cards, e.g. 375 x 667): each line fades from 15% to 100% across the lowest quarter of the viewport; cards fade up once (`.is-in`). No blur.
+  - **Reduced motion / no JS:** no split, no pin, everything stacked and visible.
+  - While pinned, links to `#about` scroll to the start of the sequence.
+
+## About card (`.card`)
+White 16px card with a 64/64/96px motif SVG (`.card__motif`, classes `m-gold m-grey m-deep m-ring`), title and text. Three motifs: overlapping circles, three growing dots, half circle.
+- **v2:** shadow `0 24px 48px rgba(35,31,32,.12), 0 2px 6px rgba(35,31,32,.06)`. Three columns from 768px (16px gap, 24px padding, 360px min height) and on desktop (32px gap, 40px padding, 420px). Stacked on mobile. In the pinned About section the list is absolutely positioned at the vertical middle of the stage, each card is translated -50% of its height and moved by `--rise`, so it ends centred in the viewport.
+
+## Scroll-pinned steps (`.steps`)
+- **Markup:** `.steps[data-steps] > .steps__stage > section.step[data-step]` x3, each with `.step__text`, `.step__rule` (three spans, `is-current` on its own), and `.photo.step__photo` with a `.circle--step-n`.
+- **Default:** stacked (mobile, no JS, reduced motion). Mobile shows photo above text.
+- **Indicator colours** match the hero progress: the current segment (`.is-current`, 2px) is the lighter olive `--olive-line`; inactive segments (1px) are white at 32%.
+- **Pinned:** `scripts/scroll-steps.js` adds `.is-pinned` on every breakpoint with motion allowed (mobile included, one step per viewport height). Section is 300vh with a sticky stage; the active step cross-fades. Circle position per step: bottom-right, top-centre, bottom-left.
+
+## Accordion (`.accordion`)
+- **Markup:** `ul.accordion[data-accordion] > li.accordion__item > h3 > button.accordion__button[aria-expanded][aria-controls]` + `.accordion__panel[hidden]`.
+- **Behaviour:** one open at a time (`scripts/accordion.js`); first open by default. Panels expand and collapse with a 0.4s height and fade (`cubic-bezier(0.22, 1, 0.36, 1)`, Web Animations API), measured from the real content height; rapid clicks continue from the current height; instant under reduced motion. After each animation `ScrollTrigger.refresh()` recalculates scroll triggers. Closed icon is a plus; open icon is an olive filled ring with an X. Numbers are decorative (`aria-hidden`) and hidden in the button on mobile.
+
+## Lawyer card (`.lawyer`)
+4:5 photo (`.photo--portrait`; placeholder panels until portraits arrive), then `.lawyer__row`: `.lawyer__info` (name with gold full stop and two meta lines) on the left and a `button.cta.cta--icon` plus on the right (`aria-label="Read more about [name]"`, `aria-haspopup="dialog"`, `aria-controls` = the dialog id). No bio on the card. The whole card is the click target: the button's hit area is stretched over the card (`.lawyer .cta--icon::after`), so the button stays the one focusable control; hovering anywhere on the card fills the ring gold and eases the portrait up 4% (0.5s, clipped by the photo frame; pointer devices with motion allowed only), and the cursor is a pointer. Placeholder photos use `.photo--placeholder` until portraits arrive.
+
+## Bio dialog (`.bio`)
+- **Purpose:** a lawyer's full bio, opened from the plus on their card.
+- **Markup:** `dialog.bio#bio-n[aria-labelledby][tabindex=-1]` (outside `.page`) with `.bio__grip` (drag handle, `data-grip`), `.photo.photo--portrait.photo--placeholder.bio__photo`, `.bio__head` (`h2.bio__name` with gold full stop, two `.bio__meta`), `.bio__rule`, `p.bio__text`, `button.cta.cta--icon.bio__close[data-close]` (X, aria-label "Close") and `button.btn.btn--lg.btn--outline.bio__back[data-close]` ("Back").
+- **Layout:** backdrop #2A2B2E at 60%. Desktop 960px, 360px portrait column, gap and padding 48px, radius 24px, shadow `0 24px 64px rgba(35,31,32,.24)`, name 44/1.1, bio 18/1.6, close ring top right. Tablet 688px, 240px portrait, gap and padding 32px, name 32px, bio 16px. Mobile bottom sheet: top corners 24px, max height 85%, padding 12px 24px 32px, 40 x 4px #D1D3D4 handle, 96 x 120px portrait (12px radius) beside the 28px name, full-width "Back" pill instead of the close ring; shadow `0 -8px 32px rgba(35,31,32,.16)`.
+- **Behaviour:** `scripts/bio-dialog.js` uses `showModal()`; focus moves to the dialog and Tab stays inside; Esc, a backdrop click, the close ring or Back closes it and focus returns to the plus; `html.is-locked` stops the page scrolling. Desktop and tablet fade and scale in from 96% over 0.2s; mobile slides up over 0.3s ease-out and can be dragged down by the handle to close (more than a quarter of its height). Reduced motion: appears instantly.
+
+## Contact block with map (`.contact`)
+Locate and contact link blocks plus a 4:3 map with a gold circle behind its bottom-right corner (`.map-wrap__circle`; 140/200/280px).
+- **Map:** a static image, `figure.map > img.map__image` (`assets/images/map-snazzy.png`, 1000 x 1000, a Google Maps export styled in Snazzy Maps) with an olive `svg.map__pin` (`#i-pin` in the sprite; brand olive, gold ring, white dot). The card is square (1:1) so the whole export shows, including Google's logo and copyright bar, and the pin tip sits on the card centre (`top: 50%`, which is the image centre). No Google Maps script and no API key on the page.
+
+## Footer (`.footer`)
+Stacked on mobile and tablet; two-column grid with a vertical rule on desktop. Contains logo, tagline (desktop 48/1.1, max 560px), footer nav, contact details, credentials, legal copy, Privacy policy and Terms of use (links to `privacy-policy.html` and `terms-of-use.html`; the current page's link has `aria-current="page"` and is underlined), and "Back to top".
+- **v2, reveal (1200px and up):** the footer is `position: sticky; bottom: 0; z-index: 0`, pinned to the bottom of the viewport under the page. `main.page__main` (`position: relative; z-index: 1`, solid white ground) is the curtain: its last section (Contact) covers the footer until the end of the page scrolls up, uncovering it over one footer-height of scrolling. The footer is the full viewport height (`100svh`) on desktop; the flexible row between the logo and tagline row and the content below takes the extra height (minimum 200px). No GSAP pinning.
+- **Fallbacks:** below 1200px the footer is a normal footer (it is about 1,040px tall, more than a tablet or phone viewport). `scripts/footer-reveal.js` adds `.is-tall` when the footer is taller than the viewport (short desktop windows), so its top stays reachable. Under reduced motion it is a normal footer. No ancestor of the footer may use `overflow: hidden`, `clip` or `contain`.
+- **Polish:** the footer content eases from -10% to 0 while it is uncovered (GSAP ScrollTrigger, scrubbed, values in the script's `CONFIG`). Not applied with reduced motion or `?static=1`.
+- **A11y:** a footer link that takes keyboard focus while the footer is still covered scrolls the page to the end so the link is visible. "Back to top" and the logo (`#top`) scroll to the top through Lenis, or natively without it.
+
+## Legal pages (`privacy-policy.html`, `terms-of-use.html`)
+Both pages come from one template and use the floating nav (`.site-header.is-on-light` from the start, links to `index.html#...`), the footer unchanged (links to `index.html#...`, desktop reveal, `aria-current="page"` on the current legal link) and the page transition. No hero, carousel, scroll reveals or pinning. Text is `reference/content/legal.md`, verbatim.
+
+### Legal page header (`.page-head`)
+- **Markup:** `section.page-head#top[data-nav=light] > .container` with `h1.heading.page-head__title[tabindex=-1]` (page name and a gold full stop) and `p.page-head__meta` ("Last updated: [date]").
+- **Style:** `--gold-100` ground; padding clears the 112px nav offset (`--nav-offset` plus half the section padding above, half below); h1 at the section-heading sizes (36 / 48 / 64); meta 14/1.5, 0.01em. The h1 takes focus after a page transition, so its outline is off.
+
+### Contents list (`.toc`)
+- **Markup:** `nav.toc[aria-label="On this page"]` with `p.eyebrow.toc__title` and `ul.toc__list > li > a.toc__link` ("1. Who we are"). `scripts/legal-toc.js` sets `aria-current="location"` on the link of the section in view.
+- **Layout:** hidden below 1200px (`display: none`, so it is also out of the accessibility tree there; `legal-toc.js` then has nothing visible to mark). From 1200px: a sticky left column (4 of 12 columns, `top: var(--nav-offset)`, scrolls inside itself if the window is short). Current and hover: dark text, 1px underline. Focus ring is inset (2px #414245).
+
+### Legal prose (`.legal`)
+- **Markup:** `section.section.legal[data-nav=light] > .container.legal__grid` with the contents list and `.legal__body`: one `.legal__section` per numbered section (`h2.legal__title#slug`, then `p`, `ul.legal__list`), then `.legal__end`.
+- **Style:** text column 688px (tablet) or 7 of 12 columns (desktop, about 687px, about 75 characters at 18px). Body 16 / 16 / 18 on 1.6, `--grey-800` on white; section titles Freight Display 24 / 24 / 28 (1.25); 40px between sections with a 1px `--rule` above each; paragraphs 16px apart; bullets `--olive`, 24px indent, 8px apart; lead-in bold is weight 500; links `--grey-900` with a 1px underline (2px on hover); address and contact lines are one paragraph with line breaks; email and phone are `mailto:` and `tel:` links.
+- **End of page (`.legal__end`):** a `.cta` to the other legal page and "Back to top" (`#top`), stacked on mobile, in a row from 768px.
+- **Print:** bar, contents, end links, footer and page cover are hidden; `--grey-900` on white; sections and titles keep together.
+
+### Placeholder marker (`.placeholder`)
+`span.placeholder` around every [bracketed] item the firm still has to confirm: `--olive` text (5.9:1 on white, 5.3:1 on gold-100) with a 1px dotted `--gold-700` underline. The brackets stay in the text.
+
+## Gold circle accents (`.circle`)
+Absolute solid gold circle (#C1BD98, no transparency anywhere on the site) sized by `--circle` (160px, 280px from 1200). Modifiers: `--br`, `--bl`, `--top`, `--step-1/2/3`. Parent needs `position: relative; overflow: hidden`. The hero has its own fixed circle (`.hero__circle--b`).

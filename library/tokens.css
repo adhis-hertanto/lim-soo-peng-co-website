@@ -1,0 +1,148 @@
+/* Lim Soo Peng & Co LLC: design tokens. Custom properties only.
+   Every value appears in the final design frames (reference/design). Nothing invented.
+   Breakpoints: mobile < 768, tablet 768 to 1199, desktop 1200+.
+   Sizes are in rem: the design px divided by 16 (24px = 1.5rem). Hairlines, rules and the focus ring stay in px. */
+
+@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Cera Pro";src:url("../brand/fonts/CeraPro-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Freight Display";src:url("../brand/fonts/FreightDisplay-Book.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+  /* Brand */
+  --gold:#C1BD98;            /* brand gold: full stops, circles, hover fills */
+  --olive:#5E693D;           /* olive-700: pill button, eyebrows, active icon */
+  --olive-deep:#49522F;      /* olive-800: What we do ground */
+  --olive-line:#94A36A;      /* olive-500: inactive progress rule */
+  --olive-eyebrow:#CEDBAF;   /* olive-300: eyebrow on olive ground */
+  --olive-50:#F9FBF3;        /* Contact ground */
+
+  /* Gold ramp steps used */
+  --gold-50:#FBFAF4;         /* About and Matters ground */
+  --gold-100:#F5F4E9;        /* hero, footer, alternate accordion rows */
+  --gold-300:#D9D6B8;        /* footer border, image placeholder */
+  --gold-700:#686447;        /* ring stroke on About motif */
+
+  /* Greys */
+  --grey-200:#E6E7E8;
+  --grey-300:#D1D3D4;
+  --grey-600:#77787B;        /* map labels only */
+  --grey-700:#58595B;        /* map marker labels */
+  --grey-800:#414245;        /* body text, focus ring, link colour */
+  --grey-900:#2A2B2E;        /* headings, hover label on gold */
+  --brand-black:#231F20;     /* map pin shadow, nav shadow */
+  --white:#FFFFFF;
+
+  /* Roles */
+  --text:var(--grey-800);
+  --heading:var(--grey-900);
+  --on-dark:var(--white);
+  --focus:var(--grey-800);
+  --line:var(--grey-300);
+  --on-dark-72:rgba(255,255,255,.72);  /* inactive labels, ghost button border on photo */
+  --on-dark-32:rgba(255,255,255,.32);  /* progress track on photo */
+  --texture-overlay:.85;               /* What We Do photo: dark grey overlay strength (#2A2B2E) */
+  --blur-texture:3px;                  /* What We Do photo: blur, so it reads as texture */
+  --glass:rgba(255,255,255,.14);       /* nav pill over the hero */
+  --glass-olive:rgba(94,105,61,.14);   /* nav pill over light sections (olive at the same strength) */
+  --blur-glass:.75rem;                   /* backdrop blur behind the nav pill */
+  --overlay:rgba(42,43,46,.5);         /* hero photo overlay (slides 1, 2, 4) */
+  --overlay-strong:rgba(42,43,46,.65); /* hero photo overlay (slide 3) */
+  --backdrop:rgba(42,43,46,.6);        /* bio dialog backdrop */
+  --rule:var(--grey-200);              /* divider in the bio dialog */
+
+  /* Type families */
+  --font-sans:"Cera Pro",Jost,system-ui,sans-serif;
+  --font-serif:"Freight Display",Newsreader,Georgia,serif;
+
+  /* Shape */
+  --radius-card:1rem;
+  --radius-pill:999px;
+  --radius-menu:1.5rem;         /* open mobile menu card (was 36px; reduced so the logo clears the corner) */
+  --radius-dialog:1.5rem;
+  --radius-thumb:.75rem;        /* mobile bio portrait */
+  --shadow-nav:0 .25rem 1rem rgba(35,31,32,.08),0 1px 2px rgba(35,31,32,.06);
+  --shadow-card:0 1.5rem 3rem rgba(35,31,32,.12),0 2px .375rem rgba(35,31,32,.06);
+  --shadow-dialog:0 1.5rem 4rem rgba(35,31,32,.24);
+  --shadow-sheet:0 -.5rem 2rem rgba(35,31,32,.16);
+
+  /* Circles (all solid brand gold) */
+  --circle:10rem;             /* mobile and tablet */
+  --motif:4rem;               /* About card motif (mobile, tablet) */
+  --ring:2.75rem;                /* CTA ring */
+  --ring-toggle:2.75rem;         /* accordion toggle (48px from 768) */
+
+  /* Wide screens: 1rem is 16px up to the 1440px design width, then grows with the window to 21.33px at 1920px,
+     so the whole page (type, spacing, cards, images, margins) scales in proportion. Above 1920px it stops and the
+     margins grow. Never smaller than the reader's own browser font size. */
+  --root-size:clamp(100%,100vw * 16 / 1440,100% * 1920 / 1440);
+
+  /* Layout */
+  --content-max:75rem;
+  --container:83rem;         /* content-max + 2 * gutter */
+  --gutter:1.5rem;
+  --gap:1rem;                 /* grid gap */
+  --section-y:4rem;
+  --nav-offset:7rem;         /* scroll-margin below the floating bar */
+  --duration:.15s;
+  --fade:.6s;
+  --dialog-in:.2s;            /* bio popup fade and scale */
+  --sheet-in:.3s;             /* bio bottom sheet slide */
+  --loader-curve:3.1875rem;        /* page loader: curved bottom edge height */
+  --fs-loader-count:3.5rem;     /* page loader: percentage counter */
+  --nav-slide:.3s;            /* nav hides on scroll down, returns on scroll up */
+
+  /* Type scale (Freight Display headings, Cera Pro body) */
+  /* Mobile hero title scales with the screen so "Practical solutions." (7.115 times the font size wide) always stays on one line,
+     keeping slide 1 on three lines: (screen width - both gutters) / 7.2, between 34px and 56px. 44px was the fixed value. */
+  --fs-hero:clamp(2.125rem,calc((100vw - 2 * var(--gutter)) / 7.2),3.5rem);   --lh-hero:1.1;
+  --fs-h2:2.25rem;     --lh-h2:1.15;
+  --fs-h3:1.5rem;     --lh-h3:1.25;     /* card, accordion, step (step overridden) */
+  --fs-step:2.25rem;   --lh-step:1.15;
+  --fs-tagline:2rem;--lh-tagline:1.15;
+  --fs-statement:2.25rem;--lh-statement:1.15;  /* About reveal statement */
+  --fs-body:1rem;
+  --fs-lead-row:1.125rem;                  /* accordion sub-item */
+  --fs-contact:1.375rem;
+  --fs-nav:.875rem;
+  --fs-eyebrow:.8125rem;
+  --fs-name:1.25rem;
+  --fs-small:.875rem;
+}
+
+@media (min-width:768px){
+  :root{
+    --circle:10rem;
+    --gutter:2.5rem;
+    --gap:1.5rem;
+    --section-y:6rem;
+    --ring-toggle:3rem;
+    --fs-loader-count:4.5rem;
+    --fs-hero:4rem; --lh-hero:1.05;
+    --fs-h2:3rem;   --lh-h2:1.1;
+    --fs-statement:3rem; --lh-statement:1.1;
+    --fs-step:3rem; --lh-step:1.1;
+    --fs-tagline:2.5rem;
+    --fs-contact:1.5rem;
+  }
+}
+
+@media (min-width:1200px){
+  :root{
+    --circle:17.5rem;
+    --gutter:4rem;
+    --gap:2rem;
+    --section-y:8rem;
+    --fs-loader-count:6rem;
+    --fs-hero:5.5rem; --lh-hero:1.02;
+    --fs-h2:4rem;   --lh-h2:1.1;
+    --fs-statement:4rem; --lh-statement:1.1;
+    --fs-h3:1.75rem;
+    --fs-step:4rem; --lh-step:1.1;
+    --fs-tagline:3rem; --lh-tagline:1.1;
+    --motif:6rem;
+    --fs-body:1.125rem;
+    --fs-contact:1.75rem;
+    --fs-name:1.5rem;
+  }
+}

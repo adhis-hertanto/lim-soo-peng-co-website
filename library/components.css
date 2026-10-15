@@ -1,0 +1,589 @@
+/* Lim Soo Peng & Co LLC: component styles.
+   Mobile first. Tablet from 768px, desktop from 1200px, scaling in proportion from 1440px to 1920px (tokens.css). No inline styles in the page.
+   All values come from tokens.css. Documented in COMPONENTS.md. */
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:var(--root-size)}
+html.lenis{scroll-behavior:auto}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--white);color:var(--text);font-family:var(--font-sans);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--text)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit}
+[id]{scroll-margin-top:var(--nav-offset)}
+.page{display:flex;flex-direction:column;min-height:100vh}
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+.section{padding-block:var(--section-y)}
+.gold-stop{color:var(--gold)}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- Eyebrow + heading block ---------- */
+.eyebrow{margin:0 0 .75rem;font:500 var(--fs-eyebrow)/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--olive)}
+.eyebrow--on-dark{color:var(--olive-eyebrow)}
+.eyebrow--plain{color:var(--text)}
+.heading{font:400 var(--fs-h2)/var(--lh-h2) var(--font-serif);color:var(--heading);text-wrap:balance}
+.heading--wide{max-width:50rem}
+.body-text{font-size:var(--fs-body);line-height:1.6;color:var(--text)}
+.body-text + .body-text{margin-top:1rem}
+
+/* ---------- Gold circle accent ---------- */
+.circle{position:absolute;z-index:1;width:var(--circle);height:var(--circle);border-radius:50%;background:var(--gold);pointer-events:none}
+.circle--br{right:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
+.circle--bl{left:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
+.circle--top{top:calc(var(--circle) * -.45);left:50%;translate:-50% 0}
+
+/* ---------- Motif fills (About card SVGs) ---------- */
+.m-gold{fill:var(--gold)}
+.m-grey{fill:var(--grey-300)}
+.m-deep{fill:var(--gold-700)}
+.m-ring{fill:none;stroke:var(--gold-700);stroke-width:1;vector-effect:non-scaling-stroke}
+
+/* ---------- Pill button ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0 1.5rem;border-radius:var(--radius-pill);background:var(--olive);color:var(--on-dark);font:500 var(--fs-nav)/1.3 var(--font-sans);letter-spacing:.01em;text-decoration:none;white-space:nowrap;transition:background-color var(--duration) ease,color var(--duration) ease}
+.btn:hover{background:var(--gold);color:var(--grey-900)}
+.btn:visited{color:var(--on-dark)}
+.btn:visited:hover{color:var(--grey-900)}
+/* v2: large size and outline variants */
+.btn--lg{min-height:3.25rem;padding:0 1.75rem;font-size:1rem;letter-spacing:0}
+.btn--ghost,.btn--ghost:visited{border:1px solid var(--on-dark-72);background:transparent;color:var(--on-dark)}
+.btn--ghost:hover,.btn--ghost:visited:hover{border-color:var(--white);background:var(--white);color:var(--grey-900)}
+.btn--outline{appearance:none;margin:0;border:1px solid var(--grey-800);background:transparent;color:var(--grey-800);cursor:pointer}
+.btn--outline:hover{border-color:var(--gold);background:var(--gold);color:var(--grey-900)}
+
+/* ---------- Ring CTA link ---------- */
+.cta{display:inline-flex;align-items:center;gap:.75rem;min-height:2.75rem;color:var(--text);font:500 1rem/1.3 var(--font-sans);text-decoration:none}
+.cta__ring{display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--ring);height:var(--ring);border:1px solid var(--grey-800);border-radius:50%;transition:background-color var(--duration) ease,border-color var(--duration) ease}
+.cta__ring svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:square}
+.cta:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
+.cta:hover .cta__label{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+/* v2: icon-only ring button (lawyer "read more", dialog close) and ring-less icon link (hero scroll) */
+.cta--icon{appearance:none;flex:none;margin:0;padding:0;border:0;background:none;cursor:pointer}
+.cta--bare{justify-content:center;width:2.75rem;height:2.75rem;color:inherit}
+.cta--bare svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:square}
+
+/* ---------- Text link ---------- */
+.tlink{color:var(--heading);text-decoration:none}
+.tlink:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+
+/* ---------- Page loader ---------- */
+/* Hidden unless the head script adds html.loading (so no JS, or a failure, never blocks the page). scripts/page-loader.js
+   plays it: counter and progress line, three words in stages, then the olive panel lifts away, curved edge first. */
+html.loading,html.entering,html.leaving{overflow:hidden;scrollbar-gutter:stable}
+.loader{display:none}
+.loading .loader,.entering .loader,.leaving .loader{display:block;position:fixed;inset:0;z-index:100}
+/* v2, page transition (scripts/page-transition.js): the same olive panel and curve with no counter, line or words.
+   html.entering: arriving from another page, the panel covers the screen and lifts away. html.leaving: the panel rises from
+   the bottom to cover the page before the next one loads, so the curve moves to its top (leading) edge (.loader--rise). */
+.entering .loader__inner,.leaving .loader__inner{display:none}
+.loader--rise .loader__curve{top:auto;bottom:calc(100% - 1px);transform:scaleY(-1)}
+.loader__panel{position:absolute;inset:0;background:var(--olive);color:var(--on-dark)}
+.loader__curve{position:absolute;left:0;top:100%;display:block;width:100%;height:var(--loader-curve)}
+.loader__curve path{fill:var(--olive)}
+.loader__inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--section-y) var(--gutter);overflow:hidden}
+.loader__block{width:100%;max-width:var(--content-max);margin-inline:auto;opacity:0}
+.loader__progress{margin-bottom:2rem}
+.loader__count{margin:0 0 1.5rem;font:400 var(--fs-loader-count)/1.1 var(--font-serif)}
+.loader__track{position:relative;height:2px;overflow:hidden;background:var(--on-dark-32)}
+.loader__fill{position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:0 50%}
+.loader__word{margin:0;font:400 var(--fs-hero)/var(--lh-hero) var(--font-serif);color:var(--on-dark);opacity:0}
+@media (min-width:768px){.loader__progress{margin-bottom:2.5rem}}
+@media (min-width:1200px){.loader__progress{margin-bottom:3rem}}
+
+/* ---------- Floating nav: fixed at the top, transparent, white text ---------- */
+/* One state only. The mobile menu opens as a white card (.nav.is-open); nothing else changes on scroll. */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:10;transition:transform var(--nav-slide) ease}
+/* Hidden while scrolling down, back on scroll up (scripts/nav.js). scripts/nav.js keeps it visible only while a link has
+   keyboard focus. A link that was only clicked keeps focus but must not hold the nav open, so this is not :focus-within. */
+.site-header.is-hidden{transform:translateY(-100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1rem var(--gutter) 0;color:var(--on-dark);--focus:var(--on-dark)}
+.nav__logo{display:inline-flex;flex:none;min-width:2.75rem;line-height:0}
+.nav__logo img{height:3.25rem;width:auto}
+.nav__logo-dark{display:none}
+.nav__pill{display:flex;align-items:center;gap:.25rem;padding:.25rem;background:var(--glass);-webkit-backdrop-filter:blur(var(--blur-glass));backdrop-filter:blur(var(--blur-glass));border-radius:var(--radius-pill)}
+.nav__cta{flex:none}
+.nav__toggle{display:none;align-items:center;justify-content:center;min-width:2.75rem;min-height:2.75rem;margin:0;padding:0;border:0;background:none;color:inherit;cursor:pointer}
+.nav__toggle svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:square}
+.nav__toggle .i-close{display:none}
+.js .nav__toggle{display:inline-flex}
+.nav__links{display:none}
+.nav__link{display:flex;align-items:center;min-height:3.5rem;border-top:1px solid var(--line);color:var(--text);font:500 1.25rem/1.3 var(--font-sans);text-decoration:none}
+.nav__link:hover,.nav__link[aria-current]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+.nav__cta-item{display:none;padding:1rem 0 .5rem;border-top:1px solid var(--line)}
+.nav__cta-item .btn{display:flex;width:100%;min-height:3rem;font-size:1rem}
+/* Over a light section (data-nav="light" in index.html, set by scripts/nav.js): dark text and logo, otherwise unchanged */
+.site-header.is-on-light .nav{color:var(--text);--focus:var(--grey-800)}
+.site-header.is-on-light .nav__pill{background:var(--glass-olive)}
+.site-header.is-on-light .nav__logo-light{display:none}
+.site-header.is-on-light .nav__logo-dark{display:block}
+.site-header.is-on-light .nav__link{color:var(--text)}
+
+/* Open mobile menu: white card with the dark logo, links stacked */
+.nav.is-open{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"logo . toggle" "links links links";align-items:center;column-gap:1rem;padding:.75rem .6875rem .75rem 1.5rem;background:var(--white);color:var(--text);border-radius:var(--radius-menu);box-shadow:var(--shadow-nav);--focus:var(--grey-800)}
+.nav.is-open .nav__logo{grid-area:logo}
+.nav.is-open .nav__logo-light{display:none}
+.nav.is-open .nav__logo-dark{display:block}
+.nav.is-open .nav__logo img{height:3rem}
+.nav.is-open .nav__pill{display:contents}
+.nav.is-open .nav__cta{display:none}
+.nav.is-open .nav__toggle{grid-area:toggle;align-self:start;margin:0 0 0 -1rem;color:var(--text)}
+.nav.is-open .i-open{display:none}
+.nav.is-open .i-close{display:block}
+.nav.is-open .nav__links{display:block;grid-area:links;margin:.5rem .8125rem 0 0}
+.nav.is-open .nav__cta-item{display:block}
+.nav.is-open .nav__link{color:var(--text)}
+html:not(.js) .nav__links{display:none}
+
+@media (min-width:768px){
+  .nav{gap:2rem;margin-top:1.5rem;margin-inline:var(--gutter)}
+  .nav__logo img{height:3.5rem}
+  .nav__pill{padding:.375rem;gap:.25rem}
+  .nav__toggle,.js .nav__toggle{display:none}
+  .nav__links,.js .nav__links{display:block;order:-1}
+  .nav__links ul{display:flex}
+  .nav__link{min-width:2.75rem;min-height:2.75rem;padding:0 .75rem;border:0;color:var(--on-dark);font-size:var(--fs-nav);letter-spacing:.01em;white-space:nowrap}
+  .nav__cta-item{display:none}
+}
+@media (min-width:1200px){
+  .nav{width:var(--content-max);margin-inline:auto}
+  .nav__logo img{height:4rem}
+  .nav__link{padding:0 1.25rem}
+}
+@media (max-width:767px){
+  .nav__cta-item .btn{width:100%}
+}
+
+/* ---------- Hero carousel ---------- */
+/* Full-bleed photo, flat overlay, two fixed gold circles, white text. Mobile first. */
+/* Full viewport height (svh where supported), with a floor so short windows keep the text clear of the progress */
+/* Load reveal: hero elements start hidden (html.intro, set in the head) and scripts/hero-intro.js animates them in. */
+.intro .hero__slide.is-active .hero__title,.intro .hero__slide.is-active .hero__text,.intro .hero__progress .progress,.intro .hero__scroll,.intro .hero__circle--b,.intro .nav{opacity:0}
+/* Pinned: stays in place while the About section (the curtain) slides up over it. See scripts/hero-curtain.js. */
+.hero{--focus:var(--on-dark);position:sticky;top:0;overflow:hidden;height:100vh;height:100svh;min-height:38.75rem;background:var(--grey-900);color:var(--on-dark)}
+.hero.is-covered{visibility:hidden}
+.hero__media{position:absolute;inset:0;z-index:0}
+.hero__photo{position:absolute;inset:0;width:100%;max-width:none;height:100%;object-fit:cover;object-position:var(--pos);opacity:0;transition:opacity var(--fade) ease}
+.hero__photo.is-active{opacity:1}
+.hero__photo[data-slide="1"]{--pos:55% 0}
+.hero__photo[data-slide="2"]{--pos:78% 0}
+.hero__photo[data-slide="3"]{--pos:81% 0}
+.hero__photo[data-slide="4"]{--pos:82% 0}
+.hero__overlay{position:absolute;inset:0;z-index:1;background:var(--overlay);transition:background-color var(--fade) ease}
+.hero[data-current="3"] .hero__overlay{background:var(--overlay-strong)}
+.hero__deco{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hero__circle{position:absolute;z-index:2;border-radius:50%;background:var(--gold);pointer-events:none}
+.hero__circle--b{top:6.25rem;right:-2.5rem;width:5rem;height:5rem}
+.hero__inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%}
+.hero__body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:7.5rem var(--gutter) 2rem}
+.hero__slides{display:grid}
+.hero__slide{grid-area:1 / 1;align-self:end;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
+.hero__slide.is-active{opacity:1;visibility:visible;transition-delay:0s}
+.hero__title{font:400 var(--fs-hero)/var(--lh-hero) var(--font-serif);color:var(--on-dark);text-wrap:balance}
+.hero__text{margin-top:1rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark);text-wrap:pretty}
+.hero__progress{padding:1.5rem var(--gutter) 1rem}
+.hero__scroll{display:flex;margin:.5rem auto 0}
+
+/* Progress segments */
+.progress{display:flex;gap:1rem}
+.progress__seg{appearance:none;flex:1;display:flex;flex-direction:column;justify-content:center;gap:.75rem;min-width:0;min-height:2.75rem;margin:0;padding:0;border:0;background:none;text-align:left;cursor:pointer}
+.progress__track{position:relative;display:block;height:2px}
+.progress__track::before{content:"";position:absolute;left:0;right:0;top:.5px;height:1px;background:var(--on-dark-32);transition:background-color var(--duration) ease}
+.progress__fill{position:absolute;left:0;top:0;height:2px;width:var(--fill,0%);background:var(--olive-line)}
+.progress__label{display:none;font:400 .875rem/1.3 var(--font-sans);color:var(--on-dark-72);white-space:nowrap;transition:color var(--duration) ease}
+/* Inactive tab: hover (and keyboard focus) highlights its label and track white. The active tab shows progress in olive. */
+.progress__seg:hover:not([aria-current="true"]) .progress__label,.progress__seg:focus-visible:not([aria-current="true"]) .progress__label{color:var(--on-dark)}
+.progress__seg:hover:not([aria-current="true"]) .progress__track::before,.progress__seg:focus-visible:not([aria-current="true"]) .progress__track::before{background:var(--on-dark)}
+.progress__seg[aria-current="true"] .progress__label{color:var(--on-dark)}
+.progress__current{margin-top:.75rem;font:400 .875rem/1.3 var(--font-sans);color:var(--on-dark)}
+/* Mobile: the track sits at the bottom of the 44px tap target, so the current label sits close under it */
+@media (max-width:767px){.progress__seg{justify-content:flex-end}}
+
+@media (min-width:768px){
+  .hero__photo[data-slide="1"]{--pos:74% 0}
+  .hero__photo[data-slide="2"]{--pos:100% 0}
+  .hero__photo[data-slide="3"]{--pos:92% 0}
+  .hero__photo[data-slide="4"]{--pos:92% 0}
+  .hero__circle--b{top:26.25rem;right:-7.5rem;width:17.5rem;height:17.5rem}
+  .hero__body{padding:10rem var(--gutter) 2rem}
+  .hero__slides{max-width:30rem}
+  .hero__text{margin-top:1.5rem}
+  .hero__progress{padding:2rem var(--gutter) 1.5rem}
+  .hero__scroll{margin-top:1rem}
+  .progress__current{display:none}
+  .progress{gap:1.5rem}
+  .progress__seg{justify-content:flex-start}
+  .progress__label{display:block}
+}
+@media (min-width:1200px){
+  .hero__photo[data-slide="1"]{--pos:42% 0}
+  .hero__photo[data-slide="2"]{--pos:100% 0}
+  .hero__photo[data-slide="3"]{--pos:62% 0}
+  .hero__photo[data-slide="4"]{--pos:100% 0}
+  .hero__circle--b{top:23.75rem;right:-12.5rem;width:22.5rem;height:22.5rem}
+  /* Text block bottom left: it sits just above the progress control, as on tablet and mobile. */
+  .hero__body{width:100%;max-width:var(--container);margin-inline:auto;padding:10rem var(--gutter) 2rem}
+  .hero__slides{max-width:40rem}
+  .hero__text{width:31.25rem;max-width:100%}
+  .hero__progress{width:100%;max-width:var(--container);margin-inline:auto;padding:2rem var(--gutter) 1.5rem}
+  .progress__label{font-size:1rem}
+}
+
+/* ---------- About: reveal statement and cards ---------- */
+/* Stacked by default (no JS, reduced motion). scripts/about-reveal.js adds .is-pinned (tablet, desktop)
+   or .is-fading (mobile, or when the pinned stage would not fit the viewport). */
+.about{position:relative;z-index:2;background:var(--gold-50)}
+.statement{margin-inline:auto;font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--heading);text-align:center;text-wrap:pretty}
+.statement__word{opacity:var(--o,1)}
+.cards{display:grid;gap:1rem;margin-top:2.5rem}
+.card{display:flex;flex-direction:column;justify-content:space-between;gap:2rem;padding:1.5rem;background:var(--white);border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
+.card__motif{display:block;width:var(--motif);height:var(--motif);flex:none}
+.card__title{font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
+.card__text{margin-top:.5rem;font-size:var(--fs-body);line-height:1.6;color:var(--text);text-wrap:pretty}
+@media (min-width:768px){
+  .statement{max-width:43rem}
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:3rem}
+  .card{gap:1.5rem;min-height:22.5rem}
+}
+@media (min-width:1200px){
+  .statement{max-width:56.25rem}
+  .cards{gap:var(--gap)}
+  .card{gap:2rem;min-height:26.25rem;padding:2.5rem}
+}
+
+/* Pinned (tablet, desktop): the stage sticks for about two viewport heights. The statement sits at the top;
+   the cards rise from below the viewport and come to rest centred vertically (translate -50% of their own height). */
+.about.is-pinned{padding-block:0}
+.about.is-pinned .about__track{height:300vh}
+.about.is-pinned .about__stage{position:sticky;top:0;height:100vh;overflow:hidden}
+.about.is-pinned .about__stage > .container{position:relative;display:flex;flex-direction:column;justify-content:center;height:100%}
+.about.is-pinned .statement{margin:0 auto;opacity:var(--dim,1);filter:blur(var(--blur,0px))}
+.about.is-pinned .cards{position:absolute;top:50%;left:var(--gutter);right:var(--gutter);z-index:1;margin:0}
+.about.is-pinned .card{translate:0 calc(-50% + var(--rise,0px));will-change:translate}
+/* Mobile: the cards stack in one column, centred as a block, and rise as one column */
+@media (max-width:767px){
+  /* centred in the space below the 72px nav bar */
+  .about.is-pinned .cards{display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem;top:calc(50% + 2.25rem);translate:0 -50%}
+  .about.is-pinned .card{translate:0 var(--rise,0px);gap:.75rem;padding:1rem}
+  .about.is-pinned .card__motif{width:2.5rem;height:2.5rem}
+}
+@media (min-width:768px) and (max-width:1199px){
+}
+
+/* Fading (mobile): lines fade in as they enter the viewport, cards fade up once */
+.about.is-fading .card{opacity:0;translate:0 1.5rem;transition:opacity var(--fade) ease,translate var(--fade) ease}
+.about.is-fading .card.is-in{opacity:1;translate:0 0}
+
+/* ---------- What we do: steps (stacked by default, pinned with JS and motion allowed) ---------- */
+/* overflow-x: clip trims the full-width texture without making a scroll container, so the sticky stage still pins. */
+.practice{position:relative;isolation:isolate;overflow-x:clip;background:var(--grey-900);color:var(--on-dark)}
+.steps__stage{display:grid;gap:3rem}
+.step{display:grid;gap:1.5rem}
+.step__photo{order:-1}
+.photo{position:relative;overflow:hidden;aspect-ratio:4 / 3;background:var(--grey-200);border-radius:var(--radius-card)}
+.photo picture{position:absolute;inset:0;display:block}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);filter:grayscale(1)}
+.photo--portrait{aspect-ratio:4 / 5}
+.photo--placeholder{background:var(--gold-300)}
+.photo--placeholder [role=img]{position:absolute;inset:0}
+.is-pos-a{--pos:0% 50%}
+.is-pos-b{--pos:50% 50%}
+@media (min-width:768px) and (max-width:1199px){.step[data-step="1"] .step__photo{--pos:23% 50%}}
+.step__text{display:flex;flex-direction:column;justify-content:flex-start;gap:2rem}
+.step__title{font:400 var(--fs-step)/var(--lh-step) var(--font-serif);color:var(--on-dark);text-wrap:balance}
+.step__body{max-width:35rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark)}
+.step__rule{display:none}
+.step__rule span{flex:1;width:1px;background:var(--on-dark-32)}
+.step__rule span.is-current{width:2px;background:var(--olive-line)}
+.circle--step-1{right:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
+.circle--step-2{top:calc(var(--circle) * -.45);left:50%;translate:-50% 0}
+.circle--step-3{left:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
+
+@media (min-width:768px){
+  .steps__stage{gap:0}
+  .step{grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);column-gap:.6875rem;padding-block:6rem}
+  .step + .step{border-top:1px solid var(--olive)}
+  .steps > .step:first-child{padding-top:0}
+  .steps > .step:last-child{padding-bottom:0}
+  .step__photo{order:0;aspect-ratio:1 / 1}
+  .step__rule{display:flex;flex-direction:column;align-items:center;gap:.5rem;width:2px;justify-self:center}
+  .step__text{justify-content:space-between}
+  .step__title{font-size:var(--fs-step)}
+}
+@media (min-width:1200px){
+  .step{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
+  .step__text{grid-column:1 / 6}
+  .step__rule{grid-column:6 / 7}
+  .step__photo{grid-column:7 / 13;aspect-ratio:4 / 3}
+}
+
+/* Pinned mode: scripts/scroll-steps.js adds .is-pinned (every breakpoint, motion allowed) */
+.steps.is-pinned{display:block;height:300vh}
+.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh}
+/* Texture behind each slide: the colonnade photo, blurred, under a dark grey overlay. It sits on the pinned stage,
+   so it covers exactly the viewport-high slide area, full width, and leaves with the section. */
+.steps.is-pinned .steps__stage::before{content:"";position:absolute;top:0;bottom:0;left:50%;z-index:-1;width:100vw;translate:-50% 0;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat;filter:blur(var(--blur-texture));pointer-events:none}
+.steps.is-pinned .step{grid-area:1 / 1;padding-block:0;border-top:0;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
+.steps.is-pinned .step.is-active{opacity:1;visibility:visible;transition-delay:0s}
+.steps.is-pinned .circle{transition:translate var(--fade) ease}
+/* Mobile pinned: the same three-part rule, laid out horizontally along the bottom of the viewport */
+@media (max-width:767px){
+  .steps.is-pinned .step__rule{display:flex;position:absolute;left:var(--gutter);right:var(--gutter);bottom:2rem;z-index:2;flex-direction:row;align-items:center;gap:.5rem;width:auto;height:2px}
+  .steps.is-pinned .step__rule span{flex:1;width:auto;height:1px}
+  .steps.is-pinned .step__rule span.is-current{height:2px}
+}
+/* The pinned slides fill the section edge to edge, so the texture meets the neighbouring sections exactly. */
+.steps.is-pinned{margin-block:calc(var(--section-y) * -1)}
+
+/* ---------- Accordion (Matters) ---------- */
+.matters{background:var(--gold-50)}
+.accordion{margin-top:2rem;border-radius:var(--radius-card);overflow:hidden}
+.accordion__item{background:var(--white)}
+.accordion__item:nth-child(even){background:var(--gold-100)}
+.accordion__heading{margin:0}
+.accordion__button{appearance:none;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:1rem;width:100%;margin:0;padding:1.5rem;border:0;background:none;text-align:left;cursor:pointer;color:var(--text)}
+.accordion__num{display:none;font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
+.accordion__title{font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
+.accordion__button:hover .accordion__title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+.accordion__button .cta__ring{--ring:var(--ring-toggle);color:var(--text)}
+.accordion__button .cta__ring svg{rotate:45deg;transition:rotate var(--duration) ease}
+.accordion__button:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
+.accordion__button[aria-expanded="true"] .cta__ring{background:var(--olive);border-color:var(--olive);color:var(--on-dark)}
+.accordion__button[aria-expanded="true"] .cta__ring svg{rotate:0deg}
+.accordion__button[aria-expanded="true"]:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
+.accordion__panel{padding:0 1.5rem 2rem}
+.accordion__panel[hidden]{display:none}
+.accordion__intro{font-size:var(--fs-body);line-height:1.6;color:var(--text)}
+.accordion__list{margin-top:1.5rem;border-bottom:1px solid var(--line)}
+.accordion__list li{display:grid;grid-template-columns:3rem minmax(0,1fr);column-gap:1rem;align-items:center;min-height:3.5rem;padding:.75rem 0;border-top:1px solid var(--line)}
+.accordion__list .n{font:400 1rem/1.3 var(--font-sans);color:var(--text)}
+.accordion__list .t{font:400 var(--fs-lead-row)/1.3 var(--font-sans);color:var(--text)}
+@media (min-width:768px){
+  .accordion__button{grid-template-columns:4rem minmax(0,1fr) auto;padding:1.5rem 2rem}
+  .accordion__num{display:block}
+  .accordion__panel{padding:0 2rem 3rem}
+  .accordion__intro{max-width:48ch;margin-left:5rem}
+  .accordion__list li{grid-template-columns:4rem minmax(0,1fr)}
+}
+@media (min-width:1200px){
+  .accordion{margin-top:3rem}
+  .accordion__button{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);padding:2rem 2.5rem}
+  .accordion__num{grid-column:1 / 5}
+  .accordion__title{grid-column:5 / 12}
+  .accordion__button .cta__ring{grid-column:12 / 13;justify-self:end}
+  .accordion__panel{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start;padding:0 2.5rem 3rem}
+  .accordion__panel[hidden]{display:none}
+  .accordion__intro{grid-column:1 / 5;max-width:32ch;margin-left:0}
+  .accordion__list{grid-column:5 / 13;margin-top:0}
+  .accordion__list li{grid-template-columns:repeat(8,minmax(0,1fr));column-gap:var(--gap)}
+  .accordion__list .n{grid-column:1 / 3}
+  .accordion__list .t{grid-column:3 / 9}
+}
+
+/* ---------- Lawyer card ---------- */
+.lawyers{display:grid;gap:3rem;margin-top:2rem}
+/* The whole card opens the bio: the plus button's hit area is stretched over the card (it stays the one focusable control). */
+.lawyer{position:relative;cursor:pointer}
+.lawyer .cta--icon::after{content:"";position:absolute;inset:0}
+.lawyer:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
+/* Hovering the card eases the portrait up by 4% (clipped by the photo frame). Pointer devices, motion allowed. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .lawyer .photo img{transition:scale .5s cubic-bezier(.22,1,.36,1)}
+  .lawyer:hover .photo img{scale:1.04}
+}
+.lawyer__row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-top:1rem}
+.lawyer__name{font:500 var(--fs-name)/1.3 var(--font-sans);color:var(--text)}
+.lawyer__meta{font:400 var(--fs-small)/1.5 var(--font-sans);letter-spacing:.01em;color:var(--text)}
+.lawyer__name + .lawyer__meta{margin-top:.25rem}
+@media (min-width:768px){
+  .lawyers{grid-template-columns:repeat(2,minmax(0,1fr));gap:3rem 1.5rem}
+}
+@media (min-width:1200px){
+  .lawyers{gap:var(--gap);margin-top:3rem}
+  .lawyer__row{margin-top:1.5rem}
+  .lawyer__name{color:var(--heading)}
+}
+
+/* ---------- Bio dialog (native <dialog>, scripts/bio-dialog.js) ---------- */
+/* Mobile: bottom sheet. Tablet and desktop: centred popup. */
+.bio{width:100%;max-width:100%;max-height:85%;margin:auto 0 0;padding:.75rem 1.5rem 2rem;border:0;border-radius:var(--radius-dialog) var(--radius-dialog) 0 0;background:var(--white);color:var(--text);box-shadow:var(--shadow-sheet);overflow-y:auto;overscroll-behavior:contain;transition:translate var(--sheet-in) ease-out}
+.bio::backdrop{background:var(--backdrop)}
+.bio:focus{outline:none}
+.bio[open]{display:grid;grid-template-columns:6rem minmax(0,1fr);grid-template-areas:"grip grip" "photo head" "rule rule" "body body" "back back";align-content:start;column-gap:1rem;animation:bio-sheet-in var(--sheet-in) ease-out}
+.bio.is-dragging{transition:none}
+.bio__grip{grid-area:grip;display:flex;justify-content:center;margin:-.75rem -1.5rem 0;padding:.75rem 0 1.25rem;touch-action:none;cursor:grab}
+.bio__grip::before{content:"";width:2.5rem;height:.25rem;border-radius:2px;background:var(--grey-300)}
+.bio__photo{grid-area:photo;align-self:start;border-radius:var(--radius-thumb)}
+.bio__head{grid-area:head;padding-top:.25rem}
+.bio__name{font:400 1.75rem/1.15 var(--font-serif);color:var(--heading)}
+.bio__meta{font:400 var(--fs-small)/1.5 var(--font-sans);letter-spacing:.01em;color:var(--text)}
+.bio__name + .bio__meta{margin-top:.5rem}
+.bio__rule{grid-area:rule;height:1px;margin:1.5rem 0;background:var(--rule)}
+.bio__text{grid-area:body;font-size:var(--fs-body);line-height:1.6;color:var(--text);text-wrap:pretty}
+.bio__close{display:none}
+.bio__back{grid-area:back;width:100%;margin-top:2rem}
+@keyframes bio-sheet-in{from{translate:0 100%}}
+@keyframes bio-pop-in{from{opacity:0;scale:.96}}
+.is-locked,.is-locked body{overflow:hidden}
+@media (min-width:768px){
+  .bio{width:43rem;max-width:calc(100% - 2 * var(--gutter));max-height:calc(100% - 2 * var(--gutter));margin:auto;padding:2rem;border-radius:var(--radius-dialog);box-shadow:var(--shadow-dialog)}
+  .bio[open]{grid-template-columns:15rem minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"photo head" "photo rule" "photo body";column-gap:2rem;animation:bio-pop-in var(--dialog-in) ease-out}
+  .bio__grip,.bio__back{display:none}
+  .bio__photo{border-radius:var(--radius-card)}
+  .bio__head{padding:0 3.5rem 0 0}
+  .bio__name{font-size:2rem;line-height:1.1}
+  .bio__rule{margin-right:3.5rem}
+  .bio__text{padding-right:3.5rem}
+  .bio__close{display:inline-flex;position:absolute;top:2rem;right:2rem}
+}
+@media (min-width:1200px){
+  .bio{width:60rem;padding:3rem}
+  .bio[open]{grid-template-columns:22.5rem minmax(0,1fr);column-gap:3rem}
+  .bio__name{font-size:2.75rem}
+  .bio__name + .bio__meta{margin-top:.75rem}
+  .bio__close{top:3rem;right:3rem}
+}
+
+/* ---------- Contact block with map ---------- */
+.contact{background:var(--olive-50);overflow:hidden;--circle-map:8.75rem}
+.contact__grid{display:grid;gap:2rem;margin-top:2rem}
+.contact__blocks{display:grid;gap:3rem}
+.contact__block{padding-top:2rem;border-top:1px solid var(--line)}
+.contact__block ul{margin-top:1.5rem}
+.contact__link{display:block;min-height:2.75rem;padding:3px 0;font:400 var(--fs-contact)/1.35 var(--font-sans)}
+.contact__text{display:block;min-height:2.75rem;padding:3px 0;font:400 var(--fs-contact)/1.35 var(--font-sans);color:var(--heading)}
+.map-wrap{position:relative;isolation:isolate}
+.map-wrap__circle{position:absolute;z-index:0;right:-1.5rem;bottom:-2rem;width:var(--circle-map);height:var(--circle-map);border-radius:50%;background:var(--gold)}
+.map{position:relative;z-index:1;margin:0;overflow:hidden;aspect-ratio:1 / 1;background:var(--grey-200);border-radius:var(--radius-card)}
+/* Square, so the whole Google export shows with its logo and copyright bar, and the location (the image centre) is the card centre. */
+.map__image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.map__pin{position:absolute;left:50%;top:50%;width:2.5rem;height:auto;translate:-50% -100%;pointer-events:none}
+@media (max-width:767px){.map__pin{width:2rem}}
+@media (min-width:768px){
+  .contact{--circle-map:12.5rem}
+  .contact__grid{margin-top:3rem}
+  .map-wrap__circle{right:-2.5rem}
+}
+@media (min-width:1200px){
+  .contact{--circle-map:17.5rem;overflow-x:clip;overflow-y:visible}
+  .contact__grid{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start}
+  .contact__blocks{grid-column:1 / 7;grid-row:1}
+  .map-wrap{grid-column:7 / 13;grid-row:1}
+  .map-wrap__circle{right:-5rem;bottom:-5rem}
+}
+
+/* ---------- Footer ---------- */
+/* Footer reveal: from 1200px the footer is pinned to the bottom of the viewport underneath the page (sticky, z-index 0),
+   and everything above it (main, solid background, z-index 1) is the curtain. As the end of the page scrolls up, the footer
+   is uncovered. Where the footer is taller than the viewport (tablet, mobile, short windows) it is a normal footer.
+   scripts/footer-reveal.js adds .is-tall in that case, brings a focused footer link into view, and adds the parallax. */
+.page__main{position:relative;z-index:1;background:var(--white)}
+.footer{flex-grow:1;padding:2.5rem 1.5rem;background:var(--gold-100);border-top:1px solid var(--gold-300)}
+@media (min-width:1200px){
+  .footer{position:sticky;bottom:0;z-index:0}
+  .footer.is-tall{position:static}
+}
+@media (prefers-reduced-motion:reduce){.footer{position:static}}
+.footer__inner{display:grid;grid-template-columns:minmax(0,1fr) auto;max-width:var(--container);margin-inline:auto}
+.footer__inner > *{grid-column:1 / -1}
+.footer__logo{display:inline-flex;justify-self:start;min-width:2.75rem;line-height:0}
+.footer__logo img{height:3.5rem;width:auto}
+.footer__tagline{margin-top:4rem;max-width:20.4375rem;font:400 var(--fs-tagline)/var(--lh-tagline) var(--font-serif);color:var(--heading)}
+.footer__nav{margin-top:2.5rem}
+.footer__nav ul,.footer__legal-links{display:flex;flex-direction:column}
+.footer__link{display:inline-flex;align-items:center;min-height:1.5rem;color:var(--heading);font:400 1rem/1.4 var(--font-sans);text-decoration:none}
+.footer__link:hover,.footer__link[aria-current="page"]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+.footer__nav .footer__link{min-height:1.875rem}
+.footer__contact{display:flex;flex-direction:column;gap:1.75rem;margin-top:3rem;padding-bottom:3rem;border-bottom:1px solid var(--gold-300)}
+.footer__label{margin-bottom:.25rem;font:400 1rem/1.4 var(--font-sans);color:var(--text)}
+.footer__address{display:inline-flex;max-width:17.5rem;min-height:1.5rem;color:var(--heading);font:400 1rem/1.4 var(--font-sans)}
+@media (min-width:1200px){.footer__address{max-width:15rem}}
+.footer__credentials{margin-top:3rem;font:500 1rem/1.4 var(--font-sans);color:var(--olive)}
+.footer__copy{max-width:20.4375rem;margin-top:1rem;font:400 1rem/1.6 var(--font-sans);color:var(--text)}
+.footer__legal-links{grid-column:1;align-self:end;margin-top:2.875rem}
+.footer__top{grid-column:2;align-self:end;justify-self:end;margin-top:2.875rem}
+@media (min-width:768px){
+  .footer{padding:3.5rem var(--gutter) 3rem}
+  .footer__logo img{height:4rem}
+  .footer__tagline,.footer__copy{max-width:32.5rem}
+  .footer__legal-links{flex-direction:row;flex-wrap:wrap;gap:.875rem 2.25rem;align-self:center}
+  .footer__top{align-self:center}
+}
+@media (min-width:1200px){
+  .footer{padding:0}
+  /* Full viewport height (the 1px is the footer's top border). The flexible second row takes the extra height, so the space
+     between the logo and tagline row and the content below grows with the window, never less than 200px. */
+  .footer__inner{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto minmax(12.5rem,1fr) auto auto auto;min-height:calc(100vh - 1px);min-height:calc(100svh - 1px);padding:4rem var(--gutter);position:relative}
+  /* The divider runs the full footer height, outside the 64px top and bottom padding. */
+  .footer__inner::before{content:"";position:absolute;top:0;bottom:0;left:50%;border-left:1px solid var(--gold-300)}
+  .footer__inner > *{grid-column:auto}
+  .footer__logo{grid-column:1;grid-row:1;position:relative;align-self:stretch;justify-self:stretch;margin-top:0;min-width:2.75rem}
+  .footer__logo img{position:absolute;top:0;bottom:0;left:0;height:100%;width:auto}
+  .footer__tagline{grid-column:2;grid-row:1;margin:0;padding:0 0 0 2.5rem;max-width:none}
+  .footer__tagline-text{display:block;max-width:35rem}
+  .footer__nav{grid-column:1;grid-row:3 / 6;align-self:end;justify-self:end;margin:0;padding:0 2.5rem 0 0}
+  .footer__nav .footer__link{min-height:1.5rem}
+  .footer__contact{grid-column:2;grid-row:3 / 6;align-self:end;justify-self:start;margin:0;padding:0 0 0 2.5rem;border:0;gap:2.25rem}
+  .footer__credentials{grid-column:1;grid-row:3;margin:0;padding-right:2.5rem}
+  .footer__copy{grid-column:1;grid-row:4;max-width:18.75rem;margin-top:1rem}
+  .footer__legal-links{grid-column:1;grid-row:5;align-self:end;margin:3.5rem 0 0;padding-bottom:0}
+  .footer__top{grid-column:2;grid-row:5;align-self:end;justify-self:end;margin:0;padding-bottom:0}
+}
+
+/* ---------- Legal pages: header, contents list, prose (privacy-policy.html, terms-of-use.html) ---------- */
+/* Header: gold-100 ground, h1 at the section-heading size, "Last updated" line. Clears the floating bar. */
+.page-head{background:var(--gold-100);padding:calc(var(--nav-offset) + var(--section-y) / 2) 0 calc(var(--section-y) / 2)}
+.page-head__title:focus{outline:none}
+.page-head__meta{margin-top:1.5rem;font:400 var(--fs-small)/1.5 var(--font-sans);letter-spacing:.01em;color:var(--text)}
+/* Contents list: hidden below 1200px (the headings are enough on a phone or tablet); a sticky left column from 1200px. */
+.legal{background:var(--white)}
+.toc{display:none}
+.legal__grid{display:grid;gap:3rem}
+.toc__list{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.toc__link{display:flex;align-items:center;min-height:2.75rem;padding:.375rem 0;color:var(--text);font:400 1rem/1.4 var(--font-sans);text-decoration:none}
+.toc__link:hover,.toc__link[aria-current]{color:var(--heading);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+.toc__link:focus-visible{outline-offset:-2px}
+/* Prose: Cera Pro body, Freight Display section titles, a rule between sections. Text column about 70 characters wide. */
+.legal__body{max-width:43rem}
+.legal__section{padding-top:2.5rem;border-top:1px solid var(--rule)}
+.legal__section:first-child{padding-top:0;border-top:0}
+.legal__section + .legal__section{margin-top:2.5rem}
+.legal__title{margin-bottom:1rem;font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading);text-wrap:balance}
+.legal__section p,.legal__list{font-size:var(--fs-body);line-height:1.6;color:var(--text)}
+.legal__section p + p,.legal__section p + .legal__list,.legal__section .legal__list + p{margin-top:1rem}
+.legal__list{padding-left:1.5rem;list-style:disc}
+.legal__list li + li{margin-top:.5rem}
+.legal__list li::marker{color:var(--olive)}
+.legal__section a{color:var(--heading);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+.legal__section a:hover{text-decoration-thickness:2px}
+.legal__section strong{font-weight:500;color:var(--heading)}
+/* Placeholder marker: [bracketed] text the firm still has to confirm (olive on white 5.9:1, on gold-100 5.3:1) */
+.placeholder{color:var(--olive);text-decoration:underline dotted var(--gold-700);text-decoration-thickness:1px;text-underline-offset:.2em}
+.legal__end{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--rule)}
+@media (min-width:768px){
+  .legal__end{flex-direction:row;flex-wrap:wrap;justify-content:space-between;gap:1rem 2.5rem}
+}
+@media (min-width:1200px){
+  .legal__grid{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start}
+  .toc{display:block;grid-column:1 / span 4;position:sticky;top:var(--nav-offset);max-height:calc(100svh - var(--nav-offset) - var(--gap));overflow-y:auto}
+  .legal__body{grid-column:6 / span 7;max-width:none}
+}
+/* Print: contents, bar, footer and page cover are hidden; dark text on white. */
+@media print{
+  .site-header,.footer,.toc,.loader,.legal__end{display:none !important}
+  body{background:var(--white);color:var(--grey-900)}
+  .page-head{padding:0 0 1.5rem;background:none}
+  .legal.section{padding-block:0}
+  .legal__grid{display:block}
+  .legal__section{break-inside:avoid}
+  .legal__title{break-after:avoid}
+  .legal__section a,.legal__section strong,.legal__title{color:var(--grey-900)}
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+}
