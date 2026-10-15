@@ -328,7 +328,13 @@ html:not(.js) .nav__links{display:none}
 /* Texture behind each slide: the colonnade photo under a dark grey overlay, as the stage's own background, so it
    covers exactly the viewport-high slide area, full width, and leaves with the section. No filter: a blur on a
    sticky full-screen layer makes iPhone Safari repaint it on every scroll frame. */
-.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh;min-height:100svh;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat}
+.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh;min-height:100svh}
+/* The texture is a fixed layer clipped to the section (clip-path also clips fixed descendants), not the sticky stage's
+   own background: iPhone Safari can leave a sticky layer's background painted over the sections below while it
+   re-composites, whereas a clipped layer can never draw outside .steps. */
+.steps.is-pinned{clip-path:inset(0)}
+.steps.is-pinned::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat;pointer-events:none}
+.steps.is-pinned .steps__stage{z-index:1}
 .steps.is-pinned .step{grid-area:1 / 1;padding-block:0;border-top:0;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
 .steps.is-pinned .step.is-active{opacity:1;visibility:visible;transition-delay:0s}
 .steps.is-pinned .circle{transition:translate var(--fade) ease}
