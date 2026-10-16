@@ -297,8 +297,8 @@ html:not(.js) .nav__links{display:none}
 .is-pos-b{--pos:50% 50%}
 @media (min-width:768px) and (max-width:1199px){.step[data-step="1"] .step__photo{--pos:23% 50%}}
 .step__text{display:flex;flex-direction:column;justify-content:flex-start;gap:2rem}
-.step__title{font:400 var(--fs-step)/var(--lh-step) var(--font-serif);color:var(--on-dark);text-wrap:balance}
-.step__body{max-width:35rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark)}
+.step__title{font:700 var(--fs-step)/var(--lh-step) var(--font-serif);color:var(--on-dark);text-wrap:balance}
+.step__body{max-width:35rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark-72)}
 .step__rule{display:none}
 .step__rule span{flex:1;width:1px;background:var(--on-dark-32)}
 .step__rule span.is-current{width:2px;background:var(--olive-line)}

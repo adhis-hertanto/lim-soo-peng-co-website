@@ -8,7 +8,7 @@
 <script>(function(){var r=document.documentElement;r.classList.add("js");try{var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){history.scrollRestoration="manual";if(location.hash)history.replaceState(null,"",location.pathname+location.search);window.addEventListener("load",function(){window.scrollTo(0,0)})}}catch(e){}var t=0;try{t=sessionStorage.getItem("lsp-transition");sessionStorage.removeItem("lsp-transition")}catch(e){}var calm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;if(!calm&&location.search.indexOf("static=1")<0){var c=t?"entering":"loading";r.classList.add("intro",c);setTimeout(function(){r.classList.remove(c)},10000);setTimeout(function(){r.classList.remove("intro")},12000)}})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400&family=Montserrat:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;700&family=Montserrat:wght@400;500;700&display=swap">
 <link rel="preload" as="image" href="assets/images/hero-boardroom.jpg" fetchpriority="high">
 <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="library/tokens.css">
@@ -124,7 +124,7 @@
   <div class="about__track" data-about>
     <div class="about__stage">
       <div class="container">
-        <p class="statement"><span class="statement__source"><span id="about" role="heading" aria-level="2">Your predicament, recognised and resolved.</span> Legal problems rarely arrive at a convenient time. As a small firm, you deal directly with the lawyer handling your matter, who will listen, tell you plainly where you stand and recommend what works for you<span class="gold-stop">.</span></span></p>
+        <p class="statement"><span class="statement__source"><span id="about" role="heading" aria-level="2">Your predicament, recognised and resolved.</span> Legal problems rarely arrive at a convenient time. As a boutique firm, you deal directly with the lawyer handling your matter, who will listen, tell you plainly where you stand and recommend what works for you<span class="gold-stop">.</span></span></p>
         <ul class="cards">
           <li class="card">
             <svg class="card__motif" viewBox="0 0 96 96" aria-hidden="true" focusable="false"><circle class="m-gold" cx="38" cy="48" r="26"/><circle class="m-ring" cx="58" cy="48" r="26"/></svg>
@@ -137,6 +137,7 @@
             <svg class="card__motif" viewBox="0 0 96 96" aria-hidden="true" focusable="false"><circle class="m-grey" cx="14" cy="48" r="8"/><circle class="m-gold" cx="39" cy="48" r="14"/><circle class="m-deep" cx="74" cy="48" r="20"/></svg>
             <div>
               <h3 class="card__title">Direction<span class="gold-stop">.</span></h3>
+              <p class="card__text">We discuss the options available to you and their realistic viability so you can make informed decisions.</p>
               <p class="card__text">We recommend a course of action and tell you why. The decision stays with you, and we make sure you have what you need to make&nbsp;it.</p>
             </div>
           </li>
@@ -144,6 +145,7 @@
             <svg class="card__motif" viewBox="0 0 96 96" aria-hidden="true" focusable="false"><path class="m-gold" d="M20 48 A28 28 0 0 0 76 48 Z"/><circle class="m-ring" cx="48" cy="48" r="28"/></svg>
             <div>
               <h3 class="card__title">Peace of mind<span class="gold-stop">.</span></h3>
+              <p class="card__text">We listen and help you navigate difficulties, because calm and focus often takes us further.</p>
               <p class="card__text">We handle your matter with care and keep you informed throughout. You will not be left wondering what happens&nbsp;next.</p>
             </div>
           </li>
@@ -163,8 +165,8 @@
         <section class="step is-active" aria-label="Step 1 of 3" data-step="1">
           <div class="step__text">
             <div>
-              <p class="eyebrow eyebrow--on-dark">Litigation</p>
-              <h3 class="step__title">Your case, heard in court<span class="gold-stop">.</span></h3>
+              <p class="eyebrow eyebrow--on-dark">01</p>
+              <h3 class="step__title">Litigation<span class="gold-stop">.</span></h3>
             </div>
             <p class="step__body">We represent clients before the Singapore courts, from the first letter of demand through to trial. We prepare every case as if it will be heard, and tell you plainly when settling would serve you better.</p>
           </div>
@@ -177,8 +179,8 @@
         <section class="step" aria-label="Step 2 of 3" data-step="2">
           <div class="step__text">
             <div>
-              <p class="eyebrow eyebrow--on-dark">Arbitration</p>
-              <h3 class="step__title">A private, binding decision<span class="gold-stop">.</span></h3>
+              <p class="eyebrow eyebrow--on-dark">02</p>
+              <h3 class="step__title">Arbitration<span class="gold-stop">.</span></h3>
             </div>
             <p class="step__body">We act in arbitration proceedings where parties need a private and binding outcome. We guide you through choosing the forum, preparing the case and presenting it at the hearing.</p>
           </div>
@@ -191,8 +193,8 @@
         <section class="step" aria-label="Step 3 of 3" data-step="3">
           <div class="step__text">
             <div>
-              <p class="eyebrow eyebrow--on-dark">Mediation</p>
-              <h3 class="step__title">Settle on terms that work<span class="gold-stop">.</span></h3>
+              <p class="eyebrow eyebrow--on-dark">03</p>
+              <h3 class="step__title">Mediation<span class="gold-stop">.</span></h3>
             </div>
             <p class="step__body">We help parties reach a negotiated settlement, saving time, cost and relationships where possible. We prepare you for each session, advise on what to accept and help put the agreement in writing.</p>
           </div>
@@ -264,7 +266,7 @@
 <section class="section" id="our-lawyers" aria-labelledby="lawyers-heading" data-nav="light">
   <div class="container">
     <header>
-            <h2 class="heading heading--wide" id="lawyers-heading">Two lawyers, personally involved in every matter we take on<span class="gold-stop">.</span></h2>
+            <h2 class="heading heading--wide" id="lawyers-heading">Because we are a lean team, we are personally involved in every matter we take on<span class="gold-stop">.</span></h2>
     </header>
     <div class="lawyers">
       <article class="lawyer">
