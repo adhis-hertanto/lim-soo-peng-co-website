@@ -104,8 +104,8 @@
   startSmoothScroll();
 
   var media = hero.querySelector(".hero__media");
-  // Text block, progress control and gold circle move together: all rise and fade with the same values.
-  var content = [hero.querySelector(".hero__body"), hero.querySelector(".hero__progress"), hero.querySelector(".hero__deco")].filter(Boolean);
+  // Text block, scroll chevron and gold circle move together: all rise and fade with the same values.
+  var content = [hero.querySelector(".hero__body"), hero.querySelector(".hero__foot"), hero.querySelector(".hero__deco")].filter(Boolean);
   var mm = gsap.matchMedia();
 
   function build(ctx) {

@@ -1,6 +1,7 @@
 /* About: the statement reveals line by line and the three cards rise over it.
    Every breakpoint with motion allowed, when the viewport is tall enough for the cards: the stage pins for
-   about two viewport heights. Lines go from 15% to 100% opacity, then after a short hold the cards rise from
+   about two viewport heights. Words go from 15% to 100% opacity, left to right within each line, lines one after
+   another. Then after a short hold the cards rise from
    below and come to rest centred in the viewport (on tablet and desktop in a row, on mobile in one column;
    middle, left, right, 120px of scroll apart) while the text blurs to 6px and drops to 40% opacity.
    Everything is scrubbed to scroll. A viewport too short for the cards: lines fade in as they enter and the
@@ -73,9 +74,13 @@
     });
   }
 
+  // Within a line, words light up left to right: progress o carries across the line one word at a time.
   function setLine(line, o) {
-    var v = String(LOW + (1 - LOW) * o);
-    line.forEach(function (w) { w.style.setProperty("--o", v); });
+    var n = line.length;
+    line.forEach(function (w, j) {
+      var v = String(LOW + (1 - LOW) * clamp(o * n - j));
+      w.style.setProperty("--o", v);
+    });
   }
 
   function update() {
@@ -155,12 +160,14 @@
     update();
   }
 
-  // While pinned, the heading sits in a sticky stage, so a jump to #about lands on the start of the sequence.
+  // While pinned, the heading sits in a sticky stage. A jump to #about lands where the statement is fully revealed,
+  // just before the cards start to rise (the end of the hold), not at the start of the sequence.
   document.addEventListener("click", function (e) {
     var link = e.target.closest && e.target.closest('a[href="#about"]');
     if (!link || mode !== "pin") return;
     e.preventDefault();
-    window.scrollTo(0, track.getBoundingClientRect().top + window.scrollY);
+    var pin = Math.max(1, track.offsetHeight - stage.offsetHeight);
+    window.scrollTo(0, track.getBoundingClientRect().top + window.scrollY + pin * 0.5);
     if (history.pushState) history.pushState(null, "", "#about");
   });
 

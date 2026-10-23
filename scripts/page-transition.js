@@ -5,7 +5,7 @@
    already covers the screen; it then lifts away exactly as the loader's does (the same CONFIG.slide, shared with
    page-loader.js through window.PageTransition). On index.html the full loader is skipped in that case; it still plays on a
    first visit, a refresh and a direct load. "pageloader:leave" and "pageloader:done" fire as they do after the loader, so the
-   hero reveal and carousel start as usual.
+   hero reveal starts as usual.
    Plain script (no modules), so it works from file://. Without GSAP, or under prefers-reduced-motion or ?static=1, links
    navigate normally and the head script never adds html.entering. Every value is in CONFIG. */
 (function () {
@@ -78,7 +78,7 @@
     lock(true);
     if (location.hash.length > 1) window.scrollTo(0, 0);
 
-    var photo = document.querySelector(".hero__photo.is-active");
+    var photo = document.querySelector(".hero__photo");
     Promise.race([
       Promise.all([
         document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve(),

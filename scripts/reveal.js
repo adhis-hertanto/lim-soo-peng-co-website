@@ -2,7 +2,7 @@
    viewport. Timing follows entrance practice: 0.7 to 1.1s, power3.out (fast start, soft landing), distances of
    16 to 48px, a 140ms stagger between siblings (up to five steps), no bounce, transform and opacity only, and no reverse.
    Skipped: the footer, the hero, About and What We Do, which have their own scroll choreography (see about-reveal.js,
-   scroll-steps.js and hero-carousel.js). The first What We Do slide (Litigation) reveals once, on first arrival. Skipped under prefers-reduced-motion, and if GSAP fails to load,
+   services-scroll.js and hero-intro.js). Skipped under prefers-reduced-motion, and if GSAP fails to load,
    so content is always visible. */
 (function () {
   if (!window.gsap || !window.ScrollTrigger) return;
@@ -57,24 +57,6 @@
       });
     });
   });
-
-  // What We Do, first slide (Litigation): plays once, the first time the section comes into view.
-  // The slide itself is shown and hidden by scroll-steps.js, so only its contents are animated here.
-  var litigation = document.querySelectorAll('.steps [data-step="1"] .eyebrow, .steps [data-step="1"] .step__title, .steps [data-step="1"] .step__body, .steps [data-step="1"] .step__photo');
-  if (litigation.length) {
-    gsap.from(Array.prototype.slice.call(litigation), {
-      autoAlpha: 0,
-      y: 32,
-      duration: 0.9,
-      ease: "power3.out",
-      stagger: 0.14,
-      scrollTrigger: {
-        trigger: ".steps",
-        start: "top 75%",
-        once: true
-      }
-    });
-  }
 
   // Layout can shift after fonts and images load: recalculate trigger positions.
   window.addEventListener("load", function () { ScrollTrigger.refresh(); });

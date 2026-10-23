@@ -11,6 +11,7 @@
   // Design px to screen px: 1rem grows from 16px at 1440 to 21.33px at 1920 (tokens.css).
   function rem(px) { return px * parseFloat(getComputedStyle(document.documentElement).fontSize) / 16; }
   var ticking = false;
+  var SCROLLED_AT = 40; // px: past this the header is .is-scrolled (logo drops to its default size)
   var header = document.querySelector(".site-header");
   var bar = document.getElementById("nav");
   // Sections marked data-nav="light" have a light ground, so the bar switches to dark text under them.
@@ -52,6 +53,7 @@
     ticking = false;
     tone();
     direction();
+    if (header) header.classList.toggle("is-scrolled", window.scrollY > SCROLLED_AT);
     var current = -1;
     sections.forEach(function (s, i) {
       if (s && s.getBoundingClientRect().top <= rem(120)) current = i; // clears the floating bar

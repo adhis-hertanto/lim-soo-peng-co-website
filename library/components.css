@@ -100,9 +100,9 @@ html.loading,html.entering,html.leaving{overflow:hidden;scrollbar-gutter:stable}
 /* Hidden while scrolling down, back on scroll up (scripts/nav.js). scripts/nav.js keeps it visible only while a link has
    keyboard focus. A link that was only clicked keeps focus but must not hold the nav open, so this is not :focus-within. */
 .site-header.is-hidden{transform:translateY(-100%)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1rem var(--gutter) 0;color:var(--on-dark);--focus:var(--on-dark)}
+.nav{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin:1rem var(--gutter) 0;color:var(--on-dark);--focus:var(--on-dark)}
 .nav__logo{display:inline-flex;flex:none;min-width:2.75rem;line-height:0}
-.nav__logo img{height:3.25rem;width:auto}
+.nav__logo img{height:4.875rem;width:auto;transition:height .3s ease}
 .nav__logo-dark{display:none}
 .nav__pill{display:flex;align-items:center;gap:.25rem;padding:.25rem;background:var(--glass);-webkit-backdrop-filter:blur(var(--blur-glass));backdrop-filter:blur(var(--blur-glass));border-radius:var(--radius-pill)}
 .nav__cta{flex:none}
@@ -140,7 +140,7 @@ html:not(.js) .nav__links{display:none}
 
 @media (min-width:768px){
   .nav{gap:2rem;margin-top:1.5rem;margin-inline:var(--gutter)}
-  .nav__logo img{height:3.5rem}
+  .nav__logo img{height:5.25rem}
   .nav__pill{padding:.375rem;gap:.25rem}
   .nav__toggle,.js .nav__toggle{display:none}
   .nav__links,.js .nav__links{display:block;order:-1}
@@ -150,18 +150,22 @@ html:not(.js) .nav__links{display:none}
 }
 @media (min-width:1200px){
   .nav{width:var(--content-max);margin-inline:auto}
-  .nav__logo img{height:4rem}
+  .nav__logo img{height:6rem}
   .nav__link{padding:0 1.25rem}
 }
 @media (max-width:767px){
   .nav__cta-item .btn{width:100%}
 }
+/* Logo is larger at the top of the page and drops to its default size once scrolled (scripts/nav.js sets .is-scrolled).
+   The open mobile menu keeps its own logo size. Only the height changes, and the bar is fixed, so the page does not move. */
+.site-header.is-scrolled .nav:not(.is-open) .nav__logo img{height:3.25rem}
+@media (min-width:768px){.site-header.is-scrolled .nav:not(.is-open) .nav__logo img{height:3.5rem}}
+@media (min-width:1200px){.site-header.is-scrolled .nav:not(.is-open) .nav__logo img{height:4rem}}
+@media (prefers-reduced-motion:reduce){.nav__logo img{transition:none}}
 
-/* ---------- Hero carousel ---------- */
-/* Full-bleed photo, flat overlay, two fixed gold circles, white text. Mobile first. */
-/* Full viewport height (svh where supported), with a floor so short windows keep the text clear of the progress */
+/* ---------- Hero (single slide) ---------- */
 /* Load reveal: hero elements start hidden (html.intro, set in the head) and scripts/hero-intro.js animates them in. */
-.intro .hero__slide.is-active .hero__title,.intro .hero__slide.is-active .hero__text,.intro .hero__progress .progress,.intro .hero__scroll,.intro .hero__circle--b,.intro .nav{opacity:0}
+.intro .hero__title,.intro .hero__text,.intro .hero__actions,.intro .hero__scroll,.intro .hero__circle--b,.intro .nav{opacity:0}
 /* Pinned: stays in place while the About section (the curtain) slides up over it. See scripts/hero-curtain.js. */
 /* The hero is sticky inside .curtain (hero + About), not the whole page: a page-wide sticky 100svh dark block can stay painted
    over the later sections on iPhone Safari even when hidden. Here it ends with the curtain. */
@@ -169,70 +173,50 @@ html:not(.js) .nav__links{display:none}
 .hero{--focus:var(--on-dark);position:sticky;top:0;overflow:hidden;height:100vh;height:100svh;background:var(--grey-900);color:var(--on-dark)}
 .hero.is-covered{visibility:hidden}
 .hero__media{position:absolute;inset:0;z-index:0}
-.hero__photo{position:absolute;inset:0;width:100%;max-width:none;height:100%;object-fit:cover;object-position:var(--pos);opacity:0;transition:opacity var(--fade) ease}
-.hero__photo.is-active{opacity:1}
-.hero__photo[data-slide="1"]{--pos:55% 0}
-.hero__photo[data-slide="2"]{--pos:78% 0}
-.hero__photo[data-slide="3"]{--pos:81% 0}
-.hero__photo[data-slide="4"]{--pos:82% 0}
-.hero__overlay{position:absolute;inset:0;z-index:1;background:var(--overlay);transition:background-color var(--fade) ease}
-.hero[data-current="3"] .hero__overlay{background:var(--overlay-strong)}
+.hero__photo{position:absolute;inset:0;width:100%;max-width:none;height:100%;object-fit:cover;object-position:55% 0}
+.hero__overlay{position:absolute;inset:0;z-index:1;background:var(--overlay)}
 .hero__deco{position:absolute;inset:0;z-index:2;pointer-events:none}
 .hero__circle{position:absolute;z-index:2;border-radius:50%;background:var(--gold);pointer-events:none}
-.hero__circle--b{top:6.25rem;right:-2.5rem;width:5rem;height:5rem}
 .hero__inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%}
-.hero__body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:7.5rem var(--gutter) 2rem}
-.hero__slides{display:grid}
-.hero__slide{grid-area:1 / 1;align-self:end;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
-.hero__slide.is-active{opacity:1;visibility:visible;transition-delay:0s}
+/* Olive circle: in the space between the nav and the heading, clear of the heading and the divider */
+.hero__circle--b{top:6.5rem;right:-2rem;width:6rem;height:6rem}
+.hero__inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%}
+/* Heading: centred in the space between the nav and the divider */
+.hero__body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:6rem var(--gutter) 2rem}
 .hero__title{font:400 var(--fs-hero)/var(--lh-hero) var(--font-serif);color:var(--on-dark);text-wrap:balance}
-.hero__text{margin-top:1rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark);text-wrap:pretty}
-.hero__progress{padding:1.5rem var(--gutter) 1rem}
-.hero__scroll{display:flex;margin:.5rem auto 0}
-
-/* Progress segments */
-.progress{display:flex;gap:1rem}
-.progress__seg{appearance:none;flex:1;display:flex;flex-direction:column;justify-content:center;gap:.75rem;min-width:0;min-height:2.75rem;margin:0;padding:0;border:0;background:none;text-align:left;cursor:pointer}
-.progress__track{position:relative;display:block;height:2px}
-.progress__track::before{content:"";position:absolute;left:0;right:0;top:.5px;height:1px;background:var(--on-dark-32);transition:background-color var(--duration) ease}
-.progress__fill{position:absolute;left:0;top:0;height:2px;width:var(--fill,0%);background:var(--olive-line)}
-.progress__label{display:none;font:400 .875rem/1.3 var(--font-sans);color:var(--on-dark-72);white-space:nowrap;transition:color var(--duration) ease}
-/* Inactive tab: hover (and keyboard focus) highlights its label and track white. The active tab shows progress in olive. */
-.progress__seg:hover:not([aria-current="true"]) .progress__label,.progress__seg:focus-visible:not([aria-current="true"]) .progress__label{color:var(--on-dark)}
-.progress__seg:hover:not([aria-current="true"]) .progress__track::before,.progress__seg:focus-visible:not([aria-current="true"]) .progress__track::before{background:var(--on-dark)}
-.progress__seg[aria-current="true"] .progress__label{color:var(--on-dark)}
-.progress__current{margin-top:.75rem;font:400 .875rem/1.3 var(--font-sans);color:var(--on-dark)}
-/* Mobile: the track sits at the bottom of the 44px tap target, so the current label sits close under it */
-@media (max-width:767px){.progress__seg{justify-content:flex-end}}
+/* Divider runs between the margins (not full bleed). Mobile: body text, CTAs and chevron stacked under it. */
+.hero__foot{display:grid;gap:1.5rem;margin-inline:var(--gutter);padding:1.5rem 0;border-top:1px solid var(--on-dark-32)}
+/* One fluid size for every breakpoint: 14px up to 1440px wide, growing to 16px at 1645px and above. Line widths are set in em, so they scale with the text. */
+.hero__text{font-size:clamp(14px,.9722vw,16px);line-height:1.5;color:var(--on-dark);text-wrap:pretty}
+.hero__actions{display:grid;gap:.75rem}
+.hero__actions .btn{width:100%}
+.hero__scroll{display:flex;justify-self:center}
+/* Scroll indicator: the two chevrons fade in and out in a loop, the lower one a beat behind the upper one */
+.hero__chev{animation:hero-chev 2.4s ease-in-out infinite}
+.hero__chev--bottom{animation-delay:.3s}
+@keyframes hero-chev{0%,100%{opacity:.2}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero__chev{animation:none}}
 
 @media (min-width:768px){
-  .hero__photo[data-slide="1"]{--pos:74% 0}
-  .hero__photo[data-slide="2"]{--pos:100% 0}
-  .hero__photo[data-slide="3"]{--pos:92% 0}
-  .hero__photo[data-slide="4"]{--pos:92% 0}
-  .hero__circle--b{top:26.25rem;right:-7.5rem;width:17.5rem;height:17.5rem}
-  .hero__body{padding:10rem var(--gutter) 2rem}
-  .hero__slides{max-width:36rem}
-  .hero__text{margin-top:1.5rem}
-  .hero__progress{padding:2rem var(--gutter) 1.5rem}
-  .hero__scroll{margin-top:1rem}
-  .progress__current{display:none}
-  .progress{gap:1.5rem}
-  .progress__seg{justify-content:flex-start}
-  .progress__label{display:block}
+  .hero__circle--b{top:8.5rem;right:-5rem;width:15rem;height:15rem}
+  .hero__body{padding:8rem var(--gutter) 2rem}
+  .hero__title{max-width:36rem;font-size:clamp(3.5rem,min(7.2vw,13svh),7.5rem)}
+  /* Body text left, chevron centred on the page, CTAs right */
+  .hero__foot{grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;padding:2rem 0 1.5rem}
+  .hero__text{grid-column:1;grid-row:1;max-width:25em}
+  .hero__scroll{grid-column:2;grid-row:1}
+  .hero__actions{grid-column:3;grid-row:1;display:flex;justify-content:flex-end;gap:1rem}
+  .hero__actions .btn{width:auto}
 }
 @media (min-width:1200px){
-  .hero__photo[data-slide="1"]{--pos:42% 0}
-  .hero__photo[data-slide="2"]{--pos:100% 0}
-  .hero__photo[data-slide="3"]{--pos:62% 0}
-  .hero__photo[data-slide="4"]{--pos:100% 0}
-  .hero__circle--b{top:23.75rem;right:-12.5rem;width:22.5rem;height:22.5rem}
-  /* Text block bottom left: it sits just above the progress control, as on tablet and mobile. */
-  .hero__body{width:100%;max-width:var(--container);margin-inline:auto;padding:10rem var(--gutter) 2rem}
-  .hero__slides{max-width:48rem}
-  .hero__text{width:31.25rem;max-width:100%}
-  .hero__progress{width:100%;max-width:var(--container);margin-inline:auto;padding:2rem var(--gutter) 1.5rem}
-  .progress__label{font-size:1rem}
+  .hero__photo{object-position:42% 0}
+  /* Heading, divider and body sit in the same width as the nav; the circle sits on the right edge of that width */
+  .hero__circle--b{top:9rem;right:-7.33rem;width:22rem;height:22rem}
+  .hero__text{max-width:34em}
+  .hero__body,.hero__foot{width:100%;max-width:var(--content-max);margin-inline:auto}
+  .hero__body{padding-inline:0}
+  .hero__foot{margin-inline:auto}
+  .hero__title{max-width:none}
 }
 
 /* ---------- About: reveal statement and cards ---------- */
@@ -242,19 +226,21 @@ html:not(.js) .nav__links{display:none}
 .statement{margin-inline:auto;font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--heading);text-align:center;text-wrap:pretty}
 .statement__word{opacity:var(--o,1)}
 .cards{display:grid;gap:1rem;margin-top:2.5rem}
-.card{display:flex;flex-direction:column;justify-content:space-between;gap:2rem;padding:1.5rem;background:var(--white);border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
+.card{display:flex;flex-direction:column;justify-content:space-between;gap:.5rem;padding:1.5rem;background:var(--white);border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
 .card__motif{display:block;width:var(--motif);height:var(--motif);flex:none}
+/* Icon at the top, heading directly under it, body text at the bottom of the card; the space between them is auto */
+.card>div{display:flex;flex-direction:column;flex:1}
 .card__title{font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
-.card__text{margin-top:.5rem;font-size:var(--fs-body);line-height:1.6;color:var(--text);text-wrap:pretty}
+.card__text{margin-top:auto;font-size:var(--fs-body);line-height:1.6;color:var(--text);text-wrap:pretty}
 @media (min-width:768px){
   .statement{max-width:43rem}
   .cards{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:3rem}
-  .card{gap:1.5rem;min-height:22.5rem}
+  .card{gap:.5rem;min-height:22.5rem}
 }
 @media (min-width:1200px){
   .statement{max-width:56.25rem}
   .cards{gap:var(--gap)}
-  .card{gap:2rem;min-height:26.25rem;padding:2.5rem}
+  .card{gap:.5rem;min-height:26.25rem;padding:2.5rem}
 }
 
 /* Pinned (tablet, desktop): the stage sticks for about two viewport heights. The statement sits at the top;
@@ -270,7 +256,7 @@ html:not(.js) .nav__links{display:none}
 @media (max-width:767px){
   /* centred in the space below the 72px nav bar */
   .about.is-pinned .cards{display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem;top:calc(50% + 2.25rem);translate:0 -50%}
-  .about.is-pinned .card{translate:0 var(--rise,0px);gap:.75rem;padding:1rem}
+  .about.is-pinned .card{translate:0 var(--rise,0px);gap:.5rem;padding:1rem}
   .about.is-pinned .card__motif{width:2.5rem;height:2.5rem}
 }
 @media (min-width:768px) and (max-width:1199px){
@@ -280,83 +266,71 @@ html:not(.js) .nav__links{display:none}
 .about.is-fading .card{opacity:0;translate:0 1.5rem;transition:opacity var(--fade) ease,translate var(--fade) ease}
 .about.is-fading .card.is-in{opacity:1;translate:0 0}
 
-/* ---------- What we do: steps (stacked by default, pinned with JS and motion allowed) ---------- */
-/* The stage spans the full width and the container sits inside it, so nothing overflows and no ancestor needs
-   overflow clipping. A clipped ancestor around a sticky element makes iPhone Safari jitter it while scrolling. */
-.practice{background:var(--grey-900);color:var(--on-dark)}
-.steps__inner{display:grid;gap:3rem}
-.step{display:grid;gap:1.5rem}
-.step__photo{order:-1}
-.photo{position:relative;overflow:hidden;aspect-ratio:4 / 3;background:var(--grey-200);border-radius:var(--radius-card)}
-.photo picture{position:absolute;inset:0;display:block}
-.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);filter:grayscale(1)}
-.photo--portrait{aspect-ratio:4 / 5}
-.photo--placeholder{background:var(--gold-300)}
-.photo--placeholder [role=img]{position:absolute;inset:0}
-.is-pos-a{--pos:0% 50%}
-.is-pos-b{--pos:50% 50%}
-@media (min-width:768px) and (max-width:1199px){.step[data-step="1"] .step__photo{--pos:23% 50%}}
-.step__text{display:flex;flex-direction:column;justify-content:flex-start;gap:2rem}
-.step__title{font:700 var(--fs-step)/var(--lh-step) var(--font-serif);color:var(--on-dark);text-wrap:balance}
-.step__body{max-width:35rem;font-size:var(--fs-body);line-height:1.6;color:var(--on-dark-72)}
-.step__rule{display:none}
-.step__rule span{flex:1;width:1px;background:var(--on-dark-32)}
-.step__rule span.is-current{width:2px;background:var(--olive-line)}
-.circle--step-1{right:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
-.circle--step-2{top:calc(var(--circle) * -.45);left:50%;translate:-50% 0}
-.circle--step-3{left:calc(var(--circle) * -.35);bottom:calc(var(--circle) * -.35)}
+/* ---------- Tagline: Justice, Mercy, Humility ---------- */
+/* Two rows of display words with olive circles between them, on the page's white ground. Row 1 moves left and row 2
+   moves right as the section passes the viewport (scripts/tagline-scroll.js). Reduced motion or no JS: one row of the
+   three words, centred, with no trailing circle. Each row holds three copies of the set so the loop never shows a gap. */
+.tagline{overflow:hidden;padding-top:0}
+.tagline__rows{display:grid;gap:.15em;font:400 clamp(3.5rem,13vw,11rem)/1 var(--font-serif);color:var(--grey-400)}
+.tagline__row{display:flex;width:max-content;white-space:nowrap;will-change:transform}
+.tagline__set{display:flex;align-items:baseline;flex:none}
+/* Circle the height of the capitals (about .64em in Cormorant), sitting on the baseline so its centre is at half cap height */
+.tagline__dot{position:relative;top:.02em;flex:none;width:.64em;height:.64em;margin-inline:.5em;border-radius:50%;background:var(--olive-eyebrow)}
+@media (prefers-reduced-motion:reduce){
+  .tagline__rows{justify-items:center}
+  .tagline__row[data-row="2"],.tagline__set + .tagline__set{display:none}
+  .tagline__set > .tagline__dot:last-child{display:none}
+}
+html:not(.js) .tagline__rows{justify-items:center}
+html:not(.js) .tagline__row[data-row="2"],html:not(.js) .tagline__set + .tagline__set{display:none}
+html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 
+/* ---------- What we do: services (scripts/services-scroll.js) ---------- */
+/* Stacked by default (no JS, reduced motion): the entry frame and the three service photos as full-width panels,
+   then the one-liner and the three services. With JS and motion allowed, the section adds .is-pinned: the stage pins and one
+   scrubbed timeline grows the entry frame, shows the one-liner, then rises each service photo in turn. Each service is an
+   olive circle with its number and name, on the left of the viewport, and fades in as its photo rises.
+   Animation is transform, opacity and clip-path only. */
+.practice.services{--service-circle:12.5rem;padding-block:0;background:var(--grey-900);color:var(--on-dark)}
+.services__layer{position:relative;aspect-ratio:4 / 5;overflow:hidden;background:var(--grey-900)}
+.services__layer img{display:block;width:100%;height:100%;object-fit:cover}
+/* Dark wash over the entry photo: a separate layer so the timeline can fade it in */
+.services__shade{position:absolute;inset:0;background:rgba(42,43,46,var(--texture-overlay))}
+.services__copy{padding-block:3rem}
+.services__line{margin:0 auto 3rem;max-width:min(100%,64rem);font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--on-dark);text-align:center;text-wrap:balance}
+.services__line-item{display:block}
+.services__stop{color:var(--olive-eyebrow)}
+.services__list{display:grid;justify-items:start;gap:1.25rem;margin:0;padding:0;list-style:none}
+/* Olive circle with the service: number above, name below, both on the left of the page */
+/* Left aligned inside the circle. The name is one line and may run out past the circle edge. */
+.service{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.25rem;width:var(--service-circle);height:var(--service-circle);padding:0 0 0 2rem;border-radius:50%;background:var(--olive);color:var(--on-dark);text-align:left}
+.service__num{font:400 1.25rem/1 var(--font-serif);color:var(--olive-eyebrow)}
+/* Same size as the hero title: the mobile token, and from 768px the hero's own clamp (see .hero__title above) */
+.service__name{font:400 var(--fs-hero)/var(--lh-hero) var(--font-serif);white-space:nowrap;color:var(--on-dark)}
 @media (min-width:768px){
-  .steps__inner{gap:0}
-  .step{grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);column-gap:.6875rem;padding-block:6rem}
-  .step + .step{border-top:1px solid var(--olive)}
-  .steps__inner > .step:first-child{padding-top:0}
-  .steps__inner > .step:last-child{padding-bottom:0}
-  .step__photo{order:0;aspect-ratio:1 / 1}
-  .step__rule{display:flex;flex-direction:column;align-items:center;gap:.5rem;width:2px;justify-self:center}
-  .step__text{justify-content:space-between}
-  .step__title{font-size:var(--fs-step)}
+  .practice.services{--service-circle:14rem}
+  .service__name{font-size:clamp(3.5rem,min(7.2vw,13svh),7.5rem)}
+  .services__layer{aspect-ratio:16 / 9}
+  .services__copy{padding-block:6rem}
+  .service__num{font-size:1.5rem}
 }
 @media (min-width:1200px){
-  .step{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
-  .step__text{grid-column:1 / 6}
-  .step__rule{grid-column:6 / 7}
-  .step__photo{grid-column:7 / 13;aspect-ratio:4 / 3}
+  .practice.services{--service-circle:17.5rem}
 }
 
-/* Pinned mode: scripts/scroll-steps.js adds .is-pinned (every breakpoint, motion allowed) */
-/* svh, not vh: on iPhone Safari vh is the largest viewport (URL bar hidden), so a vh-sized stage and pin distance
-   jump every time the toolbar collapses or expands while scrolling. */
-.steps.is-pinned{display:block;height:300vh;height:300svh}
-/* Texture behind each slide: the colonnade photo under a dark grey overlay, as the stage's own background, so it
-   covers exactly the viewport-high slide area, full width, and leaves with the section. No filter: a blur on a
-   sticky full-screen layer makes iPhone Safari repaint it on every scroll frame. */
-.steps.is-pinned .steps__stage{position:sticky;top:0;display:grid;align-items:center;min-height:100vh;min-height:100svh}
-/* The texture is a fixed layer clipped to the section (clip-path also clips fixed descendants), not the sticky stage's
-   own background: iPhone Safari can leave a sticky layer's background painted over the sections below while it
-   re-composites, whereas a clipped layer can never draw outside .steps. */
-.steps.is-pinned{clip-path:inset(0)}
-.steps.is-pinned::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;background:linear-gradient(rgba(42,43,46,var(--texture-overlay)),rgba(42,43,46,var(--texture-overlay))),url("../assets/images/practice-colonnade.jpg") center / cover no-repeat;pointer-events:none}
-.steps.is-pinned .steps__stage{z-index:1}
-.steps.is-pinned .step{grid-area:1 / 1;padding-block:0;border-top:0;opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s linear var(--fade)}
-.steps.is-pinned .step.is-active{opacity:1;visibility:visible;transition-delay:0s}
-.steps.is-pinned .circle{transition:translate var(--fade) ease}
-/* Mobile pinned: the same three-part rule, laid out horizontally along the bottom of the viewport,
-   inset two gutters from the edges of the full-width stage */
+/* Pinned: the stage is the viewport. Layers stack on top of each other, the copy sits over them. */
+/* White ground behind the small entry frame; the photos cover it once they grow */
+.services.is-pinned .services__stage{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--gold-50)}
+.services.is-pinned .services__media{position:absolute;inset:0}
+.services.is-pinned .services__layer{position:absolute;inset:0;aspect-ratio:auto}
+.services.is-pinned .services__copy{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;padding-block:6.5rem 3rem}
+.services.is-pinned .services__line{margin:auto;max-width:min(100%,64rem)}
+/* One service at a time: every circle sits in the same grid cell, on the left, vertically centred */
+.services.is-pinned .services__list{position:absolute;left:var(--gutter);top:50%;translate:0 -50%;display:grid}
+.services.is-pinned .service{grid-area:1 / 1;opacity:0}
 @media (max-width:767px){
-  /* Each slide fits the visible screen: clear of the nav bar at the top and the rule at the bottom. The text keeps
-     its size and the photo takes what is left, up to its natural 4:3, so short phones get a shorter photo. */
-  .steps.is-pinned .steps__stage{height:100vh;height:100svh;padding-block:5rem 4.5rem;align-items:stretch}
-  .steps.is-pinned .steps__inner{min-height:0}
-  .steps.is-pinned .step{display:flex;flex-direction:column;justify-content:center;min-height:0}
-  .steps.is-pinned .step__text{flex:none}
-  .steps.is-pinned .step__photo{flex:0 1 auto;aspect-ratio:auto;height:calc((100vw - 2 * var(--gutter)) * .75);min-height:7rem}
-  .steps.is-pinned .step__rule{display:flex;position:absolute;left:calc(var(--gutter) * 2);right:calc(var(--gutter) * 2);bottom:2rem;z-index:2;flex-direction:row;align-items:center;gap:.5rem;width:auto;height:2px}
-  .steps.is-pinned .step__rule span{flex:1;width:auto;height:1px}
-  .steps.is-pinned .step__rule span.is-current{height:2px}
+  .services.is-pinned .services__copy{padding-block:5.5rem 2rem}
 }
-/* The pinned slides fill the section edge to edge, so the texture meets the neighbouring sections exactly. */
-.steps.is-pinned{margin-block:calc(var(--section-y) * -1)}
 
 /* ---------- Accordion (Matters) ---------- */
 .matters{background:var(--gold-50)}
@@ -367,14 +341,18 @@ html:not(.js) .nav__links{display:none}
 .accordion__button{appearance:none;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:1rem;width:100%;margin:0;padding:1.5rem;border:0;background:none;text-align:left;cursor:pointer;color:var(--text)}
 .accordion__num{display:none;font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
 .accordion__title{font:400 var(--fs-h3)/var(--lh-h3) var(--font-serif);color:var(--heading)}
-.accordion__button:hover .accordion__title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+/* Subtle fill across the whole row so it reads as clickable. Pointer devices only. */
+@media (hover:hover){
+  .accordion__button{transition:background-color var(--duration) ease}
+  .accordion__button:hover{background-color:color-mix(in srgb,var(--gold) 12%,transparent)}
+}
 .accordion__button .cta__ring{--ring:var(--ring-toggle);color:var(--text)}
 .accordion__button .cta__ring svg{rotate:45deg;transition:rotate var(--duration) ease}
 .accordion__button:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
 .accordion__button[aria-expanded="true"] .cta__ring{background:var(--olive);border-color:var(--olive);color:var(--on-dark)}
 .accordion__button[aria-expanded="true"] .cta__ring svg{rotate:0deg}
 .accordion__button[aria-expanded="true"]:hover .cta__ring{background:var(--gold);border-color:var(--gold);color:var(--grey-900)}
-.accordion__panel{padding:0 1.5rem 2rem}
+.accordion__panel{padding:1.5rem 1.5rem 2rem}
 .accordion__panel[hidden]{display:none}
 .accordion__intro{font-size:var(--fs-body);line-height:1.6;color:var(--text)}
 .accordion__list{margin-top:1.5rem;border-bottom:1px solid var(--line)}
@@ -384,7 +362,7 @@ html:not(.js) .nav__links{display:none}
 @media (min-width:768px){
   .accordion__button{grid-template-columns:4rem minmax(0,1fr) auto;padding:1.5rem 2rem}
   .accordion__num{display:block}
-  .accordion__panel{padding:0 2rem 3rem}
+  .accordion__panel{padding:2rem 2rem 3rem}
   .accordion__intro{max-width:48ch;margin-left:5rem}
   .accordion__list li{grid-template-columns:4rem minmax(0,1fr)}
 }
@@ -394,7 +372,7 @@ html:not(.js) .nav__links{display:none}
   .accordion__num{grid-column:1 / 5}
   .accordion__title{grid-column:5 / 12}
   .accordion__button .cta__ring{grid-column:12 / 13;justify-self:end}
-  .accordion__panel{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start;padding:0 2.5rem 3rem}
+  .accordion__panel{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start;padding:2.5rem 2.5rem 3rem}
   .accordion__panel[hidden]{display:none}
   .accordion__intro{grid-column:1 / 5;max-width:32ch;margin-left:0}
   .accordion__list{grid-column:5 / 13;margin-top:0}

@@ -24,19 +24,19 @@
   function play() {
     if (played) return;
     played = true;
-    var slide = document.querySelector(".hero__slide.is-active");
-    var photo = document.querySelector(".hero__photo.is-active");
+    var hero = document.querySelector(".hero");
+    var photo = document.querySelector(".hero__photo");
     var circle = document.querySelector(".hero__circle--b");
     var nav = document.querySelector(".nav");
 
     var tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: CONFIG.delay });
     // gsap.from applies its starting state straight away, so removing the class below cannot flash the content.
-    if (slide) {
-      tl.from(slide.querySelectorAll(".hero__title, .hero__text"), {
+    if (hero) {
+      tl.from(hero.querySelectorAll(".hero__title, .hero__text"), {
         autoAlpha: 0, y: CONFIG.text.y, duration: CONFIG.text.duration, stagger: CONFIG.text.stagger
       }, 0);
     }
-    tl.from(".hero__progress .progress, .hero__scroll", {
+    tl.from(".hero__actions, .hero__scroll", {
       autoAlpha: 0, y: CONFIG.controls.y, duration: CONFIG.controls.duration
     }, 0.5);
     if (photo) tl.from(photo, { scale: CONFIG.photo.scaleFrom, duration: CONFIG.photo.duration, ease: "power2.out" }, 0);

@@ -8,7 +8,7 @@
 <script>(function(){var r=document.documentElement;r.classList.add("js");try{var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){history.scrollRestoration="manual";if(location.hash)history.replaceState(null,"",location.pathname+location.search);window.addEventListener("load",function(){window.scrollTo(0,0)})}}catch(e){}var t=0;try{t=sessionStorage.getItem("lsp-transition");sessionStorage.removeItem("lsp-transition")}catch(e){}var calm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;if(!calm&&location.search.indexOf("static=1")<0){var c=t?"entering":"loading";r.classList.add("intro",c);setTimeout(function(){r.classList.remove(c)},10000);setTimeout(function(){r.classList.remove("intro")},12000)}})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;700&family=Montserrat:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400&family=Montserrat:wght@400;500;700&display=swap">
 <link rel="preload" as="image" href="assets/images/hero-boardroom.jpg" fetchpriority="high">
 <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="library/tokens.css">
@@ -75,46 +75,24 @@
 <!-- Curtain: the sticky hero is confined to this wrapper, so it unpins when About ends -->
 <div class="curtain">
 
-<!-- Hero carousel -->
-<section class="hero" id="top" aria-roledescription="carousel" aria-label="Introduction" data-carousel data-current="1">
+<!-- Hero: one slide, no carousel -->
+<section class="hero" id="top" aria-label="Introduction">
   <div class="hero__media">
-    <img class="hero__photo is-active" data-slide="1" src="assets/images/hero-boardroom.jpg" width="1672" height="941" alt="Four colleagues in a boardroom, two of them shaking hands across the table" fetchpriority="high">
-    <img class="hero__photo" data-slide="2" src="assets/images/hero-notebook.jpg" width="1672" height="941" alt="Hands resting on a closed leather folder, with a pen on the desk" loading="lazy" aria-hidden="true">
-    <img class="hero__photo" data-slide="3" src="assets/images/hero-walk.jpg" width="1672" height="941" alt="Three colleagues smiling as they walk along a colonnade" loading="lazy" aria-hidden="true">
-    <img class="hero__photo" data-slide="4" src="assets/images/hero-handshake.jpg" width="1672" height="941" alt="Close-up of a handshake between two people in suits" loading="lazy" aria-hidden="true">
+    <img class="hero__photo" src="assets/images/hero-boardroom.jpg" width="1672" height="941" alt="Four colleagues in a boardroom, two of them shaking hands across the table" fetchpriority="high">
   </div>
   <div class="hero__overlay" aria-hidden="true"></div>
   <div class="hero__deco" aria-hidden="true"><span class="hero__circle hero__circle--b"></span></div>
   <div class="hero__inner">
     <div class="hero__body">
-      <div class="hero__slides">
-        <div class="hero__slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 4" data-slide="1">
-          <h1 class="hero__title">Experience<span class="gold-stop">.</span><br>Dedication<span class="gold-stop">.</span><br>Practical solutions<span class="gold-stop">.</span></h1>
-          <p class="hero__text">Lim Soo Peng &amp; Co LLC is a Singapore law firm that resolves disputes through litigation, arbitration and&nbsp;mediation.</p>
-        </div>
-        <div class="hero__slide" role="group" aria-roledescription="slide" aria-label="2 of 4" data-slide="2" aria-hidden="true" inert>
-          <h2 class="hero__title">Know where<br>you stand, in<br>plain language<span class="gold-stop">.</span></h2>
-          <p class="hero__text">We explain your position and your options in plain language. You will know where you stand and what each route involves before you&nbsp;decide.</p>
-        </div>
-        <div class="hero__slide" role="group" aria-roledescription="slide" aria-label="3 of 4" data-slide="3" aria-hidden="true" inert>
-          <h2 class="hero__title">A clear way<br>forward, and<br>the reasons why<span class="gold-stop">.</span></h2>
-          <p class="hero__text">We recommend a course of action and tell you why. The decision stays with you, and we make sure you have what you need to make&nbsp;it.</p>
-        </div>
-        <div class="hero__slide" role="group" aria-roledescription="slide" aria-label="4 of 4" data-slide="4" aria-hidden="true" inert>
-          <h2 class="hero__title">Handled with<br>care, informed<br>at every step<span class="gold-stop">.</span></h2>
-          <p class="hero__text">We handle your matter with care and keep you informed, so you are never left wondering what happens&nbsp;next.</p>
-        </div>
-      </div>
+      <h1 class="hero__title">Experience<span class="gold-stop">.</span><br>Dedication<span class="gold-stop">.</span><br>Practical solutions<span class="gold-stop">.</span></h1>
     </div>
-    <div class="hero__progress">
-      <div class="progress">
-        <button class="progress__seg" type="button" aria-label="Experience" aria-current="true" data-go="1"><span class="progress__track" aria-hidden="true"><span class="progress__fill"></span></span><span class="progress__label" aria-hidden="true">Experience</span></button>
-        <button class="progress__seg" type="button" aria-label="Clarity" aria-current="false" data-go="2"><span class="progress__track" aria-hidden="true"><span class="progress__fill"></span></span><span class="progress__label" aria-hidden="true">Clarity</span></button>
-        <button class="progress__seg" type="button" aria-label="Direction" aria-current="false" data-go="3"><span class="progress__track" aria-hidden="true"><span class="progress__fill"></span></span><span class="progress__label" aria-hidden="true">Direction</span></button>
-        <button class="progress__seg" type="button" aria-label="Peace of mind" aria-current="false" data-go="4"><span class="progress__track" aria-hidden="true"><span class="progress__fill"></span></span><span class="progress__label" aria-hidden="true">Peace of mind</span></button>
+    <div class="hero__foot">
+      <p class="hero__text">Lim Soo Peng &amp; Co LLC is a law firm established in 1994 with a focus on dispute resolution through litigation, arbitration and&nbsp;mediation.</p>
+      <div class="hero__actions">
+        <a class="btn btn--lg" href="#contact">Speak to us</a>
+        <a class="btn btn--lg btn--ghost" href="#practice-areas">What we do</a>
       </div>
-      <p class="progress__current" aria-hidden="true" data-current-label>Experience</p>
-      <a class="cta cta--bare hero__scroll" href="#about" aria-label="Scroll to About"><svg aria-hidden="true"><use href="#i-chevrons-down"/></svg></a>
+      <a class="cta cta--bare hero__scroll" href="#about" aria-label="Scroll to About"><svg aria-hidden="true" viewBox="0 0 24 24"><path class="hero__chev hero__chev--top" d="M6 6.5 12 12l6-5.5"/><path class="hero__chev hero__chev--bottom" d="M6 12.5 12 18l6-5.5"/></svg></a>
     </div>
   </div>
 </section>
@@ -156,53 +134,33 @@
 </div>
 
 <!-- What we do -->
-<section class="section practice" id="practice-areas" aria-label="What we do">
-  <div class="steps" data-steps>
-    <div class="steps__stage">
-      <div class="container steps__inner">
-        <section class="step is-active" aria-label="Step 1 of 3" data-step="1">
-          <div class="step__text">
-            <div>
-              <p class="eyebrow eyebrow--on-dark">01</p>
-              <h3 class="step__title">Litigation<span class="gold-stop">.</span></h3>
-            </div>
-            <p class="step__body">We represent clients before the Singapore courts, from the first letter of demand through to trial. We prepare every case as if it will be heard, and tell you plainly when settling would serve you better.</p>
-          </div>
-          <div class="step__rule" aria-hidden="true"><span class="is-current"></span><span></span><span></span></div>
-          <div class="photo step__photo is-pos-a">
-            <picture><source type="image/webp" srcset="assets/img/step-1-litigation-640.webp 640w, assets/img/step-1-litigation-960.webp 960w, assets/img/step-1-litigation-1344.webp 1344w, assets/img/step-1-litigation-1672.webp 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw"><img src="assets/img/step-1-litigation-960.jpg" srcset="assets/img/step-1-litigation-640.jpg 640w, assets/img/step-1-litigation-960.jpg 960w, assets/img/step-1-litigation-1344.jpg 1344w, assets/img/step-1-litigation-1672.jpg 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw" width="1672" height="941" alt="Two colleagues walking down the steps of a classical building" loading="lazy"></picture>
-            <span class="circle circle--step-1" aria-hidden="true"></span>
-          </div>
-        </section>
-        <section class="step" aria-label="Step 2 of 3" data-step="2">
-          <div class="step__text">
-            <div>
-              <p class="eyebrow eyebrow--on-dark">02</p>
-              <h3 class="step__title">Arbitration<span class="gold-stop">.</span></h3>
-            </div>
-            <p class="step__body">We act in arbitration proceedings where parties need a private and binding outcome. We guide you through choosing the forum, preparing the case and presenting it at the hearing.</p>
-          </div>
-          <div class="step__rule" aria-hidden="true"><span></span><span class="is-current"></span><span></span></div>
-          <div class="photo step__photo is-pos-b">
-            <picture><source type="image/webp" srcset="assets/img/step-2-arbitration-640.webp 640w, assets/img/step-2-arbitration-960.webp 960w, assets/img/step-2-arbitration-1344.webp 1344w, assets/img/step-2-arbitration-1672.webp 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw"><img src="assets/img/step-2-arbitration-960.jpg" srcset="assets/img/step-2-arbitration-640.jpg 640w, assets/img/step-2-arbitration-960.jpg 960w, assets/img/step-2-arbitration-1344.jpg 1344w, assets/img/step-2-arbitration-1672.jpg 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw" width="1672" height="941" alt="Two people in discussion across a round table" loading="lazy"></picture>
-            <span class="circle circle--step-2" aria-hidden="true"></span>
-          </div>
-        </section>
-        <section class="step" aria-label="Step 3 of 3" data-step="3">
-          <div class="step__text">
-            <div>
-              <p class="eyebrow eyebrow--on-dark">03</p>
-              <h3 class="step__title">Mediation<span class="gold-stop">.</span></h3>
-            </div>
-            <p class="step__body">We help parties reach a negotiated settlement, saving time, cost and relationships where possible. We prepare you for each session, advise on what to accept and help put the agreement in writing.</p>
-          </div>
-          <div class="step__rule" aria-hidden="true"><span></span><span></span><span class="is-current"></span></div>
-          <div class="photo step__photo is-pos-a">
-            <picture><source type="image/webp" srcset="assets/img/hero-4-tea-640.webp 640w, assets/img/hero-4-tea-960.webp 960w, assets/img/hero-4-tea-1344.webp 1344w, assets/img/hero-4-tea-1672.webp 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw"><img src="assets/img/hero-4-tea-960.jpg" srcset="assets/img/hero-4-tea-640.jpg 640w, assets/img/hero-4-tea-960.jpg 960w, assets/img/hero-4-tea-1344.jpg 1344w, assets/img/hero-4-tea-1672.jpg 1672w" sizes="(min-width:1920px) 747px, (min-width:1440px) 38.9vw, (min-width:1200px) 560px, (min-width:768px) 45vw, 100vw" width="1672" height="941" alt="Two women talking over tea" loading="lazy"></picture>
-            <span class="circle circle--step-3" aria-hidden="true"></span>
-          </div>
-        </section>
+<section class="section practice services" id="practice-areas" aria-label="What we do" data-services>
+  <div class="services__stage">
+    <div class="services__media" aria-hidden="true">
+      <div class="services__layer" data-entry>
+        <picture><source type="image/webp" srcset="assets/img/practice-entry-office-640.webp 640w, assets/img/practice-entry-office-960.webp 960w, assets/img/practice-entry-office-1344.webp 1344w, assets/img/practice-entry-office-1529.webp 1529w" sizes="100vw"><img src="assets/img/practice-entry-office-960.jpg" srcset="assets/img/practice-entry-office-640.jpg 640w, assets/img/practice-entry-office-960.jpg 960w, assets/img/practice-entry-office-1344.jpg 1344w, assets/img/practice-entry-office-1529.jpg 1529w" sizes="100vw" width="1672" height="941" alt="" loading="lazy"></picture>
+        <span class="services__shade"></span>
       </div>
+      <div class="services__layer" data-beat="1">
+        <picture><source type="image/webp" srcset="assets/img/service-litigation-640.webp 640w, assets/img/service-litigation-960.webp 960w, assets/img/service-litigation-1344.webp 1344w, assets/img/service-litigation-1672.webp 1672w" sizes="100vw"><img src="assets/img/service-litigation-960.jpg" srcset="assets/img/service-litigation-640.jpg 640w, assets/img/service-litigation-960.jpg 960w, assets/img/service-litigation-1344.jpg 1344w, assets/img/service-litigation-1672.jpg 1672w" sizes="100vw" width="1672" height="941" alt="" loading="lazy"></picture>
+        <span class="circle circle--br"></span>
+      </div>
+      <div class="services__layer" data-beat="2">
+        <picture><source type="image/webp" srcset="assets/img/service-arbitration-640.webp 640w, assets/img/service-arbitration-960.webp 960w, assets/img/service-arbitration-1344.webp 1344w, assets/img/service-arbitration-1672.webp 1672w" sizes="100vw"><img src="assets/img/service-arbitration-960.jpg" srcset="assets/img/service-arbitration-640.jpg 640w, assets/img/service-arbitration-960.jpg 960w, assets/img/service-arbitration-1344.jpg 1344w, assets/img/service-arbitration-1672.jpg 1672w" sizes="100vw" width="1672" height="941" alt="" loading="lazy"></picture>
+        <span class="circle circle--top"></span>
+      </div>
+      <div class="services__layer" data-beat="3">
+        <picture><source type="image/webp" srcset="assets/img/service-mediation-640.webp 640w, assets/img/service-mediation-960.webp 960w, assets/img/service-mediation-1344.webp 1344w, assets/img/service-mediation-1672.webp 1672w" sizes="100vw"><img src="assets/img/service-mediation-960.jpg" srcset="assets/img/service-mediation-640.jpg 640w, assets/img/service-mediation-960.jpg 960w, assets/img/service-mediation-1344.jpg 1344w, assets/img/service-mediation-1672.jpg 1672w" sizes="100vw" width="1672" height="941" alt="" loading="lazy"></picture>
+        <span class="circle circle--br"></span>
+      </div>
+    </div>
+    <div class="container services__copy">
+      <p class="services__line" data-line><span class="services__line-item">Advocate and solicitors<span class="services__stop">.</span></span><span class="services__line-item">Commissioner for oaths<span class="services__stop">.</span></span><span class="services__line-item">Notary public<span class="services__stop">.</span></span></p>
+      <ol class="services__list">
+        <li class="service" data-service="1"><span class="service__num">01</span><h3 class="service__name">Litigation</h3></li>
+        <li class="service" data-service="2"><span class="service__num">02</span><h3 class="service__name">Arbitration</h3></li>
+        <li class="service" data-service="3"><span class="service__num">03</span><h3 class="service__name">Mediation</h3></li>
+      </ol>
     </div>
   </div>
 </section>
@@ -290,6 +248,22 @@
         </div>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- Tagline -->
+<section class="section tagline" aria-label="Justice Mercy Humility" data-nav="light">
+  <div class="tagline__rows" aria-hidden="true">
+        <div class="tagline__row" data-row="1">
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span></div>
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span></div>
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span></div>
+        </div>
+        <div class="tagline__row" data-row="2">
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span></div>
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span></div>
+          <div class="tagline__set"><span>Justice</span><span class="tagline__dot"></span><span>Humility</span><span class="tagline__dot"></span><span>Mercy</span><span class="tagline__dot"></span></div>
+        </div>
   </div>
 </section>
 
@@ -397,14 +371,14 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js" defer></script>
 <script src="scripts/nav.js" defer></script>
 <script src="scripts/menu.js" defer></script>
-<script src="scripts/hero-carousel.js" defer></script>
 <script src="scripts/about-reveal.js" defer></script>
 <script src="scripts/hero-curtain.js" defer></script>
 <script src="scripts/page-transition.js" defer></script>
 <script src="scripts/page-loader.js" defer></script>
 <script src="scripts/hero-intro.js" defer></script>
 <script src="scripts/footer-reveal.js" defer></script>
-<script src="scripts/scroll-steps.js" defer></script>
+<script src="scripts/services-scroll.js" defer></script>
+<script src="scripts/tagline-scroll.js" defer></script>
 <script src="scripts/accordion.js" defer></script>
 <script src="scripts/bio-dialog.js" defer></script>
 <script src="scripts/reveal.js" defer></script>

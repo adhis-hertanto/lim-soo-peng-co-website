@@ -22,6 +22,7 @@
   /* Greys */
   --grey-200:#E6E7E8;
   --grey-300:#D1D3D4;
+  --grey-400:#BCBEC0;        /* tagline display text (subtle) */
   --grey-600:#77787B;        /* map labels only */
   --grey-700:#58595B;        /* map marker labels */
   --grey-800:#414245;        /* body text, focus ring, link colour */
