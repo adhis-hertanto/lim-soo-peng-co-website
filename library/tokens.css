@@ -9,7 +9,7 @@
   --gold:#C1BD98;            /* brand gold: full stops, circles, hover fills */
   --olive:#5E693D;           /* olive-700: pill button, eyebrows, active icon */
   --olive-deep:#49522F;      /* olive-800: What we do ground */
-  --olive-cursor:#7C8957;    /* custom cursor: between the lightest (#CEDBAF) and darkest (#5E693D) olive circles; 4.3:1 with --brand-black text */
+  --olive-cursor:#7C8957;    /* custom cursor: between the lightest (#CEDBAF) and darkest (#5E693D) olive circles; 3.8:1 with white text */
   --olive-line:#94A36A;      /* olive-500: inactive progress rule */
   --olive-eyebrow:#CEDBAF;   /* olive-300: eyebrow on olive ground */
   --olive-50:#F9FBF3;        /* Contact ground */
