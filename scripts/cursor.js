@@ -1,9 +1,9 @@
 /* Custom cursor: a small gold circle that trails the pointer (gsap.quickTo) and grows into a labelled circle over some areas.
    Labels come from one place, resolve() below:
-   - What we do (pinned by services-scroll.js): no label on the entry stage, then "Prev" (top half of the viewport)
-     and "Next" (bottom half) on each service. A click scrolls to that stop, through Lenis when it is running.
+   - What we do (pinned by services-scroll.js): no label on the entry stage, then an up arrow (top half of the viewport, previous
+     stop) and a down arrow (bottom half, next stop) on each service. A click scrolls to that stop, through Lenis when it is running.
    - Any element with data-cursor="Label", or data-cursor-expanded="Label" while it has aria-expanded="true" (the accordion
-     rows read "View", then "Close" once open). The lawyer cards use "View"; their button already covers the whole card, so a
+     rows read "Open", then "Close" once open). The lawyer cards read "Read bio"; their button already covers the whole card, so a
      click opens the bio dialog through the existing bio-dialog.js flow.
    Purely visual: no focus changes, and keyboard use is untouched. The circle is a popover so it stays above the bio <dialog>
    (the top layer ignores z-index); it is promoted again whenever a dialog opens.
@@ -64,9 +64,9 @@
     var at = 0;                                                 // the stop the scroll is on (or has just passed)
     S.stops.forEach(function (s, i) { if (s <= pos + CONFIG.epsilon) at = i; });
     // Previous goes to the stop the scroll has passed, or to the one before when it is sitting on a stop.
-    if (py < window.innerHeight / 2) return { label: "Prev", go: pos > S.stops[at] + CONFIG.epsilon ? S.stops[at] : S.stops[at - 1] };
-    if (at + 1 < S.stops.length) return { label: "Next", go: S.stops[at + 1] };
-    return { label: "Next", go: "section" };                    // past the last service: on to the next section
+    if (py < window.innerHeight / 2) return { label: "\u2191", go: pos > S.stops[at] + CONFIG.epsilon ? S.stops[at] : S.stops[at - 1] };
+    if (at + 1 < S.stops.length) return { label: "\u2193", go: S.stops[at + 1] };
+    return { label: "\u2193", go: "section" };                    // past the last service: on to the next section
   }
 
   function resolve(t, py) {
@@ -106,7 +106,10 @@
     var label = r && r.label;
     var scale = !seen || !inside ? 0 : label ? 1 : CONFIG.dotScale;
     html.classList.toggle("has-cursor-label", !!label);
-    if (label) labelEl.textContent = label;      // keeps the old text while it fades out
+    if (label) {                                 // keeps the old text while it fades out
+      labelEl.textContent = label;
+      labelEl.classList.toggle("cursor__label--arrow", label.length === 1);
+    }
     if (scale === current.scale && !!label === !!current.label) { current.label = label; return; }
     current = { scale: scale, label: label };
     if (reduce.matches) {
