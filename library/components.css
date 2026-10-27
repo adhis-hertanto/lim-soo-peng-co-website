@@ -276,6 +276,13 @@ html:not(.js) .nav__links{display:none}
 .tagline__set{display:flex;align-items:baseline;flex:none}
 /* Circle the height of the capitals (about .64em in Cormorant), sitting on the baseline so its centre is at half cap height */
 .tagline__dot{position:relative;top:.02em;flex:none;width:.64em;height:.64em;margin-inline:.5em;border-radius:50%;background:var(--olive-eyebrow)}
+/* Hover (pointer devices): a word turns black, a circle grows. The circle scales, so the row layout does not shift. */
+.tagline__row span:not(.tagline__dot){transition:color .3s ease}
+.tagline__dot{transition:scale .4s cubic-bezier(.22,1,.36,1)}
+@media (hover:hover){
+  .tagline__row span:not(.tagline__dot):hover{color:var(--brand-black)}
+  .tagline__dot:hover{scale:1.6}
+}
 @media (prefers-reduced-motion:reduce){
   .tagline__rows{justify-items:center}
   .tagline__row[data-row="2"],.tagline__set + .tagline__set{display:none}
