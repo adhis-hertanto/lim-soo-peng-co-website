@@ -1,7 +1,8 @@
 /* What we do: one pinned, scrubbed GSAP ScrollTrigger timeline. The section pins for eight viewport heights.
    1. The entry photo starts as a small rectangle in the middle of the stage (it scrolls into view in the flow, as the About
       cards end) and grows to full bleed, with its wash fading in.
-   2. The one-liner fades in, centred, over it, then fades out before the services start.
+   2. The one-liner fades in, centred, over it, then fades out before the services start. The hero's double chevron shows
+      at the bottom of the stage with it, as a scroll cue.
    3. One service per photo: each photo rises from the bottom. As it rises, the previous service's circle fades out and
       the next one fades in, on the left.
    The pin releases after the third service. Built with gsap.matchMedia, so it is torn down and rebuilt at each breakpoint
@@ -29,6 +30,7 @@
   var entryImg = entry.querySelector("img");
   var shade = entry.querySelector(".services__shade");
   var line = section.querySelector("[data-line]");
+  var cue = section.querySelector("[data-scroll-cue]");
   var beats = Array.prototype.slice.call(section.querySelectorAll("[data-beat]"));
   var rows = Array.prototype.slice.call(section.querySelectorAll("[data-service]"));
 
@@ -58,6 +60,11 @@
     tl.fromTo(line, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5 }, 1.0);
     // The one-liner holds for about 1.5 viewport heights of scroll before it goes.
     tl.to(line, { opacity: 0, duration: 0.25 }, 2.6);
+    // The hero's chevrons at the bottom of the stage tell the visitor to keep scrolling; they come and go with the one-liner.
+    if (cue) {
+      tl.fromTo(cue, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+      tl.to(cue, { opacity: 0, duration: 0.25 }, 2.6);
+    }
 
     // 3. One service per photo. Each photo rises from the bottom; as it arrives, the previous service's text
     //    fades out and the next one fades in, with its divider drawn and its name revealed from the bottom.

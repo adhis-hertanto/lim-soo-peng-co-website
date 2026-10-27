@@ -1,6 +1,6 @@
 /* Custom cursor: a small gold circle that trails the pointer (gsap.quickTo) and grows into a labelled circle over some areas.
    Labels come from one place, resolve() below:
-   - What we do (pinned by services-scroll.js): "Explore" before the first service, then "Previous" (top half of the viewport)
+   - What we do (pinned by services-scroll.js): no label on the entry stage, then "Previous" (top half of the viewport)
      and "Next" (bottom half) on each service. A click scrolls to that stop, through Lenis when it is running.
    - Any element with data-cursor="Label" (the lawyer cards use "View"; their button already covers the whole card, so a click
      opens the bio dialog through the existing bio-dialog.js flow).
@@ -59,7 +59,7 @@
     var st = S && S.trigger();
     if (!st || !S.stage.contains(t)) return null;
     var pos = st.progress * S.distance;
-    if (pos < S.firstService - CONFIG.epsilon) return { label: "Explore", go: S.stops[1] };
+    if (pos < S.firstService - CONFIG.epsilon) return null;     // the entry stage has no label: a scroll cue shows instead
     var at = 0;                                                 // the stop the scroll is on (or has just passed)
     S.stops.forEach(function (s, i) { if (s <= pos + CONFIG.epsilon) at = i; });
     // Previous goes to the stop the scroll has passed, or to the one before when it is sitting on a stop.

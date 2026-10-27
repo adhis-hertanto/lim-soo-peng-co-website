@@ -299,6 +299,8 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 .services__copy{padding-block:3rem}
 .services__line{margin:0 auto 3rem;max-width:min(100%,64rem);font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--on-dark);text-align:center;text-wrap:balance}
 .services__line-item{display:block}
+/* Scroll cue: the hero's double chevron (same loop, .hero__chev), at the bottom of the entry stage. Only while pinned. */
+.services__scroll{display:none}
 .services__stop{color:var(--olive-eyebrow)}
 .services__list{display:grid;justify-items:start;gap:1.25rem;margin:0;padding:0;list-style:none}
 /* Olive circle with the service: number above, name below, both on the left of the page */
@@ -325,6 +327,8 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 .services.is-pinned .services__layer{position:absolute;inset:0;aspect-ratio:auto}
 .services.is-pinned .services__copy{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;padding-block:6.5rem 3rem}
 .services.is-pinned .services__line{margin:auto;max-width:min(100%,64rem)}
+.services.is-pinned .services__scroll{position:absolute;left:50%;bottom:2rem;z-index:2;translate:-50% 0;display:flex;justify-content:center;width:2.75rem;height:2.75rem;color:var(--on-dark);opacity:0;pointer-events:none}
+.services__scroll svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:square;margin:auto}
 /* One service at a time: every circle sits in the same grid cell, on the left, vertically centred */
 .services.is-pinned .services__list{position:absolute;left:var(--gutter);top:50%;translate:0 -50%;display:grid}
 .services.is-pinned .service{grid-area:1 / 1;opacity:0}
