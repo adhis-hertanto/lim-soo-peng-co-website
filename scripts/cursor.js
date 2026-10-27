@@ -19,8 +19,6 @@
     grow: { duration: 0.3, ease: "power3.out" },      // scale and label fade
     epsilon: 0.02                                     // timeline units of slack when working out which stop the scroll is on
   };
-  // Elements that keep the native cursor, so the circle steps aside over them (unless they are inside a labelled area).
-  var NATIVE = "a[href], button, summary, label, select, input, textarea, [role='button'], [role='link']";
 
   var html = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -34,7 +32,13 @@
   labelEl.className = "cursor__label";
   el.appendChild(labelEl);
   document.body.appendChild(el);
-  if (hasPopover) el.showPopover();
+
+  // Something closes the popover while the page is still loading (it is shown but not open by the time the loader ends),
+  // so check it is open on every pointer move, which also covers anything else that might close it.
+  function ensureOpen() {
+    if (hasPopover && !el.matches(":popover-open")) el.showPopover();
+  }
+  ensureOpen();
 
   gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0 });
   var moveX = gsap.quickTo(el, "x", CONFIG.follow);
@@ -87,7 +91,7 @@
     queued = false;
     var r = seen && inside ? resolve(target, y) : null;
     var label = r && r.label;
-    var scale = !seen || !inside ? 0 : label ? 1 : target && target.closest && target.closest(NATIVE) ? 0 : CONFIG.dotScale;
+    var scale = !seen || !inside ? 0 : label ? 1 : CONFIG.dotScale;
     html.classList.toggle("has-cursor-label", !!label);
     if (label) labelEl.textContent = label;      // keeps the old text while it fades out
     if (scale === current.scale && !!label === !!current.label) { current.label = label; return; }
@@ -111,10 +115,10 @@
 
   document.addEventListener("mousemove", function (e) {
     x = e.clientX; y = e.clientY; target = e.target;
+    ensureOpen();
     inside = true;
     if (!seen) {
       seen = true;
-      html.classList.add("has-cursor");
       gsap.set(el, { x: x, y: y });
     } else if (reduce.matches) {
       gsap.set(el, { x: x, y: y });

@@ -585,12 +585,9 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 /* A popover (top layer) so it stays above the bio <dialog>; the UA popover styles are reset here. The script scales it
    between a 16px dot and the full size, so the width and height never animate. Pointer devices only: the script does not run
    on touch or without GSAP, and then none of this is on the page. */
-.cursor{position:fixed;inset:0 auto auto 0;z-index:1000;width:var(--cursor-size);height:var(--cursor-size);margin:0;padding:0;border:0;overflow:visible;border-radius:50%;background:var(--gold);color:var(--grey-900);pointer-events:none;will-change:transform}
+.cursor{position:fixed;box-shadow:0 0 0 .375rem rgba(94,105,61,.35);inset:0 auto auto 0;z-index:1000;width:var(--cursor-size);height:var(--cursor-size);margin:0;padding:0;border:0;overflow:visible;border-radius:50%;background:var(--gold);color:var(--grey-900);pointer-events:none;will-change:transform}
 .cursor__label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;font:500 var(--fs-small)/1 var(--font-sans);letter-spacing:.01em;opacity:0}
-/* Native cursor hidden only once the custom one is running. Links, buttons and fields keep theirs, unless the pointer is in a labelled area. */
-.has-cursor,.has-cursor body{cursor:none}
-.has-cursor :is(a[href],button,summary,label,select,[role=button],[role=link]){cursor:pointer}
-.has-cursor :is(input,textarea){cursor:text}
+/* The native cursor stays everywhere; it is hidden only in a labelled area, where the big circle sits under the pointer. */
 .has-cursor-label,.has-cursor-label *{cursor:none !important}
 
 /* ---------- Reduced motion ---------- */
