@@ -2,7 +2,7 @@
    1. The entry photo starts as a small rectangle in the middle of the stage (it scrolls into view in the flow, as the About
       cards end) and grows to full bleed, with its wash fading in.
    2. The one-liner fades in, centred, over it, then fades out before the services start. The hero's double chevron shows
-      at the bottom of the stage with it, as a scroll cue.
+      at the bottom of the stage from then on, over every service, as a scroll cue.
    3. One service per photo: each photo rises from the bottom. As it rises, the previous service's circle fades out and
       the next one fades in, on the left.
    The pin releases after the third service. Built with gsap.matchMedia, so it is torn down and rebuilt at each breakpoint
@@ -60,11 +60,9 @@
     tl.fromTo(line, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5 }, 1.0);
     // The one-liner holds for about 1.5 viewport heights of scroll before it goes.
     tl.to(line, { opacity: 0, duration: 0.25 }, 2.6);
-    // The hero's chevrons at the bottom of the stage tell the visitor to keep scrolling; they come and go with the one-liner.
-    if (cue) {
-      tl.fromTo(cue, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
-      tl.to(cue, { opacity: 0, duration: 0.25 }, 2.6);
-    }
+    // The hero's chevrons at the bottom of the stage tell the visitor to keep scrolling. They arrive with the one-liner and
+    // stay on every service until the pin releases.
+    if (cue) tl.fromTo(cue, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
 
     // 3. One service per photo. Each photo rises from the bottom; as it arrives, the previous service's text
     //    fades out and the next one fades in, with its divider drawn and its name revealed from the bottom.
