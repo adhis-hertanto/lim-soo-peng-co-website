@@ -76,6 +76,7 @@
   function startSmoothScroll() {
     if (!window.Lenis || !window.gsap || !window.ScrollTrigger) return;
     lenis = new Lenis(CONFIG.lenis);
+    window.lenis = lenis;   // read by cursor.js for click-to-scroll
     lenis.on("scroll", ScrollTrigger.update);
     tick = function (time) { lenis.raf(time * 1000); };
     gsap.ticker.add(tick);
@@ -85,7 +86,7 @@
       document.removeEventListener("click", onAnchor);
       gsap.ticker.remove(tick);
       lenis.destroy();
-      lenis = null;
+      lenis = window.lenis = null;
     });
   }
 

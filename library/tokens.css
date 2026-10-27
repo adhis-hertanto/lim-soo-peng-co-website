@@ -67,6 +67,7 @@
   --motif:4rem;               /* About card motif (mobile, tablet) */
   --ring:2.75rem;                /* CTA ring */
   --ring-toggle:2.75rem;         /* accordion toggle (48px from 768) */
+  --cursor-size:6rem;            /* custom cursor at full size (96px); its resting dot is a sixth of this */
 
   /* Wide screens: 1rem is 16px up to the 1440px design width, then grows with the window to 21.33px at 1920px,
      so the whole page (type, spacing, cards, images, margins) scales in proportion. Above 1920px it stops and the

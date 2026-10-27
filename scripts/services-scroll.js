@@ -20,6 +20,9 @@
   var BEAT_START = 2.9;                          // timeline position of the first service
   var BEAT_GAP = 1.5;                            // timeline units between services: each one holds for about 1.5 viewport heights, as the intro does
 
+  var trigger = null;                            // the live ScrollTrigger (null until built, and under reduced motion)
+  var listeners = [];                            // scroll callbacks registered through window.ServicesScroll.onUpdate
+
   var stage = section.querySelector(".services__stage");
   var entry = section.querySelector("[data-entry]");
   var entryImg = entry.querySelector("img");
@@ -40,7 +43,8 @@
         pin: stage,
         scrub: true,
         invalidateOnRefresh: true,   // recalculates the distance on resize and when fonts load
-        anticipatePin: 1
+        anticipatePin: 1,
+        onUpdate: function () { listeners.forEach(function (fn) { fn(); }); }
       }
     });
 
@@ -68,9 +72,24 @@
     // The last service holds for about 1.5 viewport heights, then the pin releases.
     tl.to({}, { duration: 0 }, DISTANCE);
 
+    trigger = tl.scrollTrigger;
+
     // Returned to gsap.matchMedia, which runs it when the query stops matching (breakpoint change or reduced motion).
-    return function () { section.classList.remove("is-pinned"); };
+    return function () { trigger = null; section.classList.remove("is-pinned"); };
   }
+
+  // Read by cursor.js, so the timeline positions live here only. Stops are timeline positions: the entry one-liner fully
+  // visible (2), each service (BEAT_START + i * BEAT_GAP) and the end of the pin (DISTANCE), where the next section starts.
+  window.ServicesScroll = {
+    section: section,
+    stage: stage,
+    distance: DISTANCE,
+    entryStop: 2,
+    firstService: BEAT_START,
+    stops: [2].concat(beats.map(function (b, i) { return BEAT_START + i * BEAT_GAP; }), [DISTANCE]),
+    trigger: function () { return trigger; },
+    onUpdate: function (fn) { listeners.push(fn); }
+  };
 
   var mm = gsap.matchMedia();
   mm.add("(min-width: 768px) and " + MOTION, build);
