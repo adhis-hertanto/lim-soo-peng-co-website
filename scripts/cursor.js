@@ -59,10 +59,11 @@
     var st = S && S.trigger();
     if (!st || !S.stage.contains(t)) return null;
     var pos = st.progress * S.distance;
-    if (pos < S.firstService - CONFIG.epsilon) return { label: "Explore", go: S.firstService };
+    if (pos < S.firstService - CONFIG.epsilon) return { label: "Explore", go: S.stops[1] };
     var at = 0;                                                 // the stop the scroll is on (or has just passed)
     S.stops.forEach(function (s, i) { if (s <= pos + CONFIG.epsilon) at = i; });
-    if (py < window.innerHeight / 2) return { label: "Previous", go: S.stops[at - 1] };
+    // Previous goes to the stop the scroll has passed, or to the one before when it is sitting on a stop.
+    if (py < window.innerHeight / 2) return { label: "Previous", go: pos > S.stops[at] + CONFIG.epsilon ? S.stops[at] : S.stops[at - 1] };
     if (at + 1 < S.stops.length) return { label: "Next", go: S.stops[at + 1] };
     return { label: "Next", go: "section" };                    // past the last service: on to the next section
   }

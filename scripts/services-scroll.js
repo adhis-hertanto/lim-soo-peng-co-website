@@ -18,6 +18,7 @@
   var FULL = "inset(0% 0% 0% 0%)";
   var HIDDEN_BOTTOM = "inset(100% 0% 0% 0%)";    // clipped away from the bottom, so the reveal rises from the bottom
   var BEAT_START = 2.9;                          // timeline position of the first service
+  var BEAT_DURATION = 0.6;                       // timeline units each service takes to rise and fade in
   var BEAT_GAP = 1.5;                            // timeline units between services: each one holds for about 1.5 viewport heights, as the intro does
 
   var trigger = null;                            // the live ScrollTrigger (null until built, and under reduced motion)
@@ -63,10 +64,10 @@
     beats.forEach(function (beat, i) {
       var at = BEAT_START + i * BEAT_GAP;
       var row = rows[i];
-      tl.fromTo(beat, { clipPath: HIDDEN_BOTTOM }, { clipPath: FULL, duration: 0.6 }, at);
+      tl.fromTo(beat, { clipPath: HIDDEN_BOTTOM }, { clipPath: FULL, duration: BEAT_DURATION }, at);
       // The service text fades in as its image masks up, and the previous service's text fades out with it.
-      if (i > 0) tl.to(rows[i - 1], { opacity: 0, duration: 0.6 }, at);
-      tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.6 }, at);
+      if (i > 0) tl.to(rows[i - 1], { opacity: 0, duration: BEAT_DURATION }, at);
+      tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: BEAT_DURATION }, at);
     });
 
     // The last service holds for about 1.5 viewport heights, then the pin releases.
@@ -79,14 +80,14 @@
   }
 
   // Read by cursor.js, so the timeline positions live here only. Stops are timeline positions: the entry one-liner fully
-  // visible (2) and each service (BEAT_START + i * BEAT_GAP).
+  // visible (2) and each service once its photo and text have arrived (BEAT_START + i * BEAT_GAP + BEAT_DURATION).
   window.ServicesScroll = {
     section: section,
     stage: stage,
     distance: DISTANCE,
     entryStop: 2,
     firstService: BEAT_START,
-    stops: [2].concat(beats.map(function (b, i) { return BEAT_START + i * BEAT_GAP; })),
+    stops: [2].concat(beats.map(function (b, i) { return BEAT_START + i * BEAT_GAP + BEAT_DURATION; })),
     trigger: function () { return trigger; },
     onUpdate: function (fn) { listeners.push(fn); }
   };
