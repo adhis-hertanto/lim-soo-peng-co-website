@@ -79,14 +79,14 @@
   }
 
   // Read by cursor.js, so the timeline positions live here only. Stops are timeline positions: the entry one-liner fully
-  // visible (2), each service (BEAT_START + i * BEAT_GAP) and the end of the pin (DISTANCE), where the next section starts.
+  // visible (2) and each service (BEAT_START + i * BEAT_GAP).
   window.ServicesScroll = {
     section: section,
     stage: stage,
     distance: DISTANCE,
     entryStop: 2,
     firstService: BEAT_START,
-    stops: [2].concat(beats.map(function (b, i) { return BEAT_START + i * BEAT_GAP; }), [DISTANCE]),
+    stops: [2].concat(beats.map(function (b, i) { return BEAT_START + i * BEAT_GAP; })),
     trigger: function () { return trigger; },
     onUpdate: function (fn) { listeners.push(fn); }
   };

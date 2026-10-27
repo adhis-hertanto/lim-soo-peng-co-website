@@ -64,7 +64,7 @@
     S.stops.forEach(function (s, i) { if (s <= pos + CONFIG.epsilon) at = i; });
     if (py < window.innerHeight / 2) return { label: "Previous", go: S.stops[at - 1] };
     if (at + 1 < S.stops.length) return { label: "Next", go: S.stops[at + 1] };
-    return null;                                                // past the last service: nothing further to step to
+    return { label: "Next", go: "section" };                    // past the last service: on to the next section
   }
 
   function resolve(t, py) {
@@ -80,7 +80,15 @@
     var S = window.ServicesScroll;
     var st = S && S.trigger();
     if (!st || position == null) return;
-    var top = st.start + position / S.distance * (st.end - st.start);
+    var top;
+    if (position === "section") {
+      // The section after What we do, clearing the 112px nav offset like the anchor links do (hero-curtain.js).
+      var next = S.section.nextElementSibling;
+      if (!next) return;
+      top = next.getBoundingClientRect().top + window.scrollY - 7 * parseFloat(getComputedStyle(html).fontSize);
+    } else {
+      top = st.start + position / S.distance * (st.end - st.start);
+    }
     if (window.lenis) window.lenis.scrollTo(top);
     else window.scrollTo({ top: top, behavior: reduce.matches ? "auto" : "smooth" });
   }
@@ -100,7 +108,7 @@
       gsap.set(el, { scale: scale });
       gsap.set(labelEl, { opacity: label ? 1 : 0 });
     } else {
-      gsap.to(el, { scale: scale, duration: CONFIG.grow.duration, ease: CONFIG.grow.ease, overwrite: true });
+      gsap.to(el, { scale: scale, duration: CONFIG.grow.duration, ease: CONFIG.grow.ease, overwrite: "auto" });   // "auto" only replaces the scale tween, not the x and y that quickTo is running
       gsap.to(labelEl, { opacity: label ? 1 : 0, duration: CONFIG.grow.duration, overwrite: true });
     }
   }
