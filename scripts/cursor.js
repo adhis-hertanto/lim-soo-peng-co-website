@@ -2,8 +2,9 @@
    Labels come from one place, resolve() below:
    - What we do (pinned by services-scroll.js): no label on the entry stage, then "Prev" (top half of the viewport)
      and "Next" (bottom half) on each service. A click scrolls to that stop, through Lenis when it is running.
-   - Any element with data-cursor="Label" (the lawyer cards use "View"; their button already covers the whole card, so a click
-     opens the bio dialog through the existing bio-dialog.js flow).
+   - Any element with data-cursor="Label", or data-cursor-expanded="Label" while it has aria-expanded="true" (the accordion
+     rows read "View", then "Close" once open). The lawyer cards use "View"; their button already covers the whole card, so a
+     click opens the bio dialog through the existing bio-dialog.js flow.
    Purely visual: no focus changes, and keyboard use is untouched. The circle is a popover so it stays above the bio <dialog>
    (the top layer ignores z-index); it is promoted again whenever a dialog opens.
 
@@ -73,7 +74,10 @@
     var s = services(t, py);
     if (s) return s;
     var host = t.closest("[data-cursor]");
-    return host ? { label: host.getAttribute("data-cursor") } : null;
+    if (!host) return null;
+    // An open accordion row says something else (data-cursor-expanded), since a click closes it.
+    var open = host.getAttribute("aria-expanded") === "true" && host.getAttribute("data-cursor-expanded");
+    return { label: open || host.getAttribute("data-cursor") };
   }
 
   // Scroll to a timeline position of the What we do pin. Lenis when it is running, native smooth scroll otherwise.
@@ -152,6 +156,7 @@
   document.addEventListener("click", function (e) {
     var r = resolve(e.target, e.clientY);
     if (r && r.go != null) goTo(r.go);
+    queue();   // a click can change what is under the pointer (an accordion row opening or closing)
   });
 
   // Keep the circle above a modal <dialog> (both live in the top layer; the later one is on top).
