@@ -22,10 +22,11 @@
     epsilon: 0.02                                     // timeline units of slack when working out which stop the scroll is on
   };
 
-  // Material Symbols "north" and "south" (24px grid, scaled by the CSS). A label of "north" or "south" shows the icon, not text.
+  // Material Symbols "north" and "south" geometry (same stem and head on the 24px grid) drawn as strokes, so the weight is set
+  // in the CSS (stroke-width) and is lighter than the filled 400 weight. A label of "north" or "south" shows the icon, not text.
   var ICONS = {
-    north: "M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z",
-    south: "M480-160 160-480l56-57 224 224v-487h80v487l224-224 56 57-320 320Z"
+    north: "M12 20V4M4 12 12 4l8 8",
+    south: "M12 4v16M4 12l8 8 8-8"
   };
 
   var html = document.documentElement;
@@ -116,7 +117,7 @@
     html.classList.toggle("has-cursor-label", !!label);
     if (label && label !== shown) {              // keeps the old content while it fades out
       shown = label;
-      if (ICONS[label]) labelEl.innerHTML = '<svg class="cursor__icon cursor__icon--' + label + '" viewBox="0 -960 960 960"><path d="' + ICONS[label] + '"/></svg>';
+      if (ICONS[label]) labelEl.innerHTML = '<svg class="cursor__icon cursor__icon--' + label + '" viewBox="0 0 24 24"><path d="' + ICONS[label] + '"/></svg>';
       else labelEl.textContent = label;
     }
     if (scale === current.scale && !!label === !!current.label) { current.label = label; return; }

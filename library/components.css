@@ -591,7 +591,7 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
    on touch or without GSAP, and then none of this is on the page. */
 .cursor{position:fixed;inset:0 auto auto 0;z-index:1000;width:var(--cursor-size);height:var(--cursor-size);margin:0;padding:0;border:0;overflow:visible;border-radius:50%;background:var(--olive-cursor);color:var(--white);pointer-events:none;will-change:transform}
 .cursor__label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;font:500 1.25rem/1 var(--font-serif);opacity:0}
-.cursor__icon{display:block;width:2.25rem;height:2.25rem;fill:currentColor}
+.cursor__icon{display:block;width:2.25rem;height:2.25rem;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:square;stroke-linejoin:miter}
 /* Optical centring: an arrow's head carries most of its weight (the ink's centre sits about 5% of the icon towards the head),
    so each arrow is nudged 3% the other way, away from its head. */
 .cursor__icon--north{translate:0 3%}
