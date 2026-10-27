@@ -589,9 +589,13 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 /* A popover (top layer) so it stays above the bio <dialog>; the UA popover styles are reset here. The script scales it
    between a 16px dot and the full size, so the width and height never animate. Pointer devices only: the script does not run
    on touch or without GSAP, and then none of this is on the page. */
-.cursor{position:fixed;box-shadow:0 0 0 .375rem rgba(94,105,61,.35);inset:0 auto auto 0;z-index:1000;width:var(--cursor-size);height:var(--cursor-size);margin:0;padding:0;border:0;overflow:visible;border-radius:50%;background:var(--gold);color:var(--grey-900);pointer-events:none;will-change:transform}
+.cursor{position:fixed;inset:0 auto auto 0;z-index:1000;width:var(--cursor-size);height:var(--cursor-size);margin:0;padding:0;border:0;overflow:visible;border-radius:50%;background:var(--olive-cursor);color:var(--brand-black);pointer-events:none;will-change:transform}
 .cursor__label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;font:500 1.25rem/1 var(--font-serif);opacity:0}
-.cursor__label--arrow{font:300 3rem/1 var(--font-sans)}
+.cursor__icon{display:block;width:2.25rem;height:2.25rem;fill:currentColor}
+/* Optical centring: an arrow's head carries most of its weight (the ink's centre sits about 5% of the icon towards the head),
+   so each arrow is nudged 3% the other way, away from its head. */
+.cursor__icon--north{translate:0 3%}
+.cursor__icon--south{translate:0 -3%}
 /* The native cursor stays everywhere; it is hidden only in a labelled area, where the big circle sits under the pointer. */
 .has-cursor-label,.has-cursor-label *{cursor:none !important}
 

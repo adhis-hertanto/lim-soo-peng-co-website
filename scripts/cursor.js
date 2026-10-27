@@ -1,7 +1,8 @@
 /* Custom cursor: a small gold circle that trails the pointer (gsap.quickTo) and grows into a labelled circle over some areas.
    Labels come from one place, resolve() below:
-   - What we do (pinned by services-scroll.js): no label on the entry stage, then an up arrow (top half of the viewport, previous
-     stop) and a down arrow (bottom half, next stop) on each service. A click scrolls to that stop, through Lenis when it is running.
+   - What we do (pinned by services-scroll.js): no label on the entry stage, then a north arrow (top half of the viewport, previous
+     stop) and a south arrow (bottom half, next stop), both Material Symbols. A click scrolls to that stop, through Lenis when
+     it is running.
    - Any element with data-cursor="Label", or data-cursor-expanded="Label" while it has aria-expanded="true" (the accordion
      rows read "Open", then "Close" once open). The lawyer cards read "Read bio"; their button already covers the whole card, so a
      click opens the bio dialog through the existing bio-dialog.js flow.
@@ -19,6 +20,12 @@
     follow: { duration: 0.35, ease: "power3.out" },   // the lag behind the pointer
     grow: { duration: 0.3, ease: "power3.out" },      // scale and label fade
     epsilon: 0.02                                     // timeline units of slack when working out which stop the scroll is on
+  };
+
+  // Material Symbols "north" and "south" (24px grid, scaled by the CSS). A label of "north" or "south" shows the icon, not text.
+  var ICONS = {
+    north: "M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z",
+    south: "M480-160 160-480l56-57 224 224v-487h80v487l224-224 56 57-320 320Z"
   };
 
   var html = document.documentElement;
@@ -51,6 +58,7 @@
   var target = null;         // element under the pointer
   var current = { scale: 0, label: null };
   var queued = false;
+  var shown = null;          // the label currently in the circle
 
   // ---- Labels ----
 
@@ -64,9 +72,9 @@
     var at = 0;                                                 // the stop the scroll is on (or has just passed)
     S.stops.forEach(function (s, i) { if (s <= pos + CONFIG.epsilon) at = i; });
     // Previous goes to the stop the scroll has passed, or to the one before when it is sitting on a stop.
-    if (py < window.innerHeight / 2) return { label: "\u2191", go: pos > S.stops[at] + CONFIG.epsilon ? S.stops[at] : S.stops[at - 1] };
-    if (at + 1 < S.stops.length) return { label: "\u2193", go: S.stops[at + 1] };
-    return { label: "\u2193", go: "section" };                    // past the last service: on to the next section
+    if (py < window.innerHeight / 2) return { label: "north", go: pos > S.stops[at] + CONFIG.epsilon ? S.stops[at] : S.stops[at - 1] };
+    if (at + 1 < S.stops.length) return { label: "south", go: S.stops[at + 1] };
+    return { label: "south", go: "section" };                    // past the last service: on to the next section
   }
 
   function resolve(t, py) {
@@ -106,9 +114,10 @@
     var label = r && r.label;
     var scale = !seen || !inside ? 0 : label ? 1 : CONFIG.dotScale;
     html.classList.toggle("has-cursor-label", !!label);
-    if (label) {                                 // keeps the old text while it fades out
-      labelEl.textContent = label;
-      labelEl.classList.toggle("cursor__label--arrow", label.length === 1);
+    if (label && label !== shown) {              // keeps the old content while it fades out
+      shown = label;
+      if (ICONS[label]) labelEl.innerHTML = '<svg class="cursor__icon cursor__icon--' + label + '" viewBox="0 -960 960 960"><path d="' + ICONS[label] + '"/></svg>';
+      else labelEl.textContent = label;
     }
     if (scale === current.scale && !!label === !!current.label) { current.label = label; return; }
     current = { scale: scale, label: label };
