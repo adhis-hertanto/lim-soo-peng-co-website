@@ -15,7 +15,7 @@
   var header = document.querySelector(".site-header");
   var bar = document.getElementById("nav");
   // Sections marked data-nav="light" have a light ground, so the bar switches to dark text under them.
-  var tones = Array.prototype.slice.call(document.querySelectorAll("main > section, footer"));
+  var tones = Array.prototype.slice.call(document.querySelectorAll("main section, footer"));
 
   function tone() {
     if (!header || !bar) return;

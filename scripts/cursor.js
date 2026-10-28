@@ -103,8 +103,23 @@
     } else {
       top = st.start + position / S.distance * (st.end - st.start);
     }
-    if (window.lenis) window.lenis.scrollTo(top);
-    else window.scrollTo({ top: top, behavior: reduce.matches ? "auto" : "smooth" });
+    if (window.lenis) {
+      // Next: Lenis eases out over 1.1s and the photo rises during the last 40% of the travel, about 0.95s of slow ease.
+      // Back: the photo drops during the first stretch of the travel, which would snap. So scroll only that stretch (a rise's
+      // worth of scroll) with the same 0.95s ease-out, then jump the rest, which is a hold with nothing moving.
+      var cur = window.scrollY;
+      if (top < cur) {
+        var unit = (st.end - st.start) / S.distance;
+        var mid = cur - Math.min(cur - top, 0.6 * unit);
+        var lift = function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); };
+        var t0 = 0.132;                                        // where the default ease has covered 60% of the distance
+        window.lenis.scrollTo(mid, {
+          duration: 1.1 * (1 - t0),
+          easing: function (t) { return (lift(t0 + t * (1 - t0)) - lift(t0)) / (lift(1) - lift(t0)); },
+          onComplete: function () { if (window.lenis) window.lenis.scrollTo(top, { immediate: true }); }
+        });
+      } else window.lenis.scrollTo(top);
+    } else window.scrollTo({ top: top, behavior: reduce.matches ? "auto" : "smooth" });
   }
 
   // ---- Rendering ----
