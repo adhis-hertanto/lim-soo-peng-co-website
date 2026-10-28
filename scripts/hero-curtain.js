@@ -70,6 +70,12 @@
     var target = document.querySelector(link.getAttribute("href"));
     if (!target) return;
     e.preventDefault();
+    // What we do is pinned: landing on its top shows only the small entry frame. Land where the one-liner is fully
+    // visible instead (timeline position 2 of 8, i.e. two viewport heights into the pin; see services-scroll.js).
+    if (target.hasAttribute("data-services") && target.classList.contains("is-pinned")) {
+      lenis.scrollTo(target.getBoundingClientRect().top + window.scrollY + window.innerHeight * 2);
+      return;
+    }
     lenis.scrollTo(target, { offset: -rem(112) });
   }
 

@@ -272,6 +272,7 @@ html:not(.js) .nav__links{display:none}
    three words, centred, with no trailing circle. Each row holds three copies of the set so the loop never shows a gap. */
 .tagline{overflow:hidden;padding-top:0}
 .tagline__rows{display:grid;gap:.15em;font:400 clamp(3.5rem,13vw,11rem)/1 var(--font-serif);color:var(--grey-400)}
+@media (min-width:1200px){.tagline__rows{font-size:clamp(5rem,8vw,8rem)}}
 .tagline__row{display:flex;width:max-content;white-space:nowrap;will-change:transform}
 .tagline__set{display:flex;align-items:baseline;flex:none}
 /* Circle the height of the capitals (about .64em in Cormorant), sitting on the baseline so its centre is at half cap height */
