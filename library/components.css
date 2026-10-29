@@ -267,24 +267,24 @@ html:not(.js) .nav__links{display:none}
 .about.is-fading .card.is-in{opacity:1;translate:0 0}
 
 /* ---------- Tagline: Justice, Mercy, Humility ---------- */
-/* Two rows of display words with olive circles between them, on the page's white ground. Row 1 moves left and row 2
-   moves right as the section passes the viewport (scripts/tagline-scroll.js). Reduced motion or no JS: one row of the
-   three words, centred, with no trailing circle. Each row holds three copies of the set so the loop never shows a gap. */
-.tagline{overflow:hidden;padding-top:0}
-.tagline__rows{display:grid;gap:.15em;font:400 clamp(3.5rem,13vw,11rem)/1 var(--font-serif);color:var(--grey-400)}
-@media (min-width:1200px){.tagline__rows{font-size:clamp(5rem,8vw,8rem)}}
-.tagline__row{display:flex;width:max-content;white-space:nowrap;will-change:transform}
-.tagline__set{display:flex;align-items:baseline;flex:none}
-/* Circle the height of the capitals (about .64em in Cormorant), sitting on the baseline so its centre is at half cap height */
-.tagline__dot{position:relative;top:.02em;flex:none;width:.64em;height:.64em;margin-inline:.5em;border-radius:50%;background:var(--olive-eyebrow)}
-@media (prefers-reduced-motion:reduce){
-  .tagline__rows{justify-items:center}
-  .tagline__row[data-row="2"],.tagline__set + .tagline__set{display:none}
-  .tagline__set > .tagline__dot:last-child{display:none}
+/* Static text on the page's white ground, with light olive circles between the words. Mobile: each word on its own line,
+   with its circle before it (circles in the first column, words in the second). Web (768px and up): three columns in a
+   zigzag, row 1 reads word, circle, word and row 2 reads circle, word, circle. */
+.tagline{padding-top:0}
+.tagline__grid{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:.5em;row-gap:.2em;font:400 clamp(2.75rem,14vw,5rem)/1.1 var(--font-serif);color:var(--grey-400)}
+.tagline__word{grid-column:2;text-align:left}
+/* Circle the height of the capitals (about .64em in Cormorant), centred in its cell */
+.tagline__dot{grid-column:1;justify-self:center;align-self:center;width:.64em;height:.64em;border-radius:50%;background:var(--olive-eyebrow)}
+@media (max-width:767px){
+  .tagline__word:nth-child(1),.tagline__dot:nth-child(2){grid-row:1}
+  .tagline__word:nth-child(3),.tagline__dot:nth-child(4){grid-row:2}
+  .tagline__word:nth-child(5),.tagline__dot:nth-child(6){grid-row:3}
 }
-html:not(.js) .tagline__rows{justify-items:center}
-html:not(.js) .tagline__row[data-row="2"],html:not(.js) .tagline__set + .tagline__set{display:none}
-html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
+@media (min-width:768px){
+  .tagline__grid{grid-template-columns:repeat(3,1fr);column-gap:0;row-gap:.25em;font-size:clamp(3rem,6.5vw,7.5rem);text-align:center}
+  .tagline__word,.tagline__dot{grid-column:auto;grid-row:auto}
+  .tagline__word{text-align:center}
+}
 
 /* ---------- What we do: services (scripts/services-scroll.js) ---------- */
 /* Stacked by default (no JS, reduced motion): the entry frame and the three service photos as full-width panels,
@@ -300,6 +300,8 @@ html:not(.js) .tagline__set > .tagline__dot:last-child{display:none}
 .services__copy{padding-block:3rem}
 .services__line{margin:0 auto 3rem;max-width:min(100%,64rem);font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--on-dark);text-align:center;text-wrap:balance}
 .services__line-item{display:block}
+/* The firm name stays on one line: it is about 9.9em wide, so it shrinks to fit the gutters on phones and is capped at the line's size */
+.services__firm{white-space:nowrap;font-size:min(var(--fs-statement),calc((100vw - 2 * var(--gutter)) / 10))}
 /* Scroll cue: the hero's double chevron (same loop, .hero__chev), at the bottom of the stage, over the one-liner and every service. Only while pinned. */
 .services__scroll{display:none}
 .services__stop{color:var(--olive-eyebrow)}

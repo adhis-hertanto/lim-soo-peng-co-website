@@ -111,11 +111,11 @@ Absolute solid gold circle (#C1BD98, no transparency anywhere on the site) sized
 
 ## Tagline (`.tagline`)
 - **Purpose:** the closing brand line "Justice, Mercy, Humility" between Our Lawyers and Contact. White ground (no background of its own), grey text (`--grey-400`), serif display type, no full stops. No top padding: the Our Lawyers section's bottom padding is the only gap above it.
-- **Markup:** `section.section.tagline[aria-label]` > `.tagline__rows[aria-hidden]` > two `.tagline__row[data-row]`, each holding three `.tagline__set` (Justice, Mercy, Humility, each followed by a `.tagline__dot`). The accessible name is on the section, so screen readers read it once.
-- **Type and circles:** `clamp(3.5rem, 13vw, 11rem)`, line-height 1, nowrap, so each row stays on one line at every width. The light olive dot (`.tagline__dot`, `--olive-eyebrow`, the olive of the What We Do eyebrows) is .64em across, the height of the capitals, sitting on the baseline so it is centred on half cap height, with .5em either side.
-- **Behaviour:** `scripts/tagline-scroll.js` (desktop, 1200px and up) drives both rows from ScrollTrigger progress; on tablet and mobile (up to 1199px) both rows move automatically at `AUTO_SPEED` (0.04 of a set per second, opposite directions), with no scroll link. Row 1 moves left and row 2 moves right as the section passes the viewport; the offsets wrap with modulo so the loop never ends. Each row moves 0.4 of a set's width across the section's time in view (`TRAVEL`). Row 2 reads Justice, Humility, Mercy (not the same order as row 1) and starts at 0.84 of a set's width (`STARTS`), so the two rows together show all three words at once. The rows reveal once on entry (rise 32px, fade in, 0.14s stagger), like the other sections.
-- **Reduced motion / no JS:** no movement. One row of the three words, centred, with no circle after the last word. Row 2 and the extra sets are hidden.
-- The section has `overflow: hidden`, so the rows never add horizontal scroll.
+- **Markup:** `section.section.tagline[aria-label]` > `.tagline__grid` > six spans in this order: `.tagline__word` (Justice), `.tagline__dot`, `.tagline__word` (Mercy), `.tagline__dot`, `.tagline__word` (Humility), `.tagline__dot`. The words are plain text, so screen readers read them; the dots are `aria-hidden`.
+- **Layout, web (768px and up):** three equal columns, so row 1 reads word, circle, word and row 2 reads circle, word, circle. Type is `clamp(3rem, 6.5vw, 7.5rem)`, centred.
+- **Layout, mobile (up to 767px):** each word on its own line, with its circle before it. Circles sit in the first column and words in the second (placed explicitly with `grid-row` on the `nth-child` items). Type is `clamp(2.75rem, 14vw, 5rem)`, left aligned inside the centred block.
+- **Circles:** `.tagline__dot` is .64em across, the height of the capitals, in `--olive-eyebrow` (the olive of the What We Do eyebrows).
+- **Behaviour:** static. There is no script and no ticker; the section does not move on scroll.
 
 ## Custom cursor (`.cursor`)
 - **Purpose:** a gold circle that trails the pointer and names what a click will do. Visual only: no focus changes, keyboard use is untouched.
