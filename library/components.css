@@ -299,9 +299,8 @@ html:not(.js) .nav__links{display:none}
 .services__shade{position:absolute;inset:0;background:rgba(42,43,46,var(--texture-overlay))}
 .services__copy{padding-block:3rem}
 .services__line{margin:0 auto 3rem;max-width:min(100%,64rem);font:400 var(--fs-statement)/var(--lh-statement) var(--font-serif);color:var(--on-dark);text-align:center;text-wrap:balance}
-.services__line-item{display:block}
-/* The firm name stays on one line: it is about 9.9em wide, so it shrinks to fit the gutters on phones and is capped at the line's size */
-.services__firm{white-space:nowrap;font-size:min(var(--fs-statement),calc((100vw - 2 * var(--gutter)) / 10))}
+/* Each line stays on one line. The longest (the firm name) is about 9.8em wide, so every line shrinks to fit the gutters on phones and is capped at the line's size */
+.services__line-item{display:block;white-space:nowrap;font-size:min(var(--fs-statement),calc((100vw - 2 * var(--gutter)) / 10))}
 /* Scroll cue: the hero's double chevron (same loop, .hero__chev), at the bottom of the stage, over the one-liner and every service. Only while pinned. */
 .services__scroll{display:none}
 .services__stop{color:var(--olive-eyebrow)}
