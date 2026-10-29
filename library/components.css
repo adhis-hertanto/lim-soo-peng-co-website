@@ -181,8 +181,8 @@ html:not(.js) .nav__links{display:none}
 /* Olive circle: in the space between the nav and the heading, clear of the heading and the divider */
 .hero__circle--b{top:6.5rem;right:-2rem;width:6rem;height:6rem}
 .hero__inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%}
-/* Heading: centred in the space between the nav and the divider */
-.hero__body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:6rem var(--gutter) 2rem}
+/* Heading: mobile sits on the bottom of the space above the divider, with the same 1.5rem gap as the divider to the body text (.hero__foot padding-top). Tablet and up: centred (below). */
+.hero__body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:6rem var(--gutter) 1.5rem}
 .hero__title{font:400 var(--fs-hero)/var(--lh-hero) var(--font-serif);color:var(--on-dark);text-wrap:balance}
 /* Divider runs between the margins (not full bleed). Mobile: body text, CTAs and chevron stacked under it. */
 .hero__foot{display:grid;gap:1.5rem;margin-inline:var(--gutter);padding:1.5rem 0;border-top:1px solid var(--on-dark-32)}
@@ -199,7 +199,7 @@ html:not(.js) .nav__links{display:none}
 
 @media (min-width:768px){
   .hero__circle--b{top:8.5rem;right:-5rem;width:15rem;height:15rem}
-  .hero__body{padding:8rem var(--gutter) 2rem}
+  .hero__body{padding:8rem var(--gutter) 2rem;justify-content:center}
   .hero__title{max-width:36rem;font-size:clamp(3.5rem,min(7.2vw,13svh),7.5rem)}
   /* Body text left, chevron centred on the page, CTAs right */
   .hero__foot{grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;padding:2rem 0 1.5rem}
