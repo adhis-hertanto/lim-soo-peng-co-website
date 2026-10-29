@@ -111,9 +111,10 @@ Absolute solid gold circle (#C1BD98, no transparency anywhere on the site) sized
 
 ## Tagline (`.tagline`)
 - **Purpose:** the closing brand line "Justice, Mercy, Humility" between Our Lawyers and Contact. White ground (no background of its own), grey text (`--grey-400`), serif display type, no full stops. No top padding: the Our Lawyers section's bottom padding is the only gap above it.
-- **Markup:** `section.section.tagline[aria-label]` > `.tagline__grid` > three `.tagline__word` spans (`--1` Justice, `--2` Mercy, `--3` Humility), each followed by a `.gold-stop` full stop. The words are plain text, so screen readers read them.
-- **Size:** set so the widest word, "Humility." (3.74em), fills its span. Mobile: `calc((100vw - 2 * var(--gutter)) / 3.75)`, the full width, words stacked and left aligned. Web (768px and up): `calc((100vw - 2 * var(--gutter)) / 11.25)`, a third of the width per column.
-- **Layout, web (768px and up):** row 1 has Justice (left column) and Mercy (right column); row 2 has Humility in the middle column, centred.
+- **Markup:** `section.section.tagline[aria-label]` > `.tagline__grid` > three `.tagline__word` spans (`--1` Justice, `--2` Mercy, `--3` Humility), each followed by an olive `.gold-stop` full stop. The words are plain text, so screen readers read them.
+- **Size:** set so the widest word, "Humility." (3.74em), fills its span. Mobile: `calc((100vw - 2 * var(--gutter)) / 3.75)`, the full width, words stacked and left aligned. Web (768px and up): `calc((100vw - 2 * var(--gutter)) / 10.5)`, one row spaced equally across the width (`justify-content: space-between`).
+- **Stops:** each `.gold-stop` is `--olive-eyebrow`, the same olive as the services stops.
+- **Layout, web (768px and up):** one row, Justice, Mercy, Humility, with equal gaps between them.
 - **Layout, mobile (up to 767px):** the three words stacked in one column, each filling the width.
 - **Gutters:** the section has `padding-inline: var(--gutter)`, so the words sit inside the page gutters.
 - **Behaviour:** static. There is no script and no ticker; the section does not move on scroll.
