@@ -11,10 +11,10 @@
   var CONFIG = {
     stages: [33, 66, 100],            // the counter value at which each word arrives
     segment: 0.6,                      // seconds the counter takes for each third (about 1.8s of counting)
-    pause: 0.25,                       // seconds the counter holds at the first two stages
+    pause: 0.6,                        // seconds the counter holds at the first two stages
     word: { y: 24, duration: 0.55, ease: "power3.out" },
     move: { duration: 0.4, ease: "power3.out" },  // the block moves up one line when a word arrives
-    hold: 0.3,                         // seconds on 100% before the counter and line fade
+    hold: 1.6,                         // seconds on 100%, all three words showing, before the counter and line fade
     fade: 0.3,
     // Shared with the page transition (scripts/page-transition.js loads first and owns these values).
     slide: (window.PageTransition && window.PageTransition.slide) || { duration: 0.9, ease: "power3.inOut", leaveAt: 0.45, extra: 8 },
