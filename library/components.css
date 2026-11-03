@@ -321,10 +321,13 @@ html:not(.js) .nav__links{display:none}
 
 /* Pinned: the stage is the viewport. Layers stack on top of each other, the copy sits over them. */
 /* White ground behind the small entry frame; the photos cover it once they grow */
-.services.is-pinned .services__stage{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--gold-50)}
+/* Mobile browsers (Chrome and Safari) hide their toolbars on scroll, which makes the viewport taller. The stage is the large
+   viewport height (toolbars hidden), so the photos always reach the bottom of the screen; the copy below follows the visible
+   viewport (dvh), so the circle stays centred and the scroll cue stays clear of the toolbar while it shows. */
+.services.is-pinned .services__stage{position:relative;height:100vh;height:100lvh;overflow:hidden;background:var(--gold-50)}
 .services.is-pinned .services__media{position:absolute;inset:0}
 .services.is-pinned .services__layer{position:absolute;inset:0;aspect-ratio:auto}
-.services.is-pinned .services__copy{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;padding-block:6.5rem 3rem}
+.services.is-pinned .services__copy{position:absolute;inset:0 0 auto;height:100vh;height:100svh;height:100dvh;z-index:2;display:flex;flex-direction:column;padding-block:6.5rem 3rem}
 .services.is-pinned .services__line{margin:auto;max-width:min(100%,64rem)}
 .services.is-pinned .services__scroll{position:absolute;left:50%;bottom:2rem;z-index:2;translate:-50% 0;display:flex;justify-content:center;width:2.75rem;height:2.75rem;color:var(--on-dark);opacity:0;pointer-events:none}
 .services__scroll svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:square;margin:auto}
