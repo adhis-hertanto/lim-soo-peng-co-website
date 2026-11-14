@@ -4,6 +4,12 @@
    Sizes are in rem: the design px divided by 16 (24px = 1.5rem). Hairlines, rules and the focus ring stay in px. */
 
 
+/* Self-hosted web fonts (SIL Open Font License). Stand-ins for the brand fonts until those are licensed for web use. */
+@font-face{font-family:"Cormorant";font-style:normal;font-weight:400;font-display:swap;src:url("../brand/fonts/Cormorant-400.woff2") format("woff2")}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:400;font-display:swap;src:url("../brand/fonts/Montserrat-400.woff2") format("woff2")}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:500;font-display:swap;src:url("../brand/fonts/Montserrat-500.woff2") format("woff2")}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:700;font-display:swap;src:url("../brand/fonts/Montserrat-700.woff2") format("woff2")}
+
 :root{
   /* Brand */
   --gold:#C1BD98;            /* brand gold: full stops, circles, hover fills */
