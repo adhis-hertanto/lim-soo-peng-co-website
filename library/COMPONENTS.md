@@ -69,6 +69,8 @@ White 16px card with a 64/64/96px motif SVG (`.card__motif`, classes `m-gold m-g
 ## Lawyer card (`.lawyer`)
 4:5 photo (`.photo--portrait`; placeholder panels until portraits arrive), then `.lawyer__row`: `.lawyer__info` (name with gold full stop and two meta lines) on the left and a `button.cta.cta--icon` plus on the right (`aria-label="Read more about [name]"`, `aria-haspopup="dialog"`, `aria-controls` = the dialog id). No bio on the card. The whole card is the click target: the button's hit area is stretched over the card (`.lawyer .cta--icon::after`), so the button stays the one focusable control; hovering anywhere on the card fills the ring gold and eases the portrait up 4% (0.5s, clipped by the photo frame; pointer devices with motion allowed only), and the cursor is a pointer. Placeholder photos use `.photo--placeholder` until portraits arrive.
 
+**Lawyers section layout (`.lawyers-layout`):** mobile and tablet stack the heading, then the cards one per row (28rem max on tablet). From 1200px a 12-column grid puts the heading in columns 1 to 6, sticky at `--nav-offset`, and the cards stacked in columns 8 to 12, so the heading stays in view while both portraits scroll past.
+
 ## Bio dialog (`.bio`)
 - **Purpose:** a lawyer's full bio, opened from the plus on their card.
 - **Markup:** `dialog.bio#bio-n[aria-labelledby][tabindex=-1]` (outside `.page`) with `.bio__grip` (drag handle, `data-grip`), `.photo.photo--portrait.photo--placeholder.bio__photo`, `.bio__head` (`h2.bio__name` with gold full stop, two `.bio__meta`), `.bio__rule`, `p.bio__text`, `button.cta.cta--icon.bio__close[data-close]` (X, aria-label "Close") and `button.btn.btn--lg.btn--outline.bio__back[data-close]` ("Back").

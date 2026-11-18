@@ -405,12 +405,15 @@ html:not(.js) .nav__links{display:none}
 .lawyer__name{font:500 var(--fs-name)/1.3 var(--font-sans);color:var(--text)}
 .lawyer__meta{font:400 var(--fs-small)/1.5 var(--font-sans);letter-spacing:.01em;color:var(--text)}
 .lawyer__name + .lawyer__meta{margin-top:.25rem}
-/* Tablet and desktop: the pair is capped in width so each portrait is smaller, with clear space between them */
+/* Lawyers section. Mobile and tablet: heading, then the lawyers stacked one per row (portrait capped in width on tablet).
+   Desktop: two columns; the heading stays pinned on the left (sticky) while the portraits scroll past on the right. */
 @media (min-width:768px){
-  .lawyers{grid-template-columns:repeat(2,minmax(0,1fr));gap:3rem 4rem;max-width:44rem}
+  .lawyers{gap:4rem;max-width:28rem}
 }
 @media (min-width:1200px){
-  .lawyers{gap:4rem 6rem;margin-top:3rem;max-width:60rem}
+  .lawyers-layout{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start}
+  .lawyers-layout__head{grid-column:1 / 7;position:sticky;top:var(--nav-offset)}
+  .lawyers{grid-column:8 / 13;max-width:none;margin-top:0;gap:5rem}
   .lawyer__row{margin-top:1.5rem}
   .lawyer__name{color:var(--heading)}
 }
